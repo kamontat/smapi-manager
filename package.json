@@ -1,0 +1,51 @@
+{
+  "name": "smapi-manager",
+  "productName": "smapi-manager",
+  "version": "1.0.0",
+  "description": "smapi management application",
+  "main": ".webpack/main",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "eslint --ext .ts,.tsx ."
+  },
+  "keywords": [],
+  "author": {
+    "name": "Kamontat Chantrachirathumrong",
+    "email": "developer@kamontat.net"
+  },
+  "dependencies": {
+    "ansicolor": "1.1.93",
+    "electron-squirrel-startup": "1.0.0",
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "6.0.0-beta.54",
+    "@electron-forge/maker-deb": "6.0.0-beta.54",
+    "@electron-forge/maker-rpm": "6.0.0-beta.54",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.54",
+    "@electron-forge/maker-zip": "6.0.0-beta.54",
+    "@electron-forge/plugin-webpack": "6.0.0-beta.54",
+    "@marshallofsound/webpack-asset-relocator-loader": "0.5.0",
+    "@types/react": "17.0.0",
+    "@types/react-dom": "17.0.0",
+    "@typescript-eslint/eslint-plugin": "4.12.0",
+    "@typescript-eslint/parser": "4.12.0",
+    "css-loader": "5.0.1",
+    "electron": "11.1.1",
+    "eslint": "7.17.0",
+    "eslint-plugin-import": "2.22.1",
+    "fork-ts-checker-webpack-plugin": "6.0.8",
+    "node-loader": "1.0.2",
+    "style-loader": "2.0.0",
+    "ts-loader": "8.0.14",
+    "typescript": "4.1.3"
+  },
+  "config": {
+    "forge": "./forge.config.js"
+  }
+}
