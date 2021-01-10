@@ -1,10 +1,14 @@
+const fs = require("fs"); // eslint-disable-line @typescript-eslint/no-var-requires
+const util = require("util"); // eslint-disable-line @typescript-eslint/no-var-requires
 const pjson = require("./package.json"); // eslint-disable-line @typescript-eslint/no-var-requires
+
 const BUILD_MODE = process.env.BUILD_MODE ?? "prod";
 const buildIdentifiers = {
   beta: "net.kamontat.beta",
   prod: "net.kamontat",
 };
 
+const readdir = util.promisify(fs.readdir);
 module.exports = {
   buildIdentifier: BUILD_MODE,
   packagerConfig: {
@@ -73,11 +77,23 @@ module.exports = {
     ],
   ],
   hooks: {
+    /**
+     * @param {any} forgeConfig
+     * @param {{platform: string, arch: string, outputPaths: string[]}} options
+     */
     postPackage: async (forgeConfig, options) => {
       if (options.spinner) {
         options.spinner.info(
-          `Completed packaging for ${options.platform} / ${options.arch} at ${options.outputPaths[0]}`
+          `Completed packaging for ${options.platform} / ${options.arch} at [${options.outputPaths.join(", ")}]`
         );
+        const promises = options.outputPaths.map(p => readdir(p, { withFileTypes: true }));
+        return Promise.all(promises).then(ds => {
+          for (const dd of ds) {
+            for (const d of dd) {
+              options.spinner.info(`  - ${d.name}`)
+            }
+          }
+        });
       }
     },
   },
