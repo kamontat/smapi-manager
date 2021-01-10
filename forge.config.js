@@ -1,8 +1,9 @@
-const BUILD_MODE = process.env.BUILD_MODE ?? "prod"
+const pjson = require("./package.json") // eslint-disable-line @typescript-eslint/no-var-requires
+const BUILD_MODE = process.env.BUILD_MODE ?? "prod";
 const buildIdentifiers = {
   beta: "net.kamontat.beta",
   prod: "net.kamontat",
-}
+};
 
 module.exports = {
   buildIdentifier: BUILD_MODE,
@@ -11,35 +12,44 @@ module.exports = {
   },
   makers: [
     {
+      name: "@electron-forge/maker-zip",
+    },
+    {
       name: "@electron-forge/maker-squirrel",
       config: {
         name: "smapi_manager",
       },
     },
     {
-      name: "@electron-forge/maker-zip",
-      platforms: ["darwin"],
-    },
-    {
       name: "@electron-forge/maker-deb",
-      config: {},
+      config: {
+        options: {
+          maintainer: pjson.author.name,
+          homepage: pjson.author.url
+        }
+      },
     },
     {
       name: "@electron-forge/maker-rpm",
-      config: {},
+      config: {
+        options: {
+          maintainer: pjson.author.name,
+          homepage: pjson.author.url
+        }
+      },
     },
   ],
   publishers: [
     {
-      name: '@electron-forge/publisher-github',
+      name: "@electron-forge/publisher-github",
       config: {
         repository: {
-          owner: 'kamontat',
-          name: 'smapi-manager'
+          owner: "kamontat",
+          name: "smapi-manager",
         },
-        prerelease: true
-      }
-    }
+        prerelease: true,
+      },
+    },
   ],
   plugins: [
     [

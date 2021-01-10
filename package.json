@@ -15,7 +15,8 @@
   "keywords": [],
   "author": {
     "name": "Kamontat Chantrachirathumrong",
-    "email": "developer@kamontat.net"
+    "email": "developer@kamontat.net",
+    "url": "https://kamontat.net"
   },
   "dependencies": {
     "@babel/core": "7.12.10",
@@ -53,14 +54,12 @@
     "@typescript-eslint/parser": "4.12.0",
     "babel-loader": "8.2.2",
     "css-loader": "5.0.1",
-    "devtron": "1.4.0",
     "electron": "11.1.1",
     "eslint": "7.17.0",
     "eslint-plugin-import": "2.22.1",
     "fork-ts-checker-webpack-plugin": "6.0.8",
     "node-loader": "1.0.2",
     "style-loader": "2.0.0",
-    "ts-loader": "8.0.14",
     "typescript": "4.1.3"
   },
   "config": {

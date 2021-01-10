@@ -27,7 +27,6 @@ export const createWindow = (logger: Logger) => {
     // Open the DevTools.
     if (isDevelopment()) {
       mainWindow.webContents.openDevTools();
-      // require("devtron").install(); // eslint-disable-line @typescript-eslint/no-var-requires
     }
   };
 };

@@ -25,8 +25,4 @@ declare global {
     require: NodeRequire;
     process: NodeJS.Process;
   }
-
-  interface Window {
-    __devtron: DevTronObject;
-  }
 }
