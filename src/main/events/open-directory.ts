@@ -1,13 +1,13 @@
 import { dialog, IpcMainInvokeEvent } from "electron";
 
-import EventObject from "@common/models/event";
+import { EventProcessorObject } from "@common/models/event";
 import Logger, { color } from "@common/models/logger";
 import createDirectory, { Directory } from "@common/models/directory";
 import { getGOGModDirectory, getSteamModDirectory } from "@common/utils/directory";
 
 const logger = new Logger("event", "open-directory");
 
-const openDirectory = async (event: IpcMainInvokeEvent, obj: EventObject): Promise<Directory> => {
+const openDirectory = async (event: IpcMainInvokeEvent, obj: EventProcessorObject): Promise<Directory> => {
   let directoryName: string | undefined = undefined;
 
   if (obj.subtype === "steam") {

@@ -1,25 +1,19 @@
 import { ipcRenderer } from "electron";
 
+import ProcessorType from "@common/constants/processor-type";
 import Logger from "@common/models/logger";
-import EventObject, { Origin } from "@common/models/event";
-import { RENDERER, MAIN } from "@common/constants/process-type";
-import { createPreloadEvent } from "@common/utils/event";
-import { isDevelopment } from "@common/utils/env";
+import EventObject from "@common/models/event";
 
 const logger = new Logger("renderer", "preload");
 process.once("loaded", () => {
-  if (isDevelopment()) {
-    window.__devtron = { require: require, process: process };
-  }
-
   window.addEventListener("message", event => {
-    const data: EventObject = event.data;
+    const data = EventObject.load(event.data);
 
-    if (data.origin === Origin.RENDERER) {
-      logger.event(RENDERER, `${data.type} (${data.subtype})`);
-      ipcRenderer.invoke(data.type, data).then(args => {
-        logger.event(MAIN, `received data`);
-        window.postMessage(createPreloadEvent({ type: data.type, subtype: data.subtype, value: args }), "*");
+    if (data.isOrigin(ProcessorType.RENDERER)) {
+      data.log(logger);
+      ipcRenderer.invoke(data.type(), data.toJSON()).then(args => {
+        logger.event(ProcessorType.MAIN, `received data`);
+        window.postMessage(data.clone(ProcessorType.PRELOAD, args).toJSON(), "*");
       });
     }
   });
