@@ -3,10 +3,13 @@ const util = require("util"); // eslint-disable-line @typescript-eslint/no-var-r
 const pjson = require("./package.json"); // eslint-disable-line @typescript-eslint/no-var-requires
 
 const BUILD_MODE = process.env.BUILD_MODE ?? "prod";
+const githubToken = process.env.GITHUB_TOKEN ?? "none";
 const buildIdentifiers = {
   beta: "net.kamontat.beta",
   prod: "net.kamontat",
 };
+
+console.log(githubToken.substr(0, 4), "...")
 
 const readdir = util.promisify(fs.readdir);
 module.exports = {
@@ -47,6 +50,7 @@ module.exports = {
     {
       name: "@electron-forge/publisher-github",
       config: {
+        authToken: githubToken,
         repository: {
           owner: "kamontat",
           name: "smapi-manager",
