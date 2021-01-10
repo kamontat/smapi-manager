@@ -23,7 +23,7 @@ const Header = ({ headers }: HeaderProperty): JSX.Element => {
     <HeaderStyle>
       <tr>
         {headers.map(h => (
-          <HeaderElementStyle scope="col" colSpan={h.size} css={h.css}>
+          <HeaderElementStyle key={h.name} scope="col" colSpan={h.size} css={h.css}>
             {h.name}
           </HeaderElementStyle>
         ))}

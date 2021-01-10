@@ -11,7 +11,13 @@ type BodyProperty = { type: "empty" | "exist"; size: number };
 const Body = ({ type, size, children }: PropsWithChildren<BodyProperty>): JSX.Element => {
   return (
     <BodyStyle>
-      {type === "empty" ? <EmptyBodyElementStyle colSpan={size}>Empty</EmptyBodyElementStyle> : children}
+      {type === "empty" ? (
+        <tr>
+          <EmptyBodyElementStyle colSpan={size}>Empty</EmptyBodyElementStyle>
+        </tr>
+      ) : (
+        children
+      )}
     </BodyStyle>
   );
 };

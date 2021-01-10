@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useEffect } from "react";
 import tw from "twin.macro";
 
-import { MODIFY_DIRECTORY } from "@common/constants/events";
+import { MODIFY_DIRECTORY, OPEN_DIRECTORY } from "@common/constants/events";
 import ProcessorType from "@common/constants/processor-type";
 
 import { DirectoryObject } from "@common/models/directory";
@@ -18,6 +18,11 @@ const Container = tw.div`
   shadow overflow-hidden border-b border-gray-200 sm:rounded-lg
 `;
 
+const TriggerButton = tw.button`
+  text-right text-sm font-medium
+  text-red-500 hover:text-red-800 hover:underline
+`;
+
 interface DirectoriesProperty {
   setAction: React.Dispatch<React.SetStateAction<DirectoryObject[]>>;
   list: DirectoryObject[];
@@ -26,6 +31,12 @@ interface DirectoriesProperty {
 const modifyDirectory = (d: DirectoryObject) => {
   return () => {
     window.postMessage(EventObject.createRenderer({ type: MODIFY_DIRECTORY, value: d }).toJSON(), "*");
+  };
+};
+
+const openDirectory = (d: DirectoryObject) => {
+  return () => {
+    window.postMessage(EventObject.createRenderer({ type: OPEN_DIRECTORY, value: d }).toJSON(), "*");
   };
 };
 
@@ -70,11 +81,11 @@ const Directories = ({ setAction, list }: PropsWithChildren<DirectoriesProperty>
                 {d.isHidden ? <WarnBadge>Hidden</WarnBadge> : <InfoBadge>Shown</InfoBadge>}
               </TableBodyElementStyle>
               <TableBodyElementStyle scope="col">
-                <button tw="text-right text-sm font-medium" onClick={modifyDirectory(d)}>
-                  Toggle
-                </button>
+                <TriggerButton onClick={modifyDirectory(d)}>Toggle</TriggerButton>
               </TableBodyElementStyle>
-              <TableBodyElementStyle scope="col">open</TableBodyElementStyle>
+              <TableBodyElementStyle scope="col">
+                <TriggerButton onClick={openDirectory(d)}>Open</TriggerButton>
+              </TableBodyElementStyle>
             </tr>
           ))}
         </TableBody>

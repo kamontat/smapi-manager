@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 
-import { OPEN_DIRECTORY } from "@common/constants/events";
+import { FIND_DIRECTORY } from "@common/constants/events";
 
 import Logger from "@common/models/logger";
 import { Directory, DirectoryObject } from "@common/models/directory";
@@ -24,7 +24,7 @@ const IndexPage = (): JSX.Element => {
   useEffect(() => {
     window.addEventListener("message", event => {
       const data = EventObject.load<Directory>(event.data);
-      if (data.is(ProcessorType.PRELOAD, OPEN_DIRECTORY)) {
+      if (data.is(ProcessorType.PRELOAD, FIND_DIRECTORY)) {
         data.log(logger);
 
         const value = data.value();

@@ -1,35 +1,20 @@
-import { dialog, IpcMainInvokeEvent } from "electron";
+import { join } from "path";
+import { IpcMainInvokeEvent, shell } from "electron";
 
 import { EventProcessorObject } from "@common/models/event";
-import Logger, { color } from "@common/models/logger";
-import createDirectory, { Directory } from "@common/models/directory";
-import { getGOGModDirectory, getSteamModDirectory } from "@common/utils/directory";
+import { DirectoryObject } from "@common/models/directory";
+import Logger from "@common/models/logger";
+import { MANIFEST_JSON } from "@common/constants/directory";
 
 const logger = new Logger("event", "open-directory");
 
-const openDirectory = async (event: IpcMainInvokeEvent, obj: EventProcessorObject): Promise<Directory> => {
-  let directoryName: string | undefined = undefined;
+const openDirectory = (_: IpcMainInvokeEvent, args: EventProcessorObject<DirectoryObject>): void => {
+  if (args.value) {
+    const fullpath = join(args.value.path, args.value.name.original, MANIFEST_JSON);
 
-  if (obj.subtype === "steam") {
-    directoryName = getSteamModDirectory();
-    logger.debug("received directory from", color.magenta(obj.subtype));
-  } else if (obj.subtype === "gog") {
-    directoryName = getGOGModDirectory();
-    logger.debug("received directory from", color.magenta(obj.subtype));
+    logger.debug(`try to open directory at ${fullpath}`);
+    shell.showItemInFolder(fullpath);
   }
-
-  if (directoryName === undefined) {
-    const result = await dialog.showOpenDialog({
-      properties: ["openDirectory"],
-    });
-
-    if (!result.canceled && result.filePaths.length > 0) {
-      directoryName = result.filePaths[0];
-      logger.debug("received directory from", color.magenta.underline("dialog"));
-    }
-  }
-
-  return createDirectory(directoryName);
 };
 
 export default openDirectory;

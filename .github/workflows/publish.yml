@@ -1,0 +1,32 @@
+name: Action/publish
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  publish:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15
+
+      - name: Build application
+        run: yarn make
+
+      - name: Publish application
+        run: yarn publish
+        with:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+          github_token: ${{ secrets.github_token }}

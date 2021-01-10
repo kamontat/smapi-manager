@@ -5,18 +5,24 @@ import { isDevelopment } from "@common/utils/env";
 
 const colors = [
   chalk.red,
-  chalk.blue,
-  chalk.cyan,
-  chalk.magenta,
-  chalk.green,
-  chalk.yellow,
-  chalk.gray,
   chalk.redBright,
+
+  chalk.blue,
   chalk.blueBright,
+
+  chalk.cyan,
   chalk.cyanBright,
+
+  chalk.magenta,
   chalk.magentaBright,
+
+  chalk.green,
   chalk.greenBright,
+
+  chalk.yellow,
   chalk.yellowBright,
+
+  chalk.gray,
 ];
 
 class Logger {
@@ -35,7 +41,7 @@ class Logger {
 
     this.namespace = namespaces.join(":");
 
-    const size = this.namespace.length % colors.length;
+    const size = this.namespace.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0) % colors.length;
     this.color = colors[size];
   }
 

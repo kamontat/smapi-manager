@@ -1,5 +1,14 @@
+const BUILD_MODE = process.env.BUILD_MODE ?? "prod"
+const buildIdentifiers = {
+  beta: "net.kamontat.beta",
+  prod: "net.kamontat",
+}
+
 module.exports = {
-  packagerConfig: {},
+  buildIdentifier: BUILD_MODE,
+  packagerConfig: {
+    appBundleId: buildIdentifiers[BUILD_MODE] ?? buildIdentifiers["prod"],
+  },
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
@@ -20,6 +29,18 @@ module.exports = {
       config: {},
     },
   ],
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'kamontat',
+          name: 'smapi-manager'
+        },
+        prerelease: true
+      }
+    }
+  ],
   plugins: [
     [
       "@electron-forge/plugin-webpack",
@@ -32,9 +53,9 @@ module.exports = {
               html: "./src/renderer/index.html",
               js: "./src/renderer/App.tsx",
               preload: {
-                js: "./src/renderer/preload.ts"
+                js: "./src/renderer/preload.ts",
               },
-              name: "main_window"
+              name: "main_window",
             },
           ],
         },

@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import tw from "twin.macro";
 
-import { OPEN_DIRECTORY } from "@common/constants/events";
+import { FIND_DIRECTORY } from "@common/constants/events";
 import EventObject from "@common/models/event";
 
 const SelectDirectoryStyle = tw.button`
@@ -17,7 +17,7 @@ const SelectDirectory = ({ name, children }: PropsWithChildren<SelectDirectoryPr
   return (
     <SelectDirectoryStyle
       onClick={() =>
-        window.postMessage(EventObject.createRenderer({ type: OPEN_DIRECTORY, subtype: name }).toJSON(), "*")
+        window.postMessage(EventObject.createRenderer({ type: FIND_DIRECTORY, subtype: name }).toJSON(), "*")
       }
     >
       {children}
