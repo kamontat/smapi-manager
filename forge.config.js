@@ -1,4 +1,4 @@
-const pjson = require("./package.json") // eslint-disable-line @typescript-eslint/no-var-requires
+const pjson = require("./package.json"); // eslint-disable-line @typescript-eslint/no-var-requires
 const BUILD_MODE = process.env.BUILD_MODE ?? "prod";
 const buildIdentifiers = {
   beta: "net.kamontat.beta",
@@ -9,6 +9,7 @@ module.exports = {
   buildIdentifier: BUILD_MODE,
   packagerConfig: {
     executableName: pjson.name,
+    buildVersion: pjson.buildVersion,
     appBundleId: buildIdentifiers[BUILD_MODE] ?? buildIdentifiers["prod"],
   },
   makers: [
@@ -24,8 +25,8 @@ module.exports = {
       config: {
         options: {
           maintainer: pjson.author.name,
-          homepage: pjson.author.url
-        }
+          homepage: pjson.author.url,
+        },
       },
     },
     {
@@ -33,8 +34,8 @@ module.exports = {
       config: {
         options: {
           maintainer: pjson.author.name,
-          homepage: pjson.author.url
-        }
+          homepage: pjson.author.url,
+        },
       },
     },
   ],
@@ -71,4 +72,13 @@ module.exports = {
       },
     ],
   ],
+  hooks: {
+    postPackage: async (forgeConfig, options) => {
+      if (options.spinner) {
+        options.spinner.info(
+          `Completed packaging for ${options.platform} / ${options.arch} at ${options.outputPaths[0]}`
+        );
+      }
+    },
+  },
 };
