@@ -9,8 +9,6 @@ const buildIdentifiers = {
   prod: "net.kamontat",
 };
 
-console.log(githubToken.substr(0, 4), "...")
-
 const readdir = util.promisify(fs.readdir);
 module.exports = {
   buildIdentifier: BUILD_MODE,
