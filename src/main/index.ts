@@ -15,11 +15,11 @@ import {
   OPEN_DIRECTORY,
 } from "@common/constants/events";
 import Logger from "@common/models/logger";
+import { isProduction } from "@common/utils/env";
 
 const logger = new Logger("main", "index");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-// eslint-disable-next-line global-require
 if (require("electron-squirrel-startup")) {
   app.quit();
 }
@@ -35,3 +35,7 @@ ipcMain.handle(ELECTRON_INFO, getElectronInfo);
 ipcMain.handle(FIND_DIRECTORY, findDirectory);
 ipcMain.handle(OPEN_DIRECTORY, openDirectory);
 ipcMain.handle(MODIFY_DIRECTORY, modifyDirectory);
+
+if (isProduction()) {
+  require("update-electron-app")(); // eslint-disable-line @typescript-eslint/no-var-requires
+}

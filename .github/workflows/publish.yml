@@ -24,9 +24,3 @@ jobs:
 
       - name: Build application
         run: yarn make
-
-      - name: Publish application
-        run: yarn publish
-        with:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
-          github_token: ${{ secrets.github_token }}
