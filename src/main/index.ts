@@ -5,9 +5,9 @@ import openDirectory from "./events/open-directory";
 import modifyDirectory from "./events/modify-directory";
 
 import { MODIFY_DIRECTORY, OPEN_DIRECTORY } from "@common/constants/events";
-import Logger, { color } from "@common/models/logger";
+import Logger from "@common/models/logger";
 
-const logger = new Logger(color.cyan, "main", "index");
+const logger = new Logger("main", "index");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // eslint-disable-next-line global-require

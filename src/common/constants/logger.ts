@@ -1,39 +1,32 @@
-// enum LoggerLevel {
-//   DEBUG = 3,
-//   INFO = 2,
-//   WARN = 1,
-//   ERROR = 0,
-//   SILENT = -1,
-// }
-
-import ansicolor, { AnsicolorMethods } from "ansicolor";
+import chalk, { Chalk } from "chalk";
 
 interface Level {
   readonly code: number;
   readonly name: string;
-  readonly color: AnsicolorMethods;
-
-  getName(): string;
-  accept(level: Level): boolean;
+  readonly color: Chalk;
 }
 
-class LoggerLevel implements Level {
-  constructor(readonly code: number, readonly name: string, readonly color: AnsicolorMethods) {}
+const createLoggerLevel = (code: number, name: string, color: Chalk): Level => {
+  return {
+    code,
+    name,
+    color,
+  };
+};
 
-  getName() {
-    return this.color(this.name);
-  }
+const getName = (level: Level): string => {
+  return level.color(level.name);
+};
 
-  accept(level: Level): boolean {
-    return this.code >= level.code;
-  }
-}
+const accept = (level: Level, second: Level): boolean => {
+  return level.code >= second.code;
+};
 
-const DEBUG = new LoggerLevel(3, "debug", ansicolor.lightGray);
-const INFO = new LoggerLevel(2, "info", ansicolor.lightGreen);
-const WARN = new LoggerLevel(1, "warn", ansicolor.yellow);
-const ERROR = new LoggerLevel(0, "error", ansicolor.red);
-const SILENT = new LoggerLevel(-1, "silent", ansicolor.default);
+const DEBUG = createLoggerLevel(3, "debug", chalk.gray);
+const INFO = createLoggerLevel(2, "info", chalk.green);
+const WARN = createLoggerLevel(1, "warn", chalk.yellow);
+const ERROR = createLoggerLevel(0, "error", chalk.red);
+const SILENT = createLoggerLevel(-1, "silent", chalk.reset);
 
 export default Level;
-export { DEBUG, INFO, WARN, ERROR, SILENT };
+export { DEBUG, INFO, WARN, ERROR, SILENT, getName, accept };

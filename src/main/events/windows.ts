@@ -15,6 +15,7 @@ export const createWindow = (logger: Logger) => {
       webPreferences: DEFAULT_WEB_PREFERENCES,
     };
 
+    logger.debug(`current environment: `, process.env.NODE_ENV);
     logger.debug(`create window option: `, JSON.stringify(option));
 
     // Create the browser window.
@@ -24,7 +25,10 @@ export const createWindow = (logger: Logger) => {
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
     // Open the DevTools.
-    isDevelopment() && mainWindow.webContents.openDevTools();
+    if (isDevelopment()) {
+      mainWindow.webContents.openDevTools();
+      // require("devtron").install(); // eslint-disable-line @typescript-eslint/no-var-requires
+    }
   };
 };
 

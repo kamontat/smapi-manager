@@ -1,23 +1,47 @@
-import LoggerLevel, { DEBUG, INFO, WARN, ERROR, SILENT } from "@common/constants/logger";
+import chalk, { Chalk } from "chalk";
+
+import LoggerLevel, { DEBUG, INFO, WARN, ERROR, SILENT, getName, accept } from "@common/constants/logger";
 import { isDevelopment } from "@common/utils/env";
-import ansicolor, { AnsicolorMethods } from "ansicolor";
+
+const colors = [
+  chalk.red,
+  chalk.blue,
+  chalk.cyan,
+  chalk.magenta,
+  chalk.green,
+  chalk.yellow,
+  chalk.gray,
+  chalk.redBright,
+  chalk.blueBright,
+  chalk.cyanBright,
+  chalk.magentaBright,
+  chalk.greenBright,
+  chalk.yellowBright,
+];
 
 class Logger {
   private static level: LoggerLevel = DEBUG;
   static setLevel(level: LoggerLevel): void {
     Logger.level = level;
   }
+  static getLevel(): LoggerLevel {
+    return Logger.level;
+  }
 
   private namespace: string;
-  constructor(private color: AnsicolorMethods, ...namespaces: string[]) {
+  private color: Chalk;
+  constructor(...namespaces: string[]) {
     Logger.setLevel(isDevelopment() ? DEBUG : SILENT);
 
     this.namespace = namespaces.join(":");
+
+    const size = this.namespace.length % colors.length;
+    this.color = colors[size];
   }
 
   private log(level: LoggerLevel, ...msg: string[]) {
-    if (Logger.level.accept(level)) {
-      console.log(`[${level.getName()}] ${this.color(this.namespace)}`, ...msg);
+    if (accept(Logger.level, level)) {
+      console.log(`[${getName(level)}] ${this.color(this.namespace)}`, ...msg);
     }
   }
 
@@ -43,4 +67,4 @@ class Logger {
 }
 
 export default Logger;
-export { DEBUG, INFO, WARN, ERROR, SILENT, ansicolor as color };
+export { DEBUG, INFO, WARN, ERROR, SILENT, chalk as color };

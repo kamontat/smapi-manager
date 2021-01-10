@@ -5,17 +5,17 @@ import Logger, { color } from "@common/models/logger";
 import createDirectory, { Directory } from "@common/models/directory";
 import { getGOGModDirectory, getSteamModDirectory } from "@common/utils/directory";
 
-const logger = new Logger(color.lightBlue, "event", "open-directory");
+const logger = new Logger("event", "open-directory");
 
 const openDirectory = async (event: IpcMainInvokeEvent, obj: EventObject): Promise<Directory> => {
   let directoryName: string | undefined = undefined;
 
   if (obj.subtype === "steam") {
     directoryName = getSteamModDirectory();
-    logger.debug("received directory from", color.lightMagenta(obj.subtype));
+    logger.debug("received directory from", color.magenta(obj.subtype));
   } else if (obj.subtype === "gog") {
     directoryName = getGOGModDirectory();
-    logger.debug("received directory from", color.lightMagenta(obj.subtype));
+    logger.debug("received directory from", color.magenta(obj.subtype));
   }
 
   if (directoryName === undefined) {
@@ -25,7 +25,7 @@ const openDirectory = async (event: IpcMainInvokeEvent, obj: EventObject): Promi
 
     if (!result.canceled && result.filePaths.length > 0) {
       directoryName = result.filePaths[0];
-      logger.debug("received directory from", color.lightMagenta("dialog"));
+      logger.debug("received directory from", color.magenta.underline("dialog"));
     }
   }
 

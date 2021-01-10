@@ -1,12 +1,17 @@
 import { ipcRenderer } from "electron";
 
-import Logger, { color } from "@common/models/logger";
+import Logger from "@common/models/logger";
 import EventObject, { Origin } from "@common/models/event";
 import { RENDERER, MAIN } from "@common/constants/process-type";
 import { createPreloadEvent } from "@common/utils/event";
+import { isDevelopment } from "@common/utils/env";
 
-const logger = new Logger(color.lightRed, "renderer", "preload");
+const logger = new Logger("renderer", "preload");
 process.once("loaded", () => {
+  if (isDevelopment()) {
+    window.__devtron = { require: require, process: process };
+  }
+
   window.addEventListener("message", event => {
     const data: EventObject = event.data;
 
