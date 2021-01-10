@@ -8,6 +8,7 @@ const buildIdentifiers = {
 module.exports = {
   buildIdentifier: BUILD_MODE,
   packagerConfig: {
+    executableName: pjson.name,
     appBundleId: buildIdentifiers[BUILD_MODE] ?? buildIdentifiers["prod"],
   },
   makers: [
@@ -16,9 +17,7 @@ module.exports = {
     },
     {
       name: "@electron-forge/maker-squirrel",
-      config: {
-        name: "smapi_manager",
-      },
+      config: {},
     },
     {
       name: "@electron-forge/maker-deb",
