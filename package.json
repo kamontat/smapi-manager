@@ -5,7 +5,7 @@
   "buildVersion": "1",
   "description": "smapi management application",
   "main": ".webpack/main",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -18,6 +18,11 @@
     "name": "Kamontat Chantrachirathumrong",
     "email": "developer@kamontat.net",
     "url": "https://kamontat.net"
+  },
+  "repository": {
+    "url": "https://github.com/kamontat/smapi-manager",
+    "type": "git",
+    "directory": "."
   },
   "dependencies": {
     "@babel/core": "7.12.10",
