@@ -11,6 +11,7 @@ process.once("loaded", () => {
 
     if (data.isOrigin(ProcessorType.RENDERER)) {
       data.log(logger);
+
       ipcRenderer.invoke(data.type(), data.toJSON()).then(args => {
         logger.event(ProcessorType.MAIN, `received data`);
         window.postMessage(data.clone(ProcessorType.PRELOAD, args).toJSON(), "*");

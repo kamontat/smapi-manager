@@ -1,7 +1,7 @@
 {
   "name": "smapi-manager",
-  "productName": "smapi-manager",
-  "version": "1.0.0",
+  "productName": "SMAPI Manager",
+  "version": "0.1.0",
   "description": "smapi management application",
   "main": ".webpack/main",
   "license": "MIT",
