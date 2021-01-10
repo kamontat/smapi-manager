@@ -1,6 +1,12 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 
-import { DEFAULT_HEIGHT, DEFAULT_WEB_PREFERENCES, DEFAULT_WIDTH } from "@common/constants/windows";
+import {
+  DEFAULT_HEIGHT,
+  DEFAULT_MIN_HEIGHT,
+  DEFAULT_MIN_WIDTH,
+  DEFAULT_WEB_PREFERENCES,
+  DEFAULT_WIDTH,
+} from "@common/constants/windows";
 import Logger from "@common/models/logger";
 import { isMacOS } from "@common/utils/os";
 import { isDevelopment } from "@common/utils/env";
@@ -9,9 +15,11 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 
 export const createWindow = (logger: Logger) => {
   return (): void => {
-    const option = {
+    const option: BrowserWindowConstructorOptions = {
       height: DEFAULT_HEIGHT,
+      minHeight: DEFAULT_MIN_HEIGHT,
       width: DEFAULT_WIDTH,
+      minWidth: DEFAULT_MIN_WIDTH,
       webPreferences: DEFAULT_WEB_PREFERENCES,
     };
 
