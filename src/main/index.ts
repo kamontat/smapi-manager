@@ -14,9 +14,10 @@ import {
   FIND_DIRECTORY,
   OPEN_DIRECTORY,
 } from "@common/constants/events";
+import ProcessorType from "@common/constants/processor-type";
 import Logger from "@common/models/logger";
 
-const logger = new Logger("main", "index");
+const logger = new Logger(ProcessorType.MAIN, "index");
 
 app.on("ready", createWindow(logger));
 app.on("window-all-closed", quitWindow(logger));

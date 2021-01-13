@@ -14,7 +14,9 @@
     "resolveJsonModule": true,
     "paths": {
       "*": ["node_modules/*"],
-      "@common/*": ["src/common/*"]
+      "@common/*": ["src/common/*"],
+      "@components/*": ["src/renderer/components/*"],
+      "@pages/*": ["src/renderer/pages/*"]
     }
   },
   "include": ["src/**/*"]

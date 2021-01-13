@@ -4,7 +4,7 @@ import ProcessorType from "@common/constants/processor-type";
 import Logger from "@common/models/logger";
 import EventObject from "@common/models/event";
 
-const logger = new Logger(ProcessorType.PRELOAD);
+const logger = new Logger("renderer", "preload");
 process.once("loaded", () => {
   window.addEventListener("message", event => {
     const data = EventObject.load(event.data);

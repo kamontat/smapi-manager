@@ -4,8 +4,8 @@ import ReactDOM from "react-dom";
 import { MotionConfig, AnimationFeature } from "framer-motion";
 import { GlobalStyles } from "twin.macro";
 
-import IndexPage from "./pages/Index";
-import Main from "./Main";
+import IndexPage from "./pages/Index"; // v1
+import Main from "./Main"; //v2
 
 function render() {
   ReactDOM.render(

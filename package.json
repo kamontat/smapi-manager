@@ -32,6 +32,7 @@
     "framer-motion": "3.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-router": "5.2.0",
     "regenerator-runtime": "0.13.7",
     "twin.macro": "2.0.8"
   },
@@ -54,6 +55,7 @@
     "@marshallofsound/webpack-asset-relocator-loader": "0.5.0",
     "@types/react": "17.0.0",
     "@types/react-dom": "17.0.0",
+    "@types/react-router": "5.1.11",
     "@typescript-eslint/eslint-plugin": "4.12.0",
     "@typescript-eslint/parser": "4.12.0",
     "babel-loader": "8.2.2",
@@ -70,5 +72,10 @@
   },
   "config": {
     "forge": "./forge.config.js"
+  },
+  "babelMacros": {
+    "twin": {
+      "preset": "emotion"
+    }
   }
 }

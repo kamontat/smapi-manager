@@ -6,7 +6,7 @@ import { FIND_DIRECTORY } from "@common/constants/events";
 import Logger from "@common/models/logger";
 import { Directory, DirectoryObject } from "@common/models/directory";
 
-import Header from "../components/Header";
+import Header from "../components/v1/Header";
 import SelectDirectory from "../components/SelectDirectory";
 import Body from "../components/Body";
 import Directories from "../components/Directories";

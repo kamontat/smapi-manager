@@ -1,7 +1,26 @@
+import React from "react";
 import tw from "twin.macro";
 
-const Header = tw.div`
-  flex mx-5 my-4 items-center justify-end
+import { Back } from "./Link";
+
+const Container = tw.div`
+  flex justify-between
+  mx-3
 `;
+
+interface HeaderProperty {
+  name: string;
+}
+
+const Header = ({ name }: HeaderProperty): JSX.Element => {
+  return (
+    <Container>
+      <div>
+        <Back>{name}</Back>
+      </div>
+      <div>B</div>
+    </Container>
+  );
+};
 
 export default Header;

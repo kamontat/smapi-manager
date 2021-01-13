@@ -7,7 +7,8 @@ module.exports = (name) => []
   .concat(process.env.CI !== "true" ? new BundleAnalyzerPlugin({
     analyzerMode: "static",
     reportFilename: path.join(`reports.${name}.html`),
-    openAnalyzer: false
+    openAnalyzer: false,
+    logLevel: "error",
   }) : [])
   .concat(name === "renderer" ? new ForkTsCheckerWebpackPlugin(
   ) : []);
