@@ -42,24 +42,17 @@ module.exports = {
       50: "50",
     },
     extend: {
-      inset: {
-        sidebar: '60px',
-      },
-      spacing: {
-        sidebar: "30px",
-        "sidebar-full": "60px",
-      },
       minWidth: {
-        card: "140px",
+        card: "150px",
       },
       maxWidth: {
-        card: "160px",
+        card: "180px",
       },
       minHeight: {
-        card: "60px",
+        card: "70px",
       },
       maxHeight: {
-        card: "90px",
+        card: "100px",
       }
     }
   },
