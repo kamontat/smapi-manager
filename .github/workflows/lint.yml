@@ -3,7 +3,7 @@ name: Action/Lint
 on: push
 
 jobs:
-  publish:
+  lint:
     runs-on: ${{ matrix.os }}
 
     strategy:
