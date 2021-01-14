@@ -19,7 +19,7 @@ echo "Deploying version '$version' [enter]..."
 read -r
 
 gitgo changelog --tag "$version" &&
-  git commit -am "chore: release $version" &&
+  git commit -am "chore(release): $version" &&
   git tag "$version" &&
   git push &&
   git push --tags
