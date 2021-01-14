@@ -1,4 +1,4 @@
-import { app, ipcMain } from "electron";
+import { app, ipcMain, Menu } from "electron";
 import Store from "electron-store";
 
 import { createWindow, recreateWindow, quitWindow } from "./events/windows";
@@ -18,6 +18,7 @@ import {
   WRITE_CONFIG,
   READ_MOD_CONFIG,
 } from "@common/constants/events";
+import menu from "@common/constants/menu";
 import ProcessorType from "@common/constants/processor-type";
 import StorageType, { defaults as defaultStorage } from "@common/constants/storage-type";
 import Logger from "@common/models/logger";
@@ -29,6 +30,8 @@ const storage = new Store<StorageType>({
   defaults: defaultStorage,
   encryptionKey: "secret-key",
 });
+
+Menu.setApplicationMenu(menu);
 
 app.on("ready", createWindow(logger));
 app.on("window-all-closed", quitWindow(logger));

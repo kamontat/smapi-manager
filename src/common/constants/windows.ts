@@ -1,4 +1,5 @@
 import { WebPreferences } from "electron";
+import { isDevelopment } from "@common/utils/env";
 
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -13,4 +14,5 @@ export const DEFAULT_WEB_PREFERENCES: WebPreferences = {
   contextIsolation: true, // protect against prototype pollution
   enableRemoteModule: false, // turn off remote
   preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+  devTools: isDevelopment(),
 };
