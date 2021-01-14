@@ -19,7 +19,6 @@ interface DirectoryObject {
 }
 
 interface Directory {
-  id: string;
   name: string;
   subdirectories: DirectoryObject[];
 }
@@ -69,12 +68,10 @@ const createDirectoryObject = (fullpath: string, customId?: string): DirectoryOb
 };
 
 const createDirectory = (dir?: string): Directory => {
-  const id = uuid();
-  if (!dir) return { id, name: "unknown", subdirectories: [] };
+  if (!dir) return { name: "unknown", subdirectories: [] };
 
   const ls = listSubDirectories(dir, RECUSIVE_LIMIT);
   return {
-    id,
     name: dir,
     subdirectories: ls.map(l => createDirectoryObject(l)),
   };
