@@ -1,12 +1,15 @@
 import React, { PropsWithChildren } from "react";
+import tw from "twin.macro";
 import { useHistory } from "react-router";
 
 interface RawLinkProperty {
   onClick: () => void;
 }
 
+const A = tw.a`cursor-pointer`;
+
 const RawLink = ({ children, onClick }: PropsWithChildren<RawLinkProperty>): JSX.Element => {
-  return <a onClick={onClick}>{children}</a>;
+  return <A onClick={onClick}>{children}</A>;
 };
 
 interface LinkProperty {
@@ -23,5 +26,7 @@ const Back = ({ children }: PropsWithChildren<unknown>): JSX.Element => {
   return <RawLink onClick={() => history.goBack()}>{children}</RawLink>;
 };
 
+const BackText = (): JSX.Element => <span tw="text-white">Back</span>;
+
 export default Link;
-export { LinkProperty, Back };
+export { LinkProperty, Back, BackText };
