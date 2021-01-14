@@ -7,6 +7,7 @@ import pages from "./pages";
 const Container = tw.div`
   min-w-full min-h-full
   w-screen h-screen
+  font-mono text-base font-normal leading-tight text-justify
 `;
 
 const App = (): JSX.Element => {
