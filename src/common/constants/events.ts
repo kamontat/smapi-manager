@@ -8,6 +8,8 @@ export const FIND_DIRECTORY = "find-directory";
 
 export const OPEN_DIRECTORY = "open-directory";
 
+export const LOAD_XML_FILE = "load-xml-file";
+
 export const MODIFY_DIRECTORY = "modify-directory";
 
 export const READ_CONFIG = "read-config";
