@@ -17,11 +17,14 @@ const CardContainer = tw.div`
 `;
 
 const Card = tw.div`
-  flex justify-center items-center
+  flex justify-center items-center 
   p-3 min-w-card min-h-card max-w-card max-h-card
   bg-white border rounded-xl shadow-md
   cursor-pointer
-  hover:shadow-xl hover:text-red-200
+
+  transition transform duration-300 ease-in-out
+
+  hover:shadow-xl hover:-translate-y-1 hover:scale-110
 `;
 
 interface DashboardProperty {
