@@ -1,31 +1,27 @@
 import Dashboard from "@pages/Dashboard";
 import ModManager from "@pages/ModManager";
 
-const pages = [
-  {
-    key: "dashboard",
+const pages = {
+  dashboard: {
     name: "Dashboard",
     path: "/",
     element: Dashboard,
   },
-  {
-    key: "mod-manager",
+  modManager: {
     name: "Mod Manager",
     path: "/mod-manager",
     element: ModManager,
   },
-  {
-    key: "test",
+  test: {
     name: "Test",
     path: "/test",
     element: "div",
   },
-  {
-    key: "next",
+  next: {
     name: "Next",
     path: "/next",
     element: "div",
   },
-];
+};
 
 export default pages;

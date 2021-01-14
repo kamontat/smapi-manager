@@ -23,7 +23,7 @@ const Link = ({ to, children }: PropsWithChildren<LinkProperty>): JSX.Element =>
 
 const Back = ({ children }: PropsWithChildren<unknown>): JSX.Element => {
   const history = useHistory();
-  return <RawLink onClick={() => history.goBack()}>{children}</RawLink>;
+  return <RawLink onClick={() => history.replace("/")}>{children}</RawLink>;
 };
 
 const BackText = (): JSX.Element => <span tw="text-white">Back</span>;

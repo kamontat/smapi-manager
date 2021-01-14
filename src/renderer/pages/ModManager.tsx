@@ -13,11 +13,12 @@ import Table, {
 } from "@components/table";
 
 import ProcessorType from "@common/constants/processor-type";
-import { FIND_DIRECTORY, MODIFY_DIRECTORY, OPEN_DIRECTORY } from "@common/constants/events";
+import { FIND_DIRECTORY, MODIFY_DIRECTORY, OPEN_DIRECTORY, READ_MOD_CONFIG } from "@common/constants/events";
 import { getWindowName } from "@common/constants/name";
 import Message from "@common/models/message";
 import { Directory, DirectoryObject } from "@common/models/directory";
 import { InfoBadge, WarnBadge } from "@components/Badge";
+import Logger from "@common/models/logger";
 
 interface ModManagerProperty {
   name: string;
@@ -44,6 +45,7 @@ const headers = [
   { name: "Action", size: 2 },
 ];
 
+const logger = new Logger(ProcessorType.RENDERER, "mod-manager");
 const message = new Message(window, ProcessorType.RENDERER);
 const modifyDirectory = (d: DirectoryObject) => {
   return () => {
@@ -63,15 +65,27 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
 
   useEffect(() => {
     document.title = getWindowName(name);
+    message.sent({ type: READ_MOD_CONFIG });
+
     message.receive<Directory>(ProcessorType.PRELOAD, data => {
-      if (data.isType(FIND_DIRECTORY)) {
+      if (data.isType(FIND_DIRECTORY) || data.isType(READ_MOD_CONFIG)) {
+        data.log(logger);
         const value = data.value();
-        setDirectoryName(value.name);
-        setMods(value.subdirectories);
+        if (value) {
+          setDirectoryName(value.name);
+          setMods(value.subdirectories);
+        }
+      }
+
+      if (data.isType(FIND_DIRECTORY)) {
+        message.saveConfig("modDirectory", data.value().name);
       }
     });
+
     message.receive<DirectoryObject>(ProcessorType.PRELOAD, data => {
       if (data.isType(MODIFY_DIRECTORY)) {
+        data.log(logger);
+
         const value = data.value();
         setMods(mods => {
           const copied = [...mods];
@@ -81,6 +95,8 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
         });
       }
     });
+
+    return message.cleanup.bind(message);
   }, []);
 
   return (

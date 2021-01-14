@@ -37,14 +37,15 @@ const Dashboard = ({ name }: DashboardProperty): JSX.Element => {
   }, []);
 
   const history = useHistory();
-  const pages = allPages.filter(p => p.key !== "dashboard");
+  const pages = Object.keys(allPages).filter(key => key !== "dashboard");
   return (
     <Container>
-      {pages.map(p => {
+      {pages.map(key => {
+        const page = allPages[key as keyof typeof allPages];
         return (
-          <CardContainer key={p.key}>
-            <Card onClick={() => history.push(p.path)}>
-              <span>{p.name}</span>
+          <CardContainer key={key}>
+            <Card onClick={() => history.push(page.path)}>
+              <span>{page.name}</span>
             </Card>
           </CardContainer>
         );
