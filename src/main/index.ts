@@ -1,4 +1,5 @@
 import { app, ipcMain } from "electron";
+import Store from "electron-store";
 
 import { createWindow, recreateWindow, quitWindow } from "./events/windows";
 import findDirectory from "./events/find-directory";
@@ -13,16 +14,21 @@ import {
   MODIFY_DIRECTORY,
   FIND_DIRECTORY,
   OPEN_DIRECTORY,
+  READ_CONFIG,
+  WRITE_CONFIG,
+  READ_MOD_CONFIG,
 } from "@common/constants/events";
+import ProcessorType from "@common/constants/processor-type";
+import StorageType, { defaults as defaultStorage } from "@common/constants/storage-type";
 import Logger from "@common/models/logger";
-import { isProduction } from "@common/utils/env";
+import { readConfig, readModConfig, writeConfig } from "./events/storage";
 
-const logger = new Logger("main", "index");
-
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require("electron-squirrel-startup")) {
-  app.quit();
-}
+const logger = new Logger(ProcessorType.MAIN, "index");
+const storage = new Store<StorageType>({
+  name: "config",
+  defaults: defaultStorage,
+  encryptionKey: "secret-key",
+});
 
 app.on("ready", createWindow(logger));
 app.on("window-all-closed", quitWindow(logger));
@@ -36,6 +42,6 @@ ipcMain.handle(FIND_DIRECTORY, findDirectory);
 ipcMain.handle(OPEN_DIRECTORY, openDirectory);
 ipcMain.handle(MODIFY_DIRECTORY, modifyDirectory);
 
-if (isProduction()) {
-  require("update-electron-app")(); // eslint-disable-line @typescript-eslint/no-var-requires
-}
+ipcMain.handle(READ_CONFIG, readConfig(storage));
+ipcMain.handle(READ_MOD_CONFIG, readModConfig(storage));
+ipcMain.handle(WRITE_CONFIG, writeConfig(storage));

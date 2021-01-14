@@ -1,7 +1,30 @@
+import React, { PropsWithChildren } from "react";
 import tw from "twin.macro";
 
-const Header = tw.div`
-  flex mx-5 my-4 items-center justify-end
+import { Back, BackText } from "./Link";
+
+const Container = tw.div`
+  flex items-center
+  mx-5 my-4
 `;
+
+const LeftContainer = tw.div`
+  flex flex-grow justify-end space-x-6
+`;
+
+interface HeaderProperty {
+  name: string;
+}
+
+const Header = ({ children }: PropsWithChildren<HeaderProperty>): JSX.Element => {
+  return (
+    <Container>
+      <Back>
+        <BackText />
+      </Back>
+      <LeftContainer>{children}</LeftContainer>
+    </Container>
+  );
+};
 
 export default Header;

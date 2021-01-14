@@ -27,10 +27,7 @@ class EventObject<T> {
 
   private obj: EventProcessorObject<T>;
   constructor(origin: ProcessorType, obj: EventValueObject<T>) {
-    this.obj = {
-      origin,
-      ...obj,
-    };
+    this.obj = Object.assign({}, obj, { origin });
   }
 
   origin(): ProcessorType {
@@ -82,4 +79,4 @@ class EventObject<T> {
 }
 
 export default EventObject;
-export { EventTypeObject, EventProcessorObject };
+export { EventValueObject, EventProcessorObject };

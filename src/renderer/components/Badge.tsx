@@ -1,7 +1,7 @@
 import tw from "twin.macro";
 
 const Badge = tw.span`
-  px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+  px-2 inline-flex text-xs leading-5 rounded-full
 `;
 
 const InfoBadge = tw(Badge)`bg-green-100 text-green-800`;

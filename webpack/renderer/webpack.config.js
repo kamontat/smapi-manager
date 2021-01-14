@@ -11,6 +11,6 @@ module.exports = {
   module: {
     rules,
   },
-  plugins: plugins,
+  plugins: plugins("renderer", process.cwd()),
   resolve: resolve,
 };

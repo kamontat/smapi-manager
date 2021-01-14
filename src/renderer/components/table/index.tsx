@@ -1,12 +1,13 @@
-import Table from "./root";
-import Header, { HeaderStyle, HeaderElementStyle } from "./header";
-import Body, { BodyStyle, BodyElementStyle, EmptyBodyElementStyle } from "./body";
+import tw from "twin.macro";
 
-export { Table };
-export { Header as TableHeader, HeaderStyle as TableHeaderStyle, HeaderElementStyle as TableHeaderElementStyle };
-export {
-  Body as TableBody,
-  BodyStyle as TableBodyStyle,
-  BodyElementStyle as TableBodyElementStyle,
-  EmptyBodyElementStyle as TableEmptyBodyElementStyle,
-};
+const Table = tw.table`
+  table-auto w-full divide-y divide-gray-200
+`;
+
+export default Table;
+
+export * from "./caption";
+export * from "./header";
+export * from "./body";
+
+export const TableRow = tw.tr``;

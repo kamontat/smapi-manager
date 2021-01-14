@@ -1,7 +1,15 @@
-import { randomBytes } from "crypto";
+const lowerAlphabets = "abcdefghijklmnopqrstuvwxyz".split("");
+const upperAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const numberic = "0123456789".split("");
 
-export const uuid = (): string => {
-  const digit = 9;
+const all = lowerAlphabets.concat(upperAlphabets, numberic);
 
-  return randomBytes(digit).toString("base64");
+export const uuid = (digit = 6): string => {
+  let result = "";
+  for (let i = 0; i < digit; i++) {
+    const rand = Math.floor(Math.random() * all.length);
+    result += all[rand];
+  }
+
+  return result;
 };

@@ -2,8 +2,9 @@ const fs = require("fs"); // eslint-disable-line @typescript-eslint/no-var-requi
 const util = require("util"); // eslint-disable-line @typescript-eslint/no-var-requires
 const pjson = require("./package.json"); // eslint-disable-line @typescript-eslint/no-var-requires
 
-const BUILD_MODE = process.env.BUILD_MODE ?? "prod";
 const githubToken = process.env.GITHUB_TOKEN ?? "none";
+
+const BUILD_MODE = pjson.version.includes("beta") ? "beta" : "prod";
 const buildIdentifiers = {
   beta: "net.kamontat.beta",
   prod: "net.kamontat",
@@ -20,28 +21,6 @@ module.exports = {
   makers: [
     {
       name: "@electron-forge/maker-zip",
-    },
-    {
-      name: "@electron-forge/maker-squirrel",
-      config: {},
-    },
-    {
-      name: "@electron-forge/maker-deb",
-      config: {
-        options: {
-          maintainer: pjson.author.name,
-          homepage: pjson.author.url,
-        },
-      },
-    },
-    {
-      name: "@electron-forge/maker-rpm",
-      config: {
-        options: {
-          maintainer: pjson.author.name,
-          homepage: pjson.author.url,
-        },
-      },
     },
   ],
   publishers: [
@@ -67,7 +46,7 @@ module.exports = {
           entryPoints: [
             {
               html: "./src/renderer/index.html",
-              js: "./src/renderer/App.tsx",
+              js: "./src/renderer/index.tsx",
               preload: {
                 js: "./src/renderer/preload.ts",
               },

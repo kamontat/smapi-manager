@@ -1,26 +1,41 @@
 import React, { PropsWithChildren } from "react";
 import tw from "twin.macro";
 
-const BodyStyle = tw.tbody`bg-white divide-y divide-gray-200`;
+import { TableRow } from ".";
 
-const BodyElementStyle = tw.td`px-6 py-4 whitespace-nowrap`;
+const TBody = tw.tbody`
+  bg-white divide-y divide-gray-200
+`;
 
-const EmptyBodyElementStyle = tw(BodyElementStyle)`text-center`;
-
-type BodyProperty = { type: "empty" | "exist"; size: number };
-const Body = ({ type, size, children }: PropsWithChildren<BodyProperty>): JSX.Element => {
+export const TableBodyElement = (
+  props: React.DetailedHTMLProps<React.TdHTMLAttributes<HTMLTableDataCellElement>, HTMLTableDataCellElement>
+): JSX.Element => {
   return (
-    <BodyStyle>
-      {type === "empty" ? (
-        <tr>
-          <EmptyBodyElementStyle colSpan={size}>Empty</EmptyBodyElementStyle>
-        </tr>
-      ) : (
-        children
-      )}
-    </BodyStyle>
+    <td tw="px-6 py-4 whitespace-nowrap" scope="col" {...props}>
+      {props.children}
+    </td>
   );
 };
 
-export default Body;
-export { BodyStyle, BodyElementStyle, EmptyBodyElementStyle };
+type TableBodyType = "empty" | "exist";
+
+interface TableBodyProperty {
+  type: TableBodyType;
+  size: number;
+}
+
+export const TableBody = ({ type, size, children }: PropsWithChildren<TableBodyProperty>): JSX.Element => {
+  return (
+    <TBody>
+      {type === "empty" ? (
+        <TableRow>
+          <TableBodyElement tw="text-center" colSpan={size}>
+            Empty
+          </TableBodyElement>
+        </TableRow>
+      ) : (
+        children
+      )}
+    </TBody>
+  );
+};
