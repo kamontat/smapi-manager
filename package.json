@@ -1,8 +1,8 @@
 {
   "name": "smapi-manager",
   "productName": "smapi-manager",
-  "version": "0.1.0-beta.5",
-  "buildVersion": "2",
+  "version": "0.1.0-beta.6",
+  "buildVersion": "3",
   "description": "smapi management application",
   "main": ".webpack/main",
   "license": "BSD-3-Clause",
@@ -35,7 +35,8 @@
     "react-dom": "17.0.1",
     "react-router": "5.2.0",
     "regenerator-runtime": "0.13.7",
-    "twin.macro": "2.0.8"
+    "twin.macro": "2.0.8",
+    "xml2js": "0.4.23"
   },
   "devDependencies": {
     "@babel/core": "7.12.10",
@@ -57,6 +58,7 @@
     "@types/react": "17.0.0",
     "@types/react-dom": "17.0.0",
     "@types/react-router": "5.1.11",
+    "@types/xml2js": "0.4.7",
     "@typescript-eslint/eslint-plugin": "4.13.0",
     "@typescript-eslint/parser": "4.13.0",
     "babel-loader": "8.2.2",
