@@ -1,6 +1,4 @@
 module.exports = {
-  purge: [],
-  presets: [],
   darkMode: "media",
   theme: {
     screens: {

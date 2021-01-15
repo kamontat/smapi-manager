@@ -13,7 +13,6 @@
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
   },
-  "keywords": [],
   "author": {
     "name": "Kamontat Chantrachirathumrong",
     "email": "developer@kamontat.net",
@@ -74,11 +73,12 @@
     "webpack-bundle-analyzer": "4.3.0"
   },
   "config": {
-    "forge": "./forge.config.js"
+    "forge": "./.config/forge.config.js"
   },
   "babelMacros": {
     "twin": {
-      "preset": "emotion"
+      "preset": "emotion",
+      "config": "./.config/tailwind.config.js"
     }
   }
 }

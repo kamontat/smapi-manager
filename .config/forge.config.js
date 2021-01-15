@@ -1,6 +1,8 @@
-const fs = require("fs"); // eslint-disable-line @typescript-eslint/no-var-requires
-const util = require("util"); // eslint-disable-line @typescript-eslint/no-var-requires
-const pjson = require("./package.json"); // eslint-disable-line @typescript-eslint/no-var-requires
+// eslint-disable @typescript-eslint/no-var-requires
+
+const fs = require("fs");
+const util = require("util");
+const pjson = require("../package.json");
 
 const githubToken = process.env.GITHUB_TOKEN ?? "none";
 
@@ -18,24 +20,20 @@ module.exports = {
     buildVersion: pjson.buildVersion,
     appBundleId: buildIdentifiers[BUILD_MODE] ?? buildIdentifiers["prod"],
   },
-  makers: [
-    {
-      name: "@electron-forge/maker-zip",
-    },
-  ],
-  publishers: [
-    {
-      name: "@electron-forge/publisher-github",
-      config: {
-        authToken: githubToken,
-        repository: {
-          owner: "kamontat",
-          name: "smapi-manager",
-        },
-        prerelease: true,
+  makers: [{
+    name: "@electron-forge/maker-zip",
+  }, ],
+  publishers: [{
+    name: "@electron-forge/publisher-github",
+    config: {
+      authToken: githubToken,
+      repository: {
+        owner: "kamontat",
+        name: "smapi-manager",
       },
+      prerelease: true,
     },
-  ],
+  }, ],
   plugins: [
     [
       "@electron-forge/plugin-webpack",
@@ -43,16 +41,14 @@ module.exports = {
         mainConfig: "./webpack/main/webpack.config.js",
         renderer: {
           config: "./webpack/renderer/webpack.config.js",
-          entryPoints: [
-            {
-              html: "./src/renderer/index.html",
-              js: "./src/renderer/index.tsx",
-              preload: {
-                js: "./src/renderer/preload.ts",
-              },
-              name: "main_window",
+          entryPoints: [{
+            html: "./src/renderer/index.html",
+            js: "./src/renderer/index.tsx",
+            preload: {
+              js: "./src/renderer/preload.ts",
             },
-          ],
+            name: "main_window",
+          }, ],
         },
       },
     ],
@@ -67,7 +63,9 @@ module.exports = {
         options.spinner.info(
           `Completed packaging for ${options.platform} / ${options.arch} at [${options.outputPaths.join(", ")}]`
         );
-        const promises = options.outputPaths.map(p => readdir(p, { withFileTypes: true }));
+        const promises = options.outputPaths.map(p => readdir(p, {
+          withFileTypes: true
+        }));
         return Promise.all(promises).then(ds => {
           for (const dd of ds) {
             for (const d of dd) {
@@ -79,3 +77,5 @@ module.exports = {
     },
   },
 };
+
+// eslint-enable @typescript-eslint/no-var-requires
