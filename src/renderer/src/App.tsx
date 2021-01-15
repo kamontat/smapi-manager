@@ -3,9 +3,6 @@ import tw from "twin.macro";
 import { Route, Switch } from "react-router";
 
 import pages from "./pages";
-import Message from "@common/models/message";
-import ProcessorType from "@common/constants/processor-type";
-import { READ_CONFIG } from "@common/constants/events";
 
 const Container = tw.div`
   min-w-full min-h-full

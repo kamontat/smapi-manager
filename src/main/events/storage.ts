@@ -3,15 +3,14 @@ import Store from "electron-store";
 
 import StorageType from "@common/constants/storage-type";
 
-import Logger from "@common/models/logger";
-import { EventProcessorObject } from "@common/models/event";
-import Storage from "@common/models/storage";
+import Logger from "@common/logger";
+import { EventObject } from "@common/models";
 import createDirectory, { Directory } from "@common/models/directory";
 
 const logger = new Logger("event", "storage");
 
 export const readConfig = (store: Store<StorageType>) => {
-  return (_: IpcMainInvokeEvent, obj: EventProcessorObject<string>): string => {
+  return (_: IpcMainInvokeEvent, obj: EventObject<string>): string => {
     const search: string = obj.subtype;
     logger.debug(`reading data from ${search}`);
 
@@ -34,7 +33,7 @@ export const readModConfig = (store: Store<StorageType>) => {
 };
 
 export const writeConfig = (store: Store<StorageType>) => {
-  return (_: IpcMainInvokeEvent, obj: EventProcessorObject<string>): void => {
+  return (_: IpcMainInvokeEvent, obj: EventObject<string>): void => {
     logger.debug(`writing ${obj.subtype} [key = ${obj.value}]`);
     store.set(obj.subtype, obj.value);
   };

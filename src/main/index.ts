@@ -1,13 +1,6 @@
 import { app, ipcMain, Menu } from "electron";
 import Store from "electron-store";
 
-import { createWindow, recreateWindow, quitWindow } from "./events/windows";
-import findDirectory from "./events/find-directory";
-import modifyDirectory from "./events/modify-directory";
-import openDirectory from "./events/open-directory";
-import { getAppInfo, getAppMetrics, getElectronInfo } from "./events/appinfo";
-import { loadXmlFile } from "./events/xml";
-
 import {
   APP_INFO,
   APP_METRICS,
@@ -23,8 +16,18 @@ import {
 import menu from "@common/constants/menu";
 import ProcessorType from "@common/constants/processor-type";
 import StorageType, { defaults as defaultStorage } from "@common/constants/storage-type";
-import Logger from "@common/models/logger";
+import Logger, { Global, DEBUG, ERROR } from "@common/logger";
+
+import { createWindow, recreateWindow, quitWindow } from "./events/windows";
+import findDirectory from "./events/find-directory";
+import modifyDirectory from "./events/modify-directory";
+import openDirectory from "./events/open-directory";
+import { getAppInfo, getAppMetrics, getElectronInfo } from "./events/appinfo";
+import { loadXmlFile } from "./events/xml";
 import { readConfig, readModConfig, writeConfig } from "./events/storage";
+import { isDevelopment } from "@common/utils/env";
+
+Global.setLevel(isDevelopment() ? DEBUG : ERROR);
 
 const logger = new Logger(ProcessorType.MAIN, "index");
 const storage = new Store<StorageType>({

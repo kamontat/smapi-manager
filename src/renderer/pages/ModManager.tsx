@@ -14,11 +14,13 @@ import Table, {
 
 import ProcessorType from "@common/constants/processor-type";
 import { FIND_DIRECTORY, MODIFY_DIRECTORY, OPEN_DIRECTORY, READ_MOD_CONFIG } from "@common/constants/events";
-import { getWindowName } from "@common/constants/name";
-import Message from "@common/models/message";
+import { getWindowName } from "@common/utils/window";
+
 import { Directory, DirectoryObject } from "@common/models/directory";
 import { InfoBadge, WarnBadge } from "@components/Badge";
-import Logger from "@common/models/logger";
+
+import Message from "@common/message";
+import Logger, { Global } from "@common/logger";
 
 interface ModManagerProperty {
   name: string;
@@ -46,7 +48,7 @@ const headers = [
 ];
 
 const logger = new Logger(ProcessorType.RENDERER, "mod-manager");
-const message = new Message(window, ProcessorType.RENDERER);
+const message = new Message(ProcessorType.RENDERER);
 const modifyDirectory = (d: DirectoryObject) => {
   return () => {
     message.sent({ type: MODIFY_DIRECTORY, value: d });
@@ -67,36 +69,38 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
     document.title = getWindowName(name);
     message.sent({ type: READ_MOD_CONFIG });
 
-    message.receive<Directory>(ProcessorType.PRELOAD, data => {
-      if (data.isType(FIND_DIRECTORY) || data.isType(READ_MOD_CONFIG)) {
+    message.receive<Directory>({
+      type: [FIND_DIRECTORY, READ_MOD_CONFIG],
+      callback: data => {
         data.log(logger);
-        const value = data.value();
+
+        const value = data.value;
         if (value) {
           setDirectoryName(value.name);
           setMods(value.subdirectories);
         }
-      }
 
-      if (data.isType(FIND_DIRECTORY)) {
-        message.saveConfig("modDirectory", data.value().name);
-      }
+        if (data.isType(FIND_DIRECTORY)) {
+          message.saveConfig("modDirectory", value.name);
+        }
+      },
     });
 
-    message.receive<DirectoryObject>(ProcessorType.PRELOAD, data => {
-      if (data.isType(MODIFY_DIRECTORY)) {
+    message.receive<DirectoryObject>({
+      type: [MODIFY_DIRECTORY],
+      callback: data => {
         data.log(logger);
-
-        const value = data.value();
+        const value = data.value;
         setMods(mods => {
           const copied = [...mods];
           const index = copied.findIndex(d => d.id === value.id);
           if (index >= 0) copied[index] = value;
           return copied;
         });
-      }
+      },
     });
 
-    return message.cleanup.bind(message);
+    return message.cleanup();
   }, []);
 
   return (

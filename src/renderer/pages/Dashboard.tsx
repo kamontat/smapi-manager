@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router";
 import tw from "twin.macro";
 
-import { getWindowName } from "@common/constants/name";
+import { getWindowName } from "@common/utils/window";
 
 import allPages from "../src/pages";
 

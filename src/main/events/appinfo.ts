@@ -1,7 +1,7 @@
 import { app, ProcessMetric } from "electron";
 
 import { buildVersion } from "../../../package.json";
-import { AppInfo, ElectronInfo } from "@common/models/info";
+import { AppInfo, ElectronInfo } from "@common/models";
 
 export const getAppInfo = (): AppInfo => {
   return {
@@ -22,7 +22,7 @@ export const getElectronInfo = (): ElectronInfo => {
   const electronVersion = process.versions.electron;
   const chromeVersion = process.versions.chrome;
   return {
-    electron: electronVersion,
+    version: electronVersion,
     chrome: chromeVersion,
   };
 };

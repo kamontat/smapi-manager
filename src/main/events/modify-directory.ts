@@ -3,16 +3,13 @@ import { join } from "path";
 import { rename as oldRename } from "fs";
 import { promisify } from "util";
 
-import Logger from "@common/models/logger";
+import Logger from "@common/logger";
 import { createDirectoryObject, DirectoryObject } from "@common/models/directory";
-import { EventProcessorObject } from "@common/models/event";
+import { EventObject } from "@common/models";
 
 const rename = promisify(oldRename);
 const logger = new Logger("event", "modify-directory");
-const modifyDirectory = async (
-  _: IpcMainInvokeEvent,
-  obj: EventProcessorObject<DirectoryObject>
-): Promise<DirectoryObject> => {
+const modifyDirectory = async (_: IpcMainInvokeEvent, obj: EventObject<DirectoryObject>): Promise<DirectoryObject> => {
   const directory = obj.value;
 
   const from = join(directory.path, directory.name.original);

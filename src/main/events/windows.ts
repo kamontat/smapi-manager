@@ -7,7 +7,7 @@ import {
   DEFAULT_WEB_PREFERENCES,
   DEFAULT_WIDTH,
 } from "@common/constants/windows";
-import Logger from "@common/models/logger";
+import Logger from "@common/logger";
 import { isMacOS } from "@common/utils/os";
 import { isDevelopment } from "@common/utils/env";
 

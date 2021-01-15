@@ -4,11 +4,12 @@ import tw from "twin.macro";
 
 import { APP_INFO, APP_METRICS, ELECTRON_INFO } from "@common/constants/events";
 import ProcessorType from "@common/constants/processor-type";
-import { AppInfo, defaultAppInfo, defaultElectronInfo, ElectronInfo } from "@common/models/info";
-import Message from "@common/models/message";
+import { AppInfo, defaultAppInfo, ElectronInfo, defaultElectronInfo } from "@common/models";
+import Message from "@common/message";
 
 import Header from "@components/Header";
-import { getWindowName } from "@common/constants/name";
+import { getWindowName } from "@common/utils/window";
+import Logger from "@common/logger";
 
 const Container = tw.div`
   flex flex-col h-full
@@ -35,7 +36,8 @@ interface AppInfoProperty {
   name: string;
 }
 
-const message = new Message(window, ProcessorType.RENDERER);
+const logger = new Logger(ProcessorType.RENDERER, "app-info");
+const message = new Message(ProcessorType.RENDERER);
 const AppInfoPage = ({ name }: AppInfoProperty): JSX.Element => {
   const [appInfo, setAppInfo] = useState(defaultAppInfo);
   const [electronInfo, setElectronInfo] = useState(defaultElectronInfo);
@@ -47,19 +49,31 @@ const AppInfoPage = ({ name }: AppInfoProperty): JSX.Element => {
     message.sent({ type: APP_INFO });
     message.sent({ type: ELECTRON_INFO });
 
-    message.receive<AppInfo>(ProcessorType.PRELOAD, data => {
-      data.isType(APP_INFO) && setAppInfo(data.value());
+    message.receive<AppInfo>({
+      type: [APP_INFO],
+      callback: data => {
+        data.log(logger);
+        setAppInfo(data.value);
+      },
     });
 
-    message.receive<ElectronInfo>(ProcessorType.PRELOAD, data => {
-      data.isType(ELECTRON_INFO) && setElectronInfo(data.value());
+    message.receive<ElectronInfo>({
+      type: [ELECTRON_INFO],
+      callback: data => {
+        data.log(logger);
+        setElectronInfo(data.value);
+      },
     });
 
-    message.receive<ProcessMetric[]>(ProcessorType.PRELOAD, data => {
-      data.isType(APP_METRICS) && setAppMetrics(data.value());
+    message.receive<ProcessMetric[]>({
+      type: [APP_METRICS],
+      callback: data => {
+        data.log(logger);
+        setAppMetrics(data.value);
+      },
     });
 
-    return message.cleanup.bind(message);
+    return message.cleanup();
   }, []);
 
   const data = [
@@ -77,7 +91,7 @@ const AppInfoPage = ({ name }: AppInfoProperty): JSX.Element => {
     },
     {
       name: "Electron version",
-      value: electronInfo.electron,
+      value: electronInfo.version,
     },
     {
       name: "Chrome version",

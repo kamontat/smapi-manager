@@ -3,7 +3,7 @@ import tw from "twin.macro";
 
 import { FIND_DIRECTORY } from "@common/constants/events";
 import ProcessorType from "@common/constants/processor-type";
-import Message from "@common/models/message";
+import Message from "@common/message";
 
 interface FindDirectory {
   name: string;
@@ -14,7 +14,7 @@ const Text = tw.a`
 `;
 
 const FindDirectory = ({ children, name }: PropsWithChildren<FindDirectory>): JSX.Element => {
-  const message = new Message(window, ProcessorType.RENDERER);
+  const message = new Message(ProcessorType.RENDERER);
   return (
     <Text
       onClick={() => {

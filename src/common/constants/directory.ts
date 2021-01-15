@@ -29,13 +29,14 @@ export const MACOS_STEAM_MOD_LOCATION = [
 export const MACOS_GOG_MOD_LOCATION = [join("Applications", "Stardew Valley.app", "Contents", "MacOS", "Mods")];
 
 export const WINDOW_STEAM_MOD_LOCATION = [
-  "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Stardew Valley\\Mods",
-  "C:\\Program Files\\Steam\\steamapps\\common\\Stardew Valley\\Mods",
+  join("C:", "Program Files (x86)", "Steam", "steamapps", "common", "Stardew Valley", "Mods"),
+  join("C:", "Program Files", "Steam", "steamapps", "common", "Stardew Valley", "Mods"),
 ];
+
 export const WINDOW_GOG_MOD_LOCATION = [
-  "C:\\Program Files (x86)\\GOG Galaxy\\Games\\Stardew Valley\\Mods",
-  "C:\\Program Files\\GOG Galaxy\\Games\\Stardew Valley\\Mods",
-  "C:\\GOG Games\\Stardew Valley\\Mods",
+  join("C:", "Program Files (x86)", "GOG Galaxy", "Games", "Stardew Valley", "Mods"),
+  join("C:", "Program Files", "GOG Galaxy", "Games", "Stardew Valley", "Mods"),
+  join("C:", "GOG Games", "Stardew Valley", "Mods"),
 ];
 
 export const MANIFEST_JSON = "manifest.json";
