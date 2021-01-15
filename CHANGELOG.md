@@ -2,6 +2,12 @@
 ## [Unreleased]
 
 
+<a name="v0.1.1"></a>
+## [v0.1.1] - 2021-01-15
+### Fixes Bug
+- **core:** application crash because menu item is missing on production
+
+
 <a name="v0.1.0-beta.6"></a>
 ## [v0.1.0-beta.6] - 2021-01-15
 ### Feature
@@ -60,7 +66,8 @@
 - **main:** add getting application information event support
 
 
-[Unreleased]: https://github.com/kamontat/smapi-manager/compare/v0.1.0-beta.6...HEAD
+[Unreleased]: https://github.com/kamontat/smapi-manager/compare/v0.1.1...HEAD
+[v0.1.1]: https://github.com/kamontat/smapi-manager/compare/v0.1.0-beta.6...v0.1.1
 [v0.1.0-beta.6]: https://github.com/kamontat/smapi-manager/compare/v0.1.0-beta.4...v0.1.0-beta.6
 [v0.1.0-beta.4]: https://github.com/kamontat/smapi-manager/compare/v0.1.0-beta.2...v0.1.0-beta.4
 [v0.1.0-beta.2]: https://github.com/kamontat/smapi-manager/compare/v0.1.0-beta.1...v0.1.0-beta.2
