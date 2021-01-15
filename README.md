@@ -29,6 +29,8 @@
 
 <!-- External section -->
 <h3 align="center">
+  <a href="CHANGELOG.md">Changelog</a>
+  <span> · </span>
   <a href="docs/analytics.md">Analytics</a>
   <span> · </span>
   <a href="docs/ci-cd.md">CI/CD</a>
