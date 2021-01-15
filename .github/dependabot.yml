@@ -8,8 +8,13 @@ updates:
   - package-ecosystem: "github-actions"
     directory: /
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "saturday"
+      time: "17:00"
+      timezone: "Asia/Bangkok"
   - package-ecosystem: "npm"
     directory: /
     schedule:
       interval: "daily"
+      time: "00:00"
+      timezone: "Asia/Bangkok"
