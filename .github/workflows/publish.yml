@@ -1,4 +1,4 @@
-name: Action/Publish
+name: publish
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: Action/Lint
+name: lint
 
 on: push
 

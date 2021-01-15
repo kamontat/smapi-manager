@@ -1,4 +1,4 @@
-name: Action/Package
+name: build
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  package:
+  build:
     runs-on: ${{ matrix.os }}
 
     strategy:
