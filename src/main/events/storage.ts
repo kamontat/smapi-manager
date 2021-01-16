@@ -2,10 +2,9 @@ import { IpcMainInvokeEvent } from "electron";
 import Store from "electron-store";
 
 import StorageType from "@common/constants/storage-type";
-
-import Logger from "@common/logger";
-import { EventObject } from "@common/models";
-import createDirectory, { Directory } from "@common/models/directory";
+import { EventObject } from "@common/models/event";
+import { Logger } from "@common/logger";
+import { createModCollection, ModCollection } from "@common/mod";
 
 const logger = new Logger("event", "storage");
 
@@ -21,14 +20,11 @@ export const readConfig = (store: Store<StorageType>) => {
   };
 };
 
-export const readModConfig = (store: Store<StorageType>) => {
-  return (): Directory => {
+export const readModConfigV2 = (store: Store<StorageType>) => {
+  return (): Promise<ModCollection | undefined> => {
     const directoryName = store.get("modDirectory");
-    if (directoryName) {
-      return createDirectory(directoryName);
-    } else {
-      return undefined;
-    }
+    if (directoryName) return createModCollection(directoryName);
+    return undefined;
   };
 };
 

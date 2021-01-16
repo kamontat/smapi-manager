@@ -1,7 +1,9 @@
 import { app, ProcessMetric } from "electron";
 
+import { ElectronInfo } from "@common/models/electron-info";
+import { AppInfo } from "@common/models/app-info";
+
 import { buildVersion } from "../../../package.json";
-import { AppInfo, ElectronInfo } from "@common/models";
 
 export const getAppInfo = (): AppInfo => {
   return {

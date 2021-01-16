@@ -1,9 +1,9 @@
 import React, { PropsWithChildren } from "react";
 import tw from "twin.macro";
 
-import { FIND_DIRECTORY } from "@common/constants/events";
 import ProcessorType from "@common/constants/processor-type";
-import Message from "@common/message";
+import { FIND_MODS } from "@common/constants/events";
+import { Message } from "@common/message";
 
 interface FindDirectory {
   name: string;
@@ -18,7 +18,7 @@ const FindDirectory = ({ children, name }: PropsWithChildren<FindDirectory>): JS
   return (
     <Text
       onClick={() => {
-        message.sent({ type: FIND_DIRECTORY, subtype: name });
+        message.sent({ type: FIND_MODS, subtype: name });
       }}
     >
       {children}

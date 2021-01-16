@@ -3,11 +3,11 @@ import { app, BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 import {
   DEFAULT_HEIGHT,
   DEFAULT_MIN_HEIGHT,
+  DEFAULT_WIDTH,
   DEFAULT_MIN_WIDTH,
   DEFAULT_WEB_PREFERENCES,
-  DEFAULT_WIDTH,
 } from "@common/constants/windows";
-import Logger from "@common/logger";
+import { Logger } from "@common/logger";
 import { isMacOS } from "@common/utils/os";
 import { isDevelopment } from "@common/utils/env";
 

@@ -1,16 +1,16 @@
-import { join } from "path";
 import { IpcMainInvokeEvent, shell } from "electron";
+import { join } from "path";
 
-import { EventObject } from "@common/models";
-import { DirectoryObject } from "@common/models/directory";
-import Logger from "@common/logger";
-import { MANIFEST_JSON } from "@common/constants/directory";
+import { EventObject } from "@common/models/event";
+import { Logger } from "@common/logger";
+import { ModData, MANIFEST_JSON } from "@common/mod";
 
 const logger = new Logger("event", "open-directory");
 
-const openDirectory = (_: IpcMainInvokeEvent, args: EventObject<DirectoryObject>): void => {
-  if (args.value) {
-    const fullpath = join(args.value.path, args.value.name.original, MANIFEST_JSON);
+const openDirectory = (_: IpcMainInvokeEvent, data: EventObject<ModData>): void => {
+  const value = data.value;
+  if (value) {
+    const fullpath = join(value.dirpath, value.filename, MANIFEST_JSON);
 
     logger.debug(`try to open directory at ${fullpath}`);
     shell.showItemInFolder(fullpath);

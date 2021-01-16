@@ -1,9 +1,8 @@
 import { ipcRenderer } from "electron";
 
 import ProcessorType from "@common/constants/processor-type";
-
-import Message from "@common/message";
-import Logger, { DEBUG, ERROR, Global } from "@common/logger";
+import { Logger, DEBUG, ERROR, Global } from "@common/logger";
+import { Message } from "@common/message";
 import { isDevelopment } from "@common/utils/env";
 
 process.once("loaded", () => {

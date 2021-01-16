@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 
+import { MODIFY_DIRECTORY_V2, OPEN_DIRECTORY_V2, READ_MOD_CONFIG_V2, FIND_MODS } from "@common/constants/events";
+import ProcessorType from "@common/constants/processor-type";
+import { Message } from "@common/message";
+import { Logger } from "@common/logger";
+import { ModData, ModCollection } from "@common/mod";
+import { getWindowName } from "@common/utils/window";
+
 import Header from "@components/Header";
 import FindDirectory from "@components/FindDirectory";
 import Table, {
@@ -11,16 +18,7 @@ import Table, {
   TableBodyElement,
   TableCaption,
 } from "@components/table";
-
-import ProcessorType from "@common/constants/processor-type";
-import { FIND_DIRECTORY, MODIFY_DIRECTORY, OPEN_DIRECTORY, READ_MOD_CONFIG } from "@common/constants/events";
-import { getWindowName } from "@common/utils/window";
-
-import { Directory, DirectoryObject } from "@common/models/directory";
 import { InfoBadge, WarnBadge } from "@components/Badge";
-
-import Message from "@common/message";
-import Logger, { Global } from "@common/logger";
 
 interface ModManagerProperty {
   name: string;
@@ -36,7 +34,8 @@ const TableContainer = tw.div`
   shadow overflow-hidden border-b border-gray-200 sm:rounded-lg
 `;
 
-const Button = tw.button`
+const Button = tw.a`
+  cursor-pointer select-none
   text-right text-sm
   text-red-500 hover:text-red-800 hover:underline
 `;
@@ -49,45 +48,39 @@ const headers = [
 
 const logger = new Logger(ProcessorType.RENDERER, "mod-manager");
 const message = new Message(ProcessorType.RENDERER);
-const modifyDirectory = (d: DirectoryObject) => {
+const modifyDirectory = (d: ModData) => {
   return () => {
-    message.sent({ type: MODIFY_DIRECTORY, value: d });
+    message.sent({ type: MODIFY_DIRECTORY_V2, value: d });
   };
 };
 
-const openDirectory = (d: DirectoryObject) => {
+const openDirectory = (d: ModData) => {
   return () => {
-    message.sent({ type: OPEN_DIRECTORY, value: d });
+    message.sent({ type: OPEN_DIRECTORY_V2, value: d });
   };
 };
 
 const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
   const [directoryName, setDirectoryName] = useState("");
-  const [mods, setMods] = useState<DirectoryObject[]>([]);
+  const [mods, setMods] = useState<ModData[]>([]);
 
   useEffect(() => {
     document.title = getWindowName(name);
-    message.sent({ type: READ_MOD_CONFIG });
+    message.sent({ type: READ_MOD_CONFIG_V2 });
 
-    message.receive<Directory>({
-      type: [FIND_DIRECTORY, READ_MOD_CONFIG],
+    message.receive<ModCollection>({
+      type: [FIND_MODS, READ_MOD_CONFIG_V2],
       callback: data => {
         data.log(logger);
-
-        const value = data.value;
-        if (value) {
-          setDirectoryName(value.name);
-          setMods(value.subdirectories);
-        }
-
-        if (data.isType(FIND_DIRECTORY)) {
-          message.saveConfig("modDirectory", value.name);
+        if (data.value) {
+          setDirectoryName(data.value.path);
+          setMods(data.value.mods);
         }
       },
     });
 
-    message.receive<DirectoryObject>({
-      type: [MODIFY_DIRECTORY],
+    message.receive<ModData>({
+      type: [MODIFY_DIRECTORY_V2],
       callback: data => {
         data.log(logger);
         const value = data.value;
@@ -124,10 +117,10 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
           </TableHeader>
           <TableBody type={mods.length > 0 ? "exist" : "empty"} size={4}>
             {mods.map(mod => (
-              <TableRow key={mod.name.shown}>
-                <TableBodyElement>{mod.name.shown}</TableBodyElement>
+              <TableRow key={mod.id}>
+                <TableBodyElement>{mod.manifest.name}</TableBodyElement>
                 <TableBodyElement>
-                  {mod.isHidden ? <WarnBadge>Hidden</WarnBadge> : <InfoBadge>Shown</InfoBadge>}
+                  {mod.status.isHidden ? <WarnBadge>Hidden</WarnBadge> : <InfoBadge>Shown</InfoBadge>}
                 </TableBodyElement>
                 <TableBodyElement>
                   <Button onClick={modifyDirectory(mod)}>Toggle</Button>

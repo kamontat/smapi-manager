@@ -1,4 +1,5 @@
 import { WebPreferences } from "electron";
+
 import { isDevelopment } from "@common/utils/env";
 
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;

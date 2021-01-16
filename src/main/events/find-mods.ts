@@ -1,13 +1,11 @@
-import { dialog, IpcMainInvokeEvent } from "electron";
+import { IpcMainInvokeEvent, dialog } from "electron";
 
-import { EventObject } from "@common/models";
-import Logger, { color } from "@common/logger";
-import createDirectory, { Directory } from "@common/models/directory";
-import { getGOGModDirectory, getSteamModDirectory } from "@common/utils/directory";
+import { EventObject } from "@common/models/event";
+import { Logger, color } from "@common/logger";
+import { createModCollection, getGOGModDirectory, getSteamModDirectory, ModCollection } from "@common/mod";
 
-const logger = new Logger("event", "find-directory");
-
-const findDirectory = async (_: IpcMainInvokeEvent, obj: EventObject): Promise<Directory> => {
+const logger = new Logger("event", "find-mods");
+const findMods = async (_: IpcMainInvokeEvent, obj: EventObject): Promise<ModCollection> => {
   let directoryName: string | undefined = undefined;
 
   if (obj.subtype === "steam") {
@@ -29,7 +27,7 @@ const findDirectory = async (_: IpcMainInvokeEvent, obj: EventObject): Promise<D
     }
   }
 
-  return createDirectory(directoryName);
+  return createModCollection(directoryName);
 };
 
-export default findDirectory;
+export default findMods;

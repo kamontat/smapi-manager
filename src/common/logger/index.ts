@@ -1,8 +1,9 @@
-import Global from "./global";
 import Logger from "./model";
-import chalk from "chalk";
+import color from "chalk";
+import Global from "./global";
 
-export default Logger;
-export { Global, chalk as color };
-export * from "./level";
-export * from "./utils";
+export { Global, Logger, color };
+export { getLevelName, isAcceptedLevel } from "./utils";
+export { SILENT, ERROR, WARN, INFO, DEBUG } from "./level";
+
+export type { Level } from "./level";

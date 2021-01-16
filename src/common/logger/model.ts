@@ -1,6 +1,9 @@
 import { Chalk } from "chalk";
-import { Level, isAcceptedLevel, getLevelName, Global, DEBUG, INFO, WARN, ERROR } from ".";
+
 import colors from "./colors";
+import Global from "./global";
+import { DEBUG, ERROR, INFO, Level, WARN } from "./level";
+import { getLevelName, isAcceptedLevel } from "./utils";
 
 class Logger {
   private namespace: string;

@@ -1,5 +1,5 @@
 import ProcessorType from "@common/constants/processor-type";
-import Logger from "@common/logger";
+import { Logger } from "@common/logger";
 
 import { EventOption, EventObject } from "./option";
 

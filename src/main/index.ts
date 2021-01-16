@@ -1,42 +1,42 @@
 import { app, ipcMain, Menu } from "electron";
 import Store from "electron-store";
 
+import ProcessorType from "@common/constants/processor-type";
+import StorageType, { defaults as defaultStorageType } from "@common/constants/storage-type";
 import {
   APP_INFO,
   APP_METRICS,
   ELECTRON_INFO,
-  MODIFY_DIRECTORY,
-  FIND_DIRECTORY,
-  OPEN_DIRECTORY,
-  READ_CONFIG,
-  WRITE_CONFIG,
-  READ_MOD_CONFIG,
+  FIND_MODS,
   LOAD_XML_FILE,
+  OPEN_DIRECTORY_V2,
+  MODIFY_DIRECTORY_V2,
+  READ_CONFIG,
+  READ_MOD_CONFIG_V2,
+  WRITE_CONFIG,
 } from "@common/constants/events";
-import menu from "@common/constants/menu";
-import ProcessorType from "@common/constants/processor-type";
-import StorageType, { defaults as defaultStorage } from "@common/constants/storage-type";
-import Logger, { Global, DEBUG, ERROR } from "@common/logger";
+import MENU_BAR from "@common/constants/menu";
+import { Logger, Global, DEBUG, ERROR } from "@common/logger";
+import { isDevelopment } from "@common/utils/env";
 
 import { createWindow, recreateWindow, quitWindow } from "./events/windows";
-import findDirectory from "./events/find-directory";
-import modifyDirectory from "./events/modify-directory";
-import openDirectory from "./events/open-directory";
 import { getAppInfo, getAppMetrics, getElectronInfo } from "./events/appinfo";
 import { loadXmlFile } from "./events/xml";
-import { readConfig, readModConfig, writeConfig } from "./events/storage";
-import { isDevelopment } from "@common/utils/env";
+import { readConfig, readModConfigV2, writeConfig } from "./events/storage";
+import findMods from "./events/find-mods";
+import modifyDirectory from "./events/modify-directory";
+import openDirectory from "./events/open-directory";
 
 Global.setLevel(isDevelopment() ? DEBUG : ERROR);
 
 const logger = new Logger(ProcessorType.MAIN, "index");
 const storage = new Store<StorageType>({
   name: "config",
-  defaults: defaultStorage,
+  defaults: defaultStorageType,
   encryptionKey: "secret-key",
 });
 
-Menu.setApplicationMenu(menu);
+Menu.setApplicationMenu(MENU_BAR);
 
 app.on("ready", createWindow(logger));
 app.on("window-all-closed", quitWindow(logger));
@@ -46,11 +46,12 @@ ipcMain.handle(APP_INFO, getAppInfo);
 ipcMain.handle(APP_METRICS, getAppMetrics);
 ipcMain.handle(ELECTRON_INFO, getElectronInfo);
 
-ipcMain.handle(FIND_DIRECTORY, findDirectory);
+ipcMain.handle(FIND_MODS, findMods);
 ipcMain.handle(LOAD_XML_FILE, loadXmlFile);
-ipcMain.handle(OPEN_DIRECTORY, openDirectory);
-ipcMain.handle(MODIFY_DIRECTORY, modifyDirectory);
+ipcMain.handle(OPEN_DIRECTORY_V2, openDirectory);
+
+ipcMain.handle(MODIFY_DIRECTORY_V2, modifyDirectory);
 
 ipcMain.handle(READ_CONFIG, readConfig(storage));
-ipcMain.handle(READ_MOD_CONFIG, readModConfig(storage));
+ipcMain.handle(READ_MOD_CONFIG_V2, readModConfigV2(storage));
 ipcMain.handle(WRITE_CONFIG, writeConfig(storage));

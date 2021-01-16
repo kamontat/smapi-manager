@@ -1,4 +1,5 @@
 import { app, Menu, MenuItem, MenuItemConstructorOptions, shell } from "electron";
+
 import { isDevelopment } from "@common/utils/env";
 
 import { version, repository } from "../../../package.json";

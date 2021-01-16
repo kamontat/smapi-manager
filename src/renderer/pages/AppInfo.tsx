@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { ProcessMetric } from "electron";
 import tw from "twin.macro";
 
-import { APP_INFO, APP_METRICS, ELECTRON_INFO } from "@common/constants/events";
 import ProcessorType from "@common/constants/processor-type";
-import { AppInfo, defaultAppInfo, ElectronInfo, defaultElectronInfo } from "@common/models";
-import Message from "@common/message";
+import { APP_INFO, APP_METRICS, ELECTRON_INFO } from "@common/constants/events";
+import { AppInfo, defaults as defaultAppInfo } from "@common/models/app-info";
+import { ElectronInfo, defaults as defaultElectronInfo } from "@common/models/electron-info";
+import { Message } from "@common/message";
+import { Logger } from "@common/logger";
+import { getWindowName } from "@common/utils/window";
 
 import Header from "@components/Header";
-import { getWindowName } from "@common/utils/window";
-import Logger from "@common/logger";
 
 const Container = tw.div`
   flex flex-col h-full
