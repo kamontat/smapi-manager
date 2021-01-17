@@ -3,12 +3,9 @@ import { ProcessMetric } from "electron";
 import tw from "twin.macro";
 
 import ProcessorType from "@common/constants/processor-type";
-import { APP_INFO, APP_METRICS, ELECTRON_INFO } from "@common/constants/events";
-import { AppInfo, defaults as defaultAppInfo } from "@common/models/app-info";
-import { ElectronInfo, defaults as defaultElectronInfo } from "@common/models/electron-info";
-import { Message } from "@common/message";
+import { Message, APP_INFO, APP_METRICS, ELECTRON_INFO } from "@common/event";
+import { AppInfo, defaultAppInfo, ElectronInfo, defaultElectronInfo } from "@common/application";
 import { Logger } from "@common/logger";
-import { getWindowName } from "@common/utils/window";
 
 import Header from "@components/Header";
 
@@ -45,8 +42,6 @@ const AppInfoPage = ({ name }: AppInfoProperty): JSX.Element => {
   const [appMetrics, setAppMetrics] = useState<ProcessMetric[]>([]);
 
   useEffect(() => {
-    document.title = getWindowName(name);
-
     message.sent({ type: APP_INFO });
     message.sent({ type: ELECTRON_INFO });
 
