@@ -1,6 +1,7 @@
 import AppInfo from "@pages/AppInfo";
 import Dashboard from "@pages/Dashboard";
 import ModManager from "@pages/ModManager";
+import Setting from "@pages/Setting";
 
 const pages = {
   dashboard: {
@@ -12,6 +13,11 @@ const pages = {
     name: "Mod Manager",
     path: "/mod-manager",
     element: ModManager,
+  },
+  setting: {
+    name: "Settings",
+    path: "/settings",
+    element: Setting,
   },
   next: {
     name: "Application",
