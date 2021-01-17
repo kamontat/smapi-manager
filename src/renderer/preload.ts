@@ -1,8 +1,8 @@
-import { ipcRenderer } from "electron";
+import { ipcRenderer, clipboard } from "electron";
 
 import ProcessorType from "@common/constants/processor-type";
 import { Logger, DEBUG, ERROR, Global } from "@common/logger";
-import { Message } from "@common/message";
+import { CLIPBOARD_COPY, CLIPBOARD_PASTE, Message } from "@common/event";
 import { isDevelopment } from "@common/utils/env";
 
 process.once("loaded", () => {
@@ -14,10 +14,22 @@ process.once("loaded", () => {
   message.receive({
     callback: data => {
       data.log(logger);
-      ipcRenderer.invoke(data.type, data.toJSON()).then(args => {
-        logger.event(ProcessorType.MAIN, `receiving data from ${data.type}`);
-        window.postMessage(data.clone(ProcessorType.PRELOAD, args).toJSON(), "*");
-      });
+
+      if (data.isType(CLIPBOARD_COPY)) {
+        if (data.value) {
+          clipboard.writeText(data.value as string);
+          window.postMessage(data.clone(ProcessorType.PRELOAD).toJSON(), "*");
+        }
+      } else if (data.isType(CLIPBOARD_PASTE)) {
+        const content = clipboard.readText();
+        logger.debug(`return '${content}'`);
+        window.postMessage(data.clone(ProcessorType.PRELOAD, content).toJSON(), "*");
+      } else {
+        ipcRenderer.invoke(data.type, data.toJSON()).then(args => {
+          logger.event(ProcessorType.MAIN, `receiving data from ${data.type}`);
+          window.postMessage(data.clone(ProcessorType.PRELOAD, args).toJSON(), "*");
+        });
+      }
     },
   });
 });
