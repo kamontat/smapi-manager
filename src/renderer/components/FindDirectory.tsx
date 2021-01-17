@@ -2,8 +2,7 @@ import React, { PropsWithChildren } from "react";
 import tw from "twin.macro";
 
 import ProcessorType from "@common/constants/processor-type";
-import { FIND_MODS } from "@common/constants/events";
-import { Message } from "@common/message";
+import { Message, FIND_MODS } from "@common/event";
 
 interface FindDirectory {
   name: string;
