@@ -1,4 +1,5 @@
-import React, { PropsWithChildren } from "react";
+import { getWindowName } from "@common/utils/window";
+import React, { PropsWithChildren, useEffect } from "react";
 import tw from "twin.macro";
 
 import { Back, BackText } from "./Link";
@@ -16,7 +17,11 @@ interface HeaderProperty {
   name: string;
 }
 
-const Header = ({ children }: PropsWithChildren<HeaderProperty>): JSX.Element => {
+const Header = ({ name, children }: PropsWithChildren<HeaderProperty>): JSX.Element => {
+  useEffect(() => {
+    document.title = getWindowName(name);
+  }, [name]);
+
   return (
     <Container>
       <Back>
