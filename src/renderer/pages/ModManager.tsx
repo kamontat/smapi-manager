@@ -1,37 +1,34 @@
 import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 
-import { MODIFY_DIRECTORY_V2, OPEN_DIRECTORY_V2, READ_MOD_CONFIG_V2, FIND_MODS } from "@common/constants/events";
+import { MODIFY_DIRECTORY_V2, OPEN_DIRECTORY_V2, READ_MOD_CONFIG_V2, FIND_MODS } from "@common/event/constants";
 import ProcessorType from "@common/constants/processor-type";
-import { Message } from "@common/message";
+import { Message } from "@common/event";
 import { Logger } from "@common/logger";
 import { ModData, ModCollection } from "@common/mod";
-import { getWindowName } from "@common/utils/window";
 
 import Header from "@components/Header";
 import FindDirectory from "@components/FindDirectory";
-import Table, {
-  TableRow,
-  TableHeader,
-  TableHeaderElement,
-  TableBody,
-  TableBodyElement,
-  TableCaption,
-} from "@components/table";
-import { InfoBadge, WarnBadge } from "@components/Badge";
+import Table, { TableRow, TableHeader, TableHeaderElement, TableBody, TableBodyElement } from "@components/table";
+import { ListingContainer, ListingRow } from "@components/listing";
+import BadgeContainer, { InfoBadge, WarnBadge, MessageBadge } from "@components/Badge";
 
 interface ModManagerProperty {
   name: string;
 }
 
-const Container = tw.div`
-  flex flex-col h-full
+const RootContainer = tw.div`
+  flex flex-col h-full min-h-full
   bg-gradient-to-tr from-purple-600 via-pink-500 to-red-300
+`;
+
+const Container = tw.div`
+  flex flex-col mx-4 my-2 overflow-y-auto overflow-x-hidden
 `;
 
 const TableContainer = tw.div`
   mx-4 my-2 align-middle inline-block
-  shadow overflow-hidden border-b border-gray-200 sm:rounded-lg
+  shadow overflow-x-hidden overflow-y-auto border-b border-gray-200 sm:rounded-lg
 `;
 
 const Button = tw.a`
@@ -42,6 +39,7 @@ const Button = tw.a`
 
 const headers = [
   { name: "Name", size: 1 },
+  { name: "Version", size: 1 },
   { name: "Status", size: 1 },
   { name: "Action", size: 2 },
 ];
@@ -65,7 +63,6 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
   const [mods, setMods] = useState<ModData[]>([]);
 
   useEffect(() => {
-    document.title = getWindowName(name);
     message.sent({ type: READ_MOD_CONFIG_V2 });
 
     message.receive<ModCollection>({
@@ -97,15 +94,43 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
   }, []);
 
   return (
-    <Container>
+    <RootContainer>
       <Header name={name}>
         <FindDirectory name="steam">Steam</FindDirectory>
         <FindDirectory name="gog">GOG</FindDirectory>
         <FindDirectory name="custom">Custom</FindDirectory>
       </Header>
-      <TableContainer>
+      <Container>
+        <ListingContainer>
+          {mods.map(mod => {
+            return (
+              <ListingRow key={mod.id}>
+                <div tw="col-span-9 col-end-10">
+                  <div tw="flex flex-col">
+                    <small tw="mr-2 text-gray-600 flex justify-between items-center">{mod.id}</small>
+                    <div tw="mt-2">
+                      <h2 tw="text-gray-700 font-bold text-lg hover:underline">
+                        {mod.manifest.name} ({mod.manifest.version})
+                      </h2>
+                      <p>{mod.manifest.description}</p>
+                      <BadgeContainer>
+                        <MessageBadge>{mod.manifest.category}</MessageBadge>
+                        {mod.status.isHidden ? <WarnBadge>Hidden</WarnBadge> : <InfoBadge>Shown</InfoBadge>}
+                      </BadgeContainer>
+                    </div>
+                  </div>
+                </div>
+                <div tw="col-start-11 col-span-3">
+                  <p>hello, world</p>
+                </div>
+              </ListingRow>
+            );
+          })}
+        </ListingContainer>
+      </Container>
+
+      <TableContainer tw="invisible hidden">
         <Table>
-          <TableCaption>{directoryName}</TableCaption>
           <TableHeader>
             <TableRow>
               {headers.map(h => (
@@ -115,10 +140,11 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
               ))}
             </TableRow>
           </TableHeader>
-          <TableBody type={mods.length > 0 ? "exist" : "empty"} size={4}>
+          <TableBody type={mods.length > 0 ? "exist" : "empty"} size={headers.reduce((o, h) => o + h.size, 0)}>
             {mods.map(mod => (
               <TableRow key={mod.id}>
                 <TableBodyElement>{mod.manifest.name}</TableBodyElement>
+                <TableBodyElement>{mod.manifest.version}</TableBodyElement>
                 <TableBodyElement>
                   {mod.status.isHidden ? <WarnBadge>Hidden</WarnBadge> : <InfoBadge>Shown</InfoBadge>}
                 </TableBodyElement>
@@ -133,7 +159,7 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Container>
+    </RootContainer>
   );
 };
 
