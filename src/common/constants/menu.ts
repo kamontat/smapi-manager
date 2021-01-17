@@ -18,6 +18,17 @@ const templates: (MenuItem | MenuItemConstructorOptions)[] = [
       { role: "quit" },
     ],
   },
+  {
+    label: "Edit",
+    submenu: [
+      { role: "undo" },
+      { role: "redo" },
+      { type: "separator" },
+      { role: "cut" },
+      { role: "copy" },
+      { role: "paste" },
+    ],
+  },
 ];
 
 if (isDevelopment()) {
