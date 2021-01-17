@@ -14,7 +14,8 @@ import {
   READ_CONFIG,
   READ_MOD_CONFIG_V2,
   WRITE_CONFIG,
-} from "@common/constants/events";
+  READ_CONFIG_ALL,
+} from "@common/event/constants";
 import MENU_BAR from "@common/constants/menu";
 import { Logger, Global, DEBUG, ERROR } from "@common/logger";
 import { isDevelopment } from "@common/utils/env";
@@ -22,36 +23,37 @@ import { isDevelopment } from "@common/utils/env";
 import { createWindow, recreateWindow, quitWindow } from "./events/windows";
 import { getAppInfo, getAppMetrics, getElectronInfo } from "./events/appinfo";
 import { loadXmlFile } from "./events/xml";
-import { readConfig, readModConfigV2, writeConfig } from "./events/storage";
+import { readConfig, readConfigAll, readModConfigV2, writeConfig } from "./events/storage";
 import findMods from "./events/find-mods";
 import modifyDirectory from "./events/modify-directory";
 import openDirectory from "./events/open-directory";
+import Main from "./models/main";
 
 Global.setLevel(isDevelopment() ? DEBUG : ERROR);
-
 const logger = new Logger(ProcessorType.MAIN, "index");
+
+app.on("ready", createWindow(logger));
+app.on("window-all-closed", quitWindow(logger));
+app.on("activate", recreateWindow(logger));
+
+Menu.setApplicationMenu(MENU_BAR);
+
 const storage = new Store<StorageType>({
   name: "config",
   defaults: defaultStorageType,
   encryptionKey: "secret-key",
 });
 
-Menu.setApplicationMenu(MENU_BAR);
-
-app.on("ready", createWindow(logger));
-app.on("window-all-closed", quitWindow(logger));
-app.on("activate", recreateWindow(logger));
-
-ipcMain.handle(APP_INFO, getAppInfo);
-ipcMain.handle(APP_METRICS, getAppMetrics);
-ipcMain.handle(ELECTRON_INFO, getElectronInfo);
-
-ipcMain.handle(FIND_MODS, findMods);
-ipcMain.handle(LOAD_XML_FILE, loadXmlFile);
-ipcMain.handle(OPEN_DIRECTORY_V2, openDirectory);
-
-ipcMain.handle(MODIFY_DIRECTORY_V2, modifyDirectory);
-
-ipcMain.handle(READ_CONFIG, readConfig(storage));
-ipcMain.handle(READ_MOD_CONFIG_V2, readModConfigV2(storage));
-ipcMain.handle(WRITE_CONFIG, writeConfig(storage));
+const main = new Main(ipcMain, storage);
+main
+  .handle(APP_INFO, getAppInfo)
+  .handle(APP_METRICS, getAppMetrics)
+  .handle(ELECTRON_INFO, getElectronInfo)
+  .handle(FIND_MODS, findMods)
+  .handle(LOAD_XML_FILE, loadXmlFile)
+  .handle(OPEN_DIRECTORY_V2, openDirectory)
+  .handle(MODIFY_DIRECTORY_V2, modifyDirectory)
+  .handle(READ_CONFIG, readConfig)
+  .handle(READ_CONFIG_ALL, readConfigAll)
+  .handle(READ_MOD_CONFIG_V2, readModConfigV2)
+  .handle(WRITE_CONFIG, writeConfig);
