@@ -11,7 +11,7 @@ export const TableBodyElement = (
   props: React.DetailedHTMLProps<React.TdHTMLAttributes<HTMLTableDataCellElement>, HTMLTableDataCellElement>
 ): JSX.Element => {
   return (
-    <td tw="px-6 py-4 whitespace-nowrap" scope="col" {...props}>
+    <td tw="px-4 py-3 whitespace-nowrap" scope="col" {...props}>
       {props.children}
     </td>
   );
