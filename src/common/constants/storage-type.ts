@@ -1,11 +1,13 @@
 interface StorageType {
-  firstPage: string;
   modDirectory: string;
+  recursiveLimit: number;
+  nexusmodsApiKey: string;
 }
 
 const defaults: StorageType = {
-  firstPage: "dashboard",
   modDirectory: "",
+  recursiveLimit: 5,
+  nexusmodsApiKey: "",
 };
 
 export default StorageType;
