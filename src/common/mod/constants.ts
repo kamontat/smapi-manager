@@ -38,3 +38,4 @@ export const WINDOW_GOG_MOD_LOCATION = [
 ];
 
 export const MANIFEST_JSON = "manifest.json";
+export const CONTENT_JSON = "content.json";

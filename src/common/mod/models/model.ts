@@ -7,12 +7,15 @@ interface ModStatus {
   isHidden: boolean;
 }
 
+type ModCategory = "Mod" | "Portrait";
+
 interface ModManifest {
   key: string;
   name: string;
   version: string;
   description: string;
   updater: string[];
+  category: ModCategory;
 }
 
 interface Mod {
