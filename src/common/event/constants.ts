@@ -14,6 +14,12 @@ export const MODIFY_DIRECTORY_V2 = "modify-directory-v2";
 
 export const READ_CONFIG = "read-config";
 
+export const READ_CONFIG_ALL = "read-config-all";
+
 export const WRITE_CONFIG = "write-config";
 
 export const READ_MOD_CONFIG_V2 = "read-mods-config-v2";
+
+export const CLIPBOARD_PASTE = "clipboard-paste";
+
+export const CLIPBOARD_COPY = "clipboard-copy";

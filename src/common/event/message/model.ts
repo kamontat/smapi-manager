@@ -1,8 +1,9 @@
 import StorageType from "@common/constants/storage-type";
 import ProcessorType from "@common/constants/processor-type";
-import { WRITE_CONFIG } from "@common/constants/events";
-import { EventData, EventObject, EventOption } from "@common/models/event";
 import { Logger } from "@common/logger";
+
+import { WRITE_CONFIG } from "@common/event/constants";
+import { EventData, EventObject, EventOption } from "@common/event/models";
 
 import Checker from "./checker";
 import { RawListener, Listener } from "./listener";
