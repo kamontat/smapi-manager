@@ -1,36 +1,35 @@
-import { IpcMainInvokeEvent } from "electron";
-import Store from "electron-store";
-
 import StorageType from "@common/constants/storage-type";
-import { EventObject } from "@common/models/event";
 import { Logger } from "@common/logger";
 import { createModCollection, ModCollection } from "@common/mod";
 
+import { MainHandler } from "../models/main";
+
 const logger = new Logger("event", "storage");
 
-export const readConfig = (store: Store<StorageType>) => {
-  return (_: IpcMainInvokeEvent, obj: EventObject<string>): string => {
-    const search: string = obj.subtype;
-    logger.debug(`reading data from ${search}`);
+export const readConfig: MainHandler<string, string> = (store, obj) => {
+  const search: string = obj.subtype;
+  logger.debug(`reading data from ${search}`);
 
-    if (store.has(search)) {
-      return store.get(search);
-    }
-    throw new Error(`cannot receive any data from search name = '${search}'`);
-  };
+  if (store.has(search)) {
+    return store.get(search);
+  }
+  throw new Error(`cannot receive any data from search name = '${search}'`);
 };
 
-export const readModConfigV2 = (store: Store<StorageType>) => {
-  return (): Promise<ModCollection | undefined> => {
-    const directoryName = store.get("modDirectory");
-    if (directoryName) return createModCollection(directoryName);
-    return undefined;
-  };
+export const readConfigAll: MainHandler<StorageType> = store => {
+  logger.warn(`reading all data from config is expensive event`);
+  return store.store;
 };
 
-export const writeConfig = (store: Store<StorageType>) => {
-  return (_: IpcMainInvokeEvent, obj: EventObject<string>): void => {
-    logger.debug(`writing ${obj.subtype} [key = ${obj.value}]`);
-    store.set(obj.subtype, obj.value);
-  };
+export const readModConfigV2: MainHandler<Promise<ModCollection | undefined>, number> = (store, obj) => {
+  const directoryName = store.get("modDirectory");
+  const limit = store.get("recursiveLimit");
+
+  if (directoryName) return createModCollection(directoryName, obj.value ?? limit);
+  return undefined;
+};
+
+export const writeConfig: MainHandler<void, string> = (store, obj) => {
+  logger.debug(`update '${obj.subtype}' key: '${obj.value}'`);
+  store.set(obj.subtype, obj.value);
 };

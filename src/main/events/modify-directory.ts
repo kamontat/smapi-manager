@@ -1,13 +1,13 @@
-import { IpcMainInvokeEvent } from "electron";
 import { join } from "path";
 
-import { EventObject } from "@common/models/event";
 import { Logger } from "@common/logger";
 import { rename } from "@common/file-system";
 import { ModData } from "@common/mod";
 
+import { MainHandler } from "../models/main";
+
 const logger = new Logger("event", "modify-directory");
-const modifyDirectory = async (_: IpcMainInvokeEvent, obj: EventObject<ModData>): Promise<ModData> => {
+const modifyDirectory: MainHandler<Promise<ModData>, ModData> = async (_, obj) => {
   const mod = obj.value;
 
   const newName = mod.status.isHidden ? mod.transformer.shownName : mod.transformer.hiddenName;

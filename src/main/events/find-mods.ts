@@ -1,14 +1,23 @@
-import { IpcMainInvokeEvent, dialog } from "electron";
-
-import { EventObject } from "@common/models/event";
+import { dialog } from "electron";
 import { Logger, color } from "@common/logger";
-import { createModCollection, getGOGModDirectory, getSteamModDirectory, ModCollection } from "@common/mod";
+import {
+  createModCollection,
+  getGOGModDirectory,
+  getModDirectory,
+  getSteamModDirectory,
+  ModCollection,
+} from "@common/mod";
+
+import { MainHandler } from "../models/main";
 
 const logger = new Logger("event", "find-mods");
-const findMods = async (_: IpcMainInvokeEvent, obj: EventObject): Promise<ModCollection> => {
+const findMods: MainHandler<Promise<ModCollection>, number> = async (store, obj) => {
   let directoryName: string | undefined = undefined;
 
-  if (obj.subtype === "steam") {
+  if (obj.subtype === "auto") {
+    directoryName = getModDirectory();
+    logger.debug("received directory from", color.magenta(obj.subtype));
+  } else if (obj.subtype === "steam") {
     directoryName = getSteamModDirectory();
     logger.debug("received directory from", color.magenta(obj.subtype));
   } else if (obj.subtype === "gog") {
@@ -27,7 +36,7 @@ const findMods = async (_: IpcMainInvokeEvent, obj: EventObject): Promise<ModCol
     }
   }
 
-  return createModCollection(directoryName);
+  return createModCollection(directoryName, store.get("recursiveLimit"));
 };
 
 export default findMods;

@@ -1,11 +1,11 @@
 import { app, ProcessMetric } from "electron";
 
-import { ElectronInfo } from "@common/models/electron-info";
-import { AppInfo } from "@common/models/app-info";
+import { AppInfo, ElectronInfo } from "@common/application";
 
+import { MainHandler } from "../models/main";
 import { buildVersion } from "../../../package.json";
 
-export const getAppInfo = (): AppInfo => {
+export const getAppInfo: MainHandler<AppInfo> = () => {
   return {
     name: app.getName(),
     version: app.getVersion(),
@@ -16,13 +16,14 @@ export const getAppInfo = (): AppInfo => {
   };
 };
 
-export const getAppMetrics = (): ProcessMetric[] => {
+export const getAppMetrics: MainHandler<ProcessMetric[]> = () => {
   return app.getAppMetrics();
 };
 
-export const getElectronInfo = (): ElectronInfo => {
+export const getElectronInfo: MainHandler<ElectronInfo> = () => {
   const electronVersion = process.versions.electron;
   const chromeVersion = process.versions.chrome;
+
   return {
     version: electronVersion,
     chrome: chromeVersion,

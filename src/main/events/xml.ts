@@ -1,8 +1,7 @@
-import { EventObject } from "@common/models/event";
-import { IpcMainInvokeEvent } from "electron";
+import { MainHandler } from "../models/main";
 
-export const loadXmlFile = async (_: IpcMainInvokeEvent, obj: EventObject): Promise<string> => {
-  console.log(obj);
+export const loadXmlFile: MainHandler<Promise<string>> = async (_, data) => {
+  console.log(data);
 
   return "";
 };

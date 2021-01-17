@@ -1,13 +1,14 @@
-import { IpcMainInvokeEvent, shell } from "electron";
+import { shell } from "electron";
 import { join } from "path";
 
-import { EventObject } from "@common/models/event";
 import { Logger } from "@common/logger";
 import { ModData, MANIFEST_JSON } from "@common/mod";
 
+import { MainHandler } from "../models/main";
+
 const logger = new Logger("event", "open-directory");
 
-const openDirectory = (_: IpcMainInvokeEvent, data: EventObject<ModData>): void => {
+const openDirectory: MainHandler<void, ModData> = (_, data) => {
   const value = data.value;
   if (value) {
     const fullpath = join(value.dirpath, value.filename, MANIFEST_JSON);
