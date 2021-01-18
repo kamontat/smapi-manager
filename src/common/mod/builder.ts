@@ -21,6 +21,8 @@ const createModData = async (modDirectory: Directory, customId?: string): Promis
   const manifest = await readJsonFile<ManifestData>(join(modDirectory.fullpath, MANIFEST_JSON));
   const isContentExist = await isExist(join(modDirectory.fullpath, CONTENT_JSON));
 
+  const updateKeys = manifest.UpdateKeys ?? [];
+
   return {
     id,
     dirpath: modDirectory.dirpath,
@@ -37,7 +39,21 @@ const createModData = async (modDirectory: Directory, customId?: string): Promis
       name: manifest.Name,
       version: manifest.Version,
       description: manifest.Description,
-      updater: manifest.UpdateKeys,
+      updater: updateKeys
+        .map(k => {
+          const arr = k.split(":");
+          const key = arr[0];
+          const id = arr[1];
+
+          let url = "";
+          if (key.toLowerCase() === "nexus") {
+            url = `https://www.nexusmods.com/stardewvalley/mods/${id}`;
+          }
+
+          if (arr.length === 2) return { key, id, url };
+          return undefined;
+        })
+        .filter(v => v !== undefined),
       category: isContentExist ? "Portrait" : "Mod",
     },
   };

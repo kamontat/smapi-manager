@@ -7,6 +7,13 @@ interface ModStatus {
   isHidden: boolean;
 }
 
+interface ModUpdater {
+  key: string;
+  id: string;
+
+  url: string;
+}
+
 type ModCategory = "Mod" | "Portrait";
 
 interface ModManifest {
@@ -14,7 +21,7 @@ interface ModManifest {
   name: string;
   version: string;
   description: string;
-  updater: string[];
+  updater: ModUpdater[];
   category: ModCategory;
 }
 
