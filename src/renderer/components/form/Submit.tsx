@@ -19,39 +19,29 @@ interface SubmitProperty {
 
 const Submit = ({ onClick, type, isSubmit, children }: PropsWithChildren<SubmitProperty>): JSX.Element => {
   const t = isSubmit ? "submit" : "button";
+  const base = [];
   switch (type) {
     case "info":
-      return (
-        <Button onClick={onClick} tw="border-green-600 hover:bg-green-200" type={t}>
-          {children}
-        </Button>
-      );
+      base.push(tw`border-green-600 hover:bg-green-200`);
+      break;
     case "message":
-      return (
-        <Button onClick={onClick} tw="border-purple-600 hover:bg-purple-200" type={t}>
-          {children}
-        </Button>
-      );
+      base.push(tw`border-purple-600 hover:bg-purple-200`);
+      break;
     case "warn":
-      return (
-        <Button onClick={onClick} tw="border-yellow-600 hover:bg-yellow-200" type={t}>
-          {children}
-        </Button>
-      );
+      base.push(tw`border-yellow-600 hover:bg-yellow-200`);
+      break;
     case "error":
-      return (
-        <Button onClick={onClick} tw="border-red-600 hover:bg-red-200" type={t}>
-          {children}
-        </Button>
-      );
+      base.push(tw`border-purple-600 hover:bg-purple-200`);
+      break;
     default:
-      return (
-        <Button onClick={onClick} type={t}>
-          {children}
-        </Button>
-      );
+      break;
   }
-  return;
+
+  return (
+    <Button onClick={onClick} css={base} type={t}>
+      {children}
+    </Button>
+  );
 };
 
 export default Submit;
