@@ -5528,6 +5528,11 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+jsonrepair@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/jsonrepair/-/jsonrepair-2.0.0.tgz#816ab546b0e0864ea3faa4d456e61ff0d23814d0"
+  integrity sha512-beGD14VPmrQNt/Sspi12sCGT+N3w7FWM1T2UJx7biEMfGIUUpqBBPjHq8ETKA992+JS+fSnrSHxKHq7AIgdgcA==
+
 jsprim@^1.2.2:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/jsprim/-/jsprim-1.4.1.tgz#313e66bc1e5cc06e438bc1b7499c2e5c56acb6a2"
