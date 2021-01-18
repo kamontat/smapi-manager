@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 
 import Header from "@components/Header";
-import { Message, FIND_MODS, READ_CONFIG_ALL, CLIPBOARD_PASTE } from "@common/event";
+import { Message, FIND_MODS, READ_CONFIG_ALL, CLIPBOARD_PASTE, OPEN_CONFIG_FILE } from "@common/event";
 import ProcessorType from "@common/constants/processor-type";
 import StorageType, { defaults } from "@common/constants/storage-type";
 import { ModCollection } from "@common/mod";
@@ -162,7 +162,12 @@ const SettingPage = ({ name }: SettingProperty): JSX.Element => {
             </div>
           </FormBodyContainer>
           <FormFooterContainer>
-            <FormSubmit type="submit">Save</FormSubmit>
+            <FormSubmit type="message" onClick={() => message.sent({ type: OPEN_CONFIG_FILE })}>
+              Open
+            </FormSubmit>
+            <FormSubmit type="info" isSubmit={true}>
+              Save
+            </FormSubmit>
           </FormFooterContainer>
         </FormContainer>
       </Container>

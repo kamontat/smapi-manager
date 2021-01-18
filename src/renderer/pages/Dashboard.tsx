@@ -23,7 +23,6 @@ const Card = tw.div`
   cursor-pointer
 
   transition transform duration-300 ease-in-out
-
   hover:shadow-xl hover:-translate-y-1 hover:scale-110
 `;
 

@@ -1,4 +1,4 @@
-import { ValueKey } from "@common/configuration/models";
+import { ConfigKey } from "@common/storage";
 import StorageType from "@common/constants/storage-type";
 import { Logger } from "@common/logger";
 import { createModCollection, ModCollection } from "@common/mod";
@@ -7,8 +7,13 @@ import { MainHandler } from "../models/main";
 
 const logger = new Logger("event", "storage");
 
+export const openConfigFile: MainHandler<void> = store => {
+  logger.debug(`tring to open config at ${store.url}`);
+  store.open();
+};
+
 export const readConfig: MainHandler<string, string> = (store, obj) => {
-  const search = obj.subtype as ValueKey;
+  const search = obj.subtype as ConfigKey;
   logger.debug(`reading data from ${search}`);
 
   if (store.has(search)) {
@@ -32,5 +37,5 @@ export const readModConfigV2: MainHandler<Promise<ModCollection | undefined>, nu
 
 export const writeConfig: MainHandler<void, string> = (store, obj) => {
   logger.debug(`update '${obj.subtype}' key: '${obj.value}'`);
-  store.set(obj.subtype as ValueKey, obj.value);
+  store.set(obj.subtype as ConfigKey, obj.value);
 };

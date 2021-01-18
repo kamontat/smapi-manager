@@ -12,6 +12,8 @@ export const LOAD_XML_FILE = "load-xml-file";
 
 export const MODIFY_DIRECTORY_V2 = "modify-directory-v2";
 
+export const OPEN_CONFIG_FILE = "open-config-file";
+
 export const READ_CONFIG = "read-config";
 
 export const READ_CONFIG_ALL = "read-config-all";
