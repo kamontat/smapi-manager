@@ -1,6 +1,6 @@
-import StorageType from "@common/constants/storage-type";
 import ProcessorType from "@common/constants/processor-type";
 import { Logger } from "@common/logger";
+import ConfigValue, { ConfigKey } from "@common/storage/config/data";
 
 import { WRITE_CONFIG } from "@common/event/constants";
 import { EventData, EventObject, EventOption } from "@common/event/models";
@@ -21,10 +21,7 @@ class Message {
     this.listeners = [];
   }
 
-  saveConfig<K extends keyof StorageType = keyof StorageType, V extends StorageType[K] = StorageType[K]>(
-    key: K,
-    value: V
-  ): void {
+  saveConfig<K extends ConfigKey = ConfigKey, V extends ConfigValue[K] = ConfigValue[K]>(key: K, value: V): void {
     this.sent({ type: WRITE_CONFIG, subtype: key, value });
   }
 

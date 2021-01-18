@@ -1,5 +1,4 @@
-import { ConfigKey } from "@common/storage";
-import StorageType from "@common/constants/storage-type";
+import { ConfigKey, ConfigValue } from "@common/storage";
 import { Logger } from "@common/logger";
 import { createModCollection, ModCollection } from "@common/mod";
 
@@ -22,7 +21,7 @@ export const readConfig: MainHandler<string, string> = (store, obj) => {
   throw new Error(`cannot receive any data from search name = '${search}'`);
 };
 
-export const readConfigAll: MainHandler<StorageType> = store => {
+export const readConfigAll: MainHandler<ConfigValue> = store => {
   logger.warn(`reading all data from config is expensive event`);
   return store.value;
 };

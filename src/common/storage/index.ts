@@ -1,5 +1,4 @@
 import ConfigStore from "./config/store";
-import ConfigValue from "./config/data";
-type ConfigKey = keyof ConfigValue;
+import ConfigValue, { defaults as defaultConfig, ConfigKey } from "./config/data";
 
-export { ConfigStore, ConfigValue, ConfigKey };
+export { ConfigStore, ConfigValue, ConfigKey, defaultConfig };
