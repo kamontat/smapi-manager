@@ -4,9 +4,11 @@ import tw from "twin.macro";
 import Header from "@components/Header";
 import { Message, FIND_MODS, READ_CONFIG_ALL, CLIPBOARD_PASTE, OPEN_CONFIG_FILE } from "@common/event";
 import ProcessorType from "@common/constants/processor-type";
-import StorageType, { defaults } from "@common/constants/storage-type";
+import ConfigValue, { defaults as defaultConfig, ConfigKey } from "@common/storage/config/data";
 import { ModCollection } from "@common/mod";
 import {
+  Checkbox,
+  CheckboxContainer,
   FormBodyContainer,
   FormButton,
   FormContainer,
@@ -35,10 +37,10 @@ const Container = tw.div`
 const message = new Message(ProcessorType.RENDERER);
 const logger = new Logger(ProcessorType.RENDERER, "setting");
 const SettingPage = ({ name }: SettingProperty): JSX.Element => {
-  const [original, setOriginal] = useState(defaults);
-  const [configure, _updateConfig] = useState(defaults);
+  const [original, setOriginal] = useState(defaultConfig);
+  const [configure, _updateConfig] = useState(defaultConfig);
 
-  const updateConfig = <K extends keyof StorageType = keyof StorageType, V extends StorageType[K] = StorageType[K]>(
+  const updateConfig = <K extends ConfigKey = ConfigKey, V extends ConfigValue[K] = ConfigValue[K]>(
     name: K,
     value?: V
   ) => {
@@ -49,16 +51,33 @@ const SettingPage = ({ name }: SettingProperty): JSX.Element => {
     }
   };
 
-  const onChangeConfig = <K extends keyof StorageType>(name: K) => {
+  const onTextChangeConfig = <K extends ConfigKey>(name: K) => {
     return (event: React.ChangeEvent<HTMLInputElement>) => {
+      logger.debug(`receiving ${event.target.value} (${typeof event.target.value})`);
       updateConfig<K, any>(name, event.target.value); // eslint-disable-line @typescript-eslint/no-explicit-any
     };
+  };
+
+  const onCheckboxChangeConfig = <K extends ConfigKey>(name: K) => {
+    return (event: React.ChangeEvent<HTMLInputElement>) => {
+      logger.debug(`receiving ${event.target.checked} (${typeof event.target.checked})`);
+      updateConfig<K, any>(name, event.target.checked); // eslint-disable-line @typescript-eslint/no-explicit-any
+    };
+  };
+
+  const onSubmit = () => {
+    (Object.keys(original) as ConfigKey[])
+      .filter(originalKey => original[originalKey] !== configure[originalKey])
+      .forEach(key => {
+        logger.debug(`updating ${key} in config`);
+        message.saveConfig(key, configure[key]);
+      });
   };
 
   useEffect(() => {
     message.sent({ type: READ_CONFIG_ALL });
 
-    message.receive<StorageType>({
+    message.receive<ConfigValue>({
       type: [READ_CONFIG_ALL],
       callback: data => {
         setOriginal(data.value);
@@ -79,27 +98,17 @@ const SettingPage = ({ name }: SettingProperty): JSX.Element => {
       type: [CLIPBOARD_PASTE],
       callback: data => {
         if (data.value) {
-          updateConfig(data.subtype as keyof StorageType, data.value);
+          updateConfig(data.subtype as ConfigKey, data.value);
         }
       },
     });
   }, []);
 
-  const submit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    (Object.keys(original) as (keyof StorageType)[])
-      .filter(originalKey => original[originalKey] !== configure[originalKey])
-      .forEach(key => {
-        logger.debug(`updating ${key} in config`);
-        message.saveConfig(key, configure[key]);
-      });
-  };
-
   return (
     <RootContainer>
       <Header name={name} />
       <Container>
-        <FormContainer onSubmit={submit}>
+        <FormContainer>
           <FormBodyContainer>
             <div>
               <FormLabel>Mod location</FormLabel>
@@ -121,6 +130,7 @@ const SettingPage = ({ name }: SettingProperty): JSX.Element => {
                 </FormButton>
               </FormElement>
             </div>
+
             <div>
               <FormLabel>Nexusmods API Key</FormLabel>
               <FormElement>
@@ -128,7 +138,7 @@ const SettingPage = ({ name }: SettingProperty): JSX.Element => {
                   tw="rounded-none rounded-l-md"
                   type="password"
                   value={configure.nexusmodsApiKey}
-                  onChange={onChangeConfig("nexusmodsApiKey")}
+                  onChange={onTextChangeConfig("nexusmodsApiKey")}
                 />
                 <FormButton
                   type="button"
@@ -147,25 +157,28 @@ const SettingPage = ({ name }: SettingProperty): JSX.Element => {
                   id="recursive-limit-input"
                   type="number"
                   value={configure.recursiveLimit}
-                  onChange={onChangeConfig("recursiveLimit")}
+                  onChange={onTextChangeConfig("recursiveLimit")}
                 />
               </div>
-              <div tw="col-span-3">
-                <FormLabel htmlFor="recursive-limit-input">Recursive limit</FormLabel>
-                <FormInput
-                  id="recursive-limit-input"
-                  type="number"
-                  value={configure.recursiveLimit}
-                  onChange={onChangeConfig("recursiveLimit")}
+            </div>
+
+            <div tw="flex flex-col space-y-3">
+              <CheckboxContainer>
+                <Checkbox
+                  checked={configure.debugMode}
+                  type="checkbox"
+                  name="debug-mode"
+                  onChange={onCheckboxChangeConfig("debugMode")}
                 />
-              </div>
+                <FormLabel htmlFor="debug-mode">Debug mode</FormLabel>
+              </CheckboxContainer>
             </div>
           </FormBodyContainer>
           <FormFooterContainer>
             <FormSubmit type="message" onClick={() => message.sent({ type: OPEN_CONFIG_FILE })}>
               Open
             </FormSubmit>
-            <FormSubmit type="info" isSubmit={true}>
+            <FormSubmit type="info" onClick={onSubmit}>
               Save
             </FormSubmit>
           </FormFooterContainer>
