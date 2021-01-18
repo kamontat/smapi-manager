@@ -4,7 +4,7 @@ import { EventObject } from "@common/event";
 import { Fn3 } from "./func";
 import { Logger } from "@common/logger";
 import ProcessorType from "@common/constants/processor-type";
-import { ConfigStore } from "@common/configuration";
+import { ConfigStore } from "@common/storage";
 
 type MainHandler<O, I = unknown> = Fn3<ConfigStore, EventObject<I>, IpcMainInvokeEvent, O>;
 
