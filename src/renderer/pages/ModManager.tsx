@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 
-import { MODIFY_DIRECTORY_V2, OPEN_DIRECTORY_V2, READ_MOD_CONFIG_V2, FIND_MODS } from "@common/event/constants";
+import {
+  MODIFY_DIRECTORY_V2,
+  OPEN_DIRECTORY_V2,
+  READ_MOD_CONFIG_V2,
+  FIND_MODS,
+  OPEN_EXTERNAL_LINK,
+} from "@common/event/constants";
 import ProcessorType from "@common/constants/processor-type";
 import { Message } from "@common/event";
 import { Logger } from "@common/logger";
@@ -9,9 +15,10 @@ import { ModData, ModCollection } from "@common/mod";
 
 import Header from "@components/Header";
 import FindDirectory from "@components/FindDirectory";
-import Table, { TableRow, TableHeader, TableHeaderElement, TableBody, TableBodyElement } from "@components/table";
 import { ListingContainer, ListingRow } from "@components/listing";
-import BadgeContainer, { InfoBadge, WarnBadge, MessageBadge } from "@components/Badge";
+import BadgeContainer, { Badge } from "@components/Badge";
+import LeftContainer from "@components/container/LeftContainer";
+import TextWithTooltip from "@components/TextWithTooltip";
 
 interface ModManagerProperty {
   name: string;
@@ -25,24 +32,6 @@ const RootContainer = tw.div`
 const Container = tw.div`
   flex flex-col mx-4 my-2 overflow-y-auto overflow-x-hidden
 `;
-
-const TableContainer = tw.div`
-  mx-4 my-2 align-middle inline-block
-  shadow overflow-x-hidden overflow-y-auto border-b border-gray-200 sm:rounded-lg
-`;
-
-const Button = tw.a`
-  cursor-pointer select-none
-  text-right text-sm
-  text-red-500 hover:text-red-800 hover:underline
-`;
-
-const headers = [
-  { name: "Name", size: 1 },
-  { name: "Version", size: 1 },
-  { name: "Status", size: 1 },
-  { name: "Action", size: 2 },
-];
 
 const logger = new Logger(ProcessorType.RENDERER, "mod-manager");
 const message = new Message(ProcessorType.RENDERER);
@@ -105,60 +94,37 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
           {mods.map(mod => {
             return (
               <ListingRow key={mod.id}>
-                <div tw="col-span-9 col-end-10">
-                  <div tw="flex flex-col">
-                    <small tw="mr-2 text-gray-600 flex justify-between items-center">{mod.id}</small>
-                    <div tw="mt-2">
-                      <h2 tw="text-gray-700 font-bold text-lg hover:underline">
-                        {mod.manifest.name} ({mod.manifest.version})
-                      </h2>
-                      <p>{mod.manifest.description}</p>
-                      <BadgeContainer>
-                        <MessageBadge>{mod.manifest.category}</MessageBadge>
-                        {mod.status.isHidden ? <WarnBadge>Hidden</WarnBadge> : <InfoBadge>Shown</InfoBadge>}
-                      </BadgeContainer>
-                    </div>
+                <LeftContainer>
+                  <small tw="mr-4 text-gray-600 flex">{mod.id}</small>
+                  <div tw="mt-2 mx-3">
+                    <TextWithTooltip
+                      text={`${mod.manifest.name} (${mod.manifest.version})`}
+                      tooltip={"click to open directory"}
+                      onClick={openDirectory(mod)}
+                    />
+                    <p>{mod.manifest.description}</p>
+                    <BadgeContainer>
+                      <Badge type="pink">{mod.manifest.category}</Badge>
+                      {mod.manifest.updater.map(({ id, key, url }) => (
+                        <Badge
+                          key={id}
+                          type="blue"
+                          onClick={() => message.sent({ type: OPEN_EXTERNAL_LINK, value: url })}
+                        >
+                          {key}
+                        </Badge>
+                      ))}
+                      <Badge type={mod.status.isHidden ? "yellow" : "green"} onClick={modifyDirectory(mod)}>
+                        {mod.status.isHidden ? "Hidden" : "Shown"}
+                      </Badge>
+                    </BadgeContainer>
                   </div>
-                </div>
-                <div tw="col-start-11 col-span-3">
-                  <p>hello, world</p>
-                </div>
+                </LeftContainer>
               </ListingRow>
             );
           })}
         </ListingContainer>
       </Container>
-
-      <TableContainer tw="invisible hidden">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {headers.map(h => (
-                <TableHeaderElement key={h.name} colSpan={h.size}>
-                  {h.name}
-                </TableHeaderElement>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody type={mods.length > 0 ? "exist" : "empty"} size={headers.reduce((o, h) => o + h.size, 0)}>
-            {mods.map(mod => (
-              <TableRow key={mod.id}>
-                <TableBodyElement>{mod.manifest.name}</TableBodyElement>
-                <TableBodyElement>{mod.manifest.version}</TableBodyElement>
-                <TableBodyElement>
-                  {mod.status.isHidden ? <WarnBadge>Hidden</WarnBadge> : <InfoBadge>Shown</InfoBadge>}
-                </TableBodyElement>
-                <TableBodyElement>
-                  <Button onClick={modifyDirectory(mod)}>Toggle</Button>
-                </TableBodyElement>
-                <TableBodyElement>
-                  <Button onClick={openDirectory(mod)}>Open</Button>
-                </TableBodyElement>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
     </RootContainer>
   );
 };
