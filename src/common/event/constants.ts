@@ -25,3 +25,5 @@ export const READ_MOD_CONFIG_V2 = "read-mods-config-v2";
 export const CLIPBOARD_PASTE = "clipboard-paste";
 
 export const CLIPBOARD_COPY = "clipboard-copy";
+
+export const OPEN_EXTERNAL_LINK = "open-external-link";

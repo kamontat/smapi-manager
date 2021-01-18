@@ -14,6 +14,7 @@ import {
   WRITE_CONFIG,
   READ_CONFIG_ALL,
   OPEN_CONFIG_FILE,
+  OPEN_EXTERNAL_LINK,
 } from "@common/event";
 import MENU_BAR from "@common/constants/menu";
 import { Logger, Global, DEBUG, ERROR } from "@common/logger";
@@ -27,6 +28,7 @@ import { openConfigFile, readConfig, readConfigAll, readModConfigV2, writeConfig
 import findMods from "./events/find-mods";
 import modifyDirectory from "./events/modify-directory";
 import openDirectory from "./events/open-directory";
+import openExternalLink from "./events/open-external-link";
 
 import Main from "./models/main";
 
@@ -51,6 +53,7 @@ main
   .handle(OPEN_DIRECTORY_V2, openDirectory)
   .handle(MODIFY_DIRECTORY_V2, modifyDirectory)
   .handle(OPEN_CONFIG_FILE, openConfigFile)
+  .handle(OPEN_EXTERNAL_LINK, openExternalLink)
   .handle(READ_CONFIG, readConfig)
   .handle(READ_CONFIG_ALL, readConfigAll)
   .handle(READ_MOD_CONFIG_V2, readModConfigV2)
