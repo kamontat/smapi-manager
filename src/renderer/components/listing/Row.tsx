@@ -1,7 +1,6 @@
 import tw from "twin.macro";
 
 const Row = tw.div`
-  grid grid-cols-12 gap-4
   px-4 py-3 mx-4 mt-4
 
   bg-white rounded-lg shadow-sm
