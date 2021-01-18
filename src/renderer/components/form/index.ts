@@ -7,6 +7,7 @@ import FormElement from "./Element";
 import FormInput from "./Input";
 import FormButton from "./Button";
 import FormSubmit from "./Submit";
+import Checkbox, { CheckboxContainer } from "./Checkbox";
 
 export {
   FormContainer,
@@ -17,4 +18,6 @@ export {
   FormInput,
   FormButton,
   FormSubmit,
+  CheckboxContainer,
+  Checkbox,
 };
