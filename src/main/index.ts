@@ -1,8 +1,6 @@
 import { app, ipcMain, Menu } from "electron";
-import Store from "electron-store";
 
 import ProcessorType from "@common/constants/processor-type";
-import StorageType, { defaults as defaultStorageType } from "@common/constants/storage-type";
 import {
   APP_INFO,
   APP_METRICS,
@@ -15,10 +13,11 @@ import {
   READ_MOD_CONFIG_V2,
   WRITE_CONFIG,
   READ_CONFIG_ALL,
-} from "@common/event/constants";
+} from "@common/event";
 import MENU_BAR from "@common/constants/menu";
 import { Logger, Global, DEBUG, ERROR } from "@common/logger";
 import { isDevelopment } from "@common/utils/env";
+import { ConfigStore } from "@common/configuration";
 
 import { createWindow, recreateWindow, quitWindow } from "./events/windows";
 import { getAppInfo, getAppMetrics, getElectronInfo } from "./events/appinfo";
@@ -27,6 +26,7 @@ import { readConfig, readConfigAll, readModConfigV2, writeConfig } from "./event
 import findMods from "./events/find-mods";
 import modifyDirectory from "./events/modify-directory";
 import openDirectory from "./events/open-directory";
+
 import Main from "./models/main";
 
 Global.setLevel(isDevelopment() ? DEBUG : ERROR);
@@ -38,13 +38,9 @@ app.on("activate", recreateWindow(logger));
 
 Menu.setApplicationMenu(MENU_BAR);
 
-const storage = new Store<StorageType>({
-  name: "config",
-  defaults: defaultStorageType,
-  encryptionKey: "secret-key",
-});
+const store = new ConfigStore();
 
-const main = new Main(ipcMain, storage);
+const main = new Main(ipcMain, store);
 main
   .handle(APP_INFO, getAppInfo)
   .handle(APP_METRICS, getAppMetrics)
