@@ -2,7 +2,7 @@ import ProcessorType from "@common/constants/processor-type";
 import { Logger } from "@common/logger";
 import ConfigValue, { ConfigKey } from "@common/storage/config/data";
 
-import { WRITE_CONFIG } from "@common/event/constants";
+import { READ_CONFIG, WRITE_CONFIG } from "@common/event/constants";
 import { EventData, EventObject, EventOption } from "@common/event/models";
 
 import Checker from "./checker";
@@ -23,6 +23,10 @@ class Message {
 
   saveConfig<K extends ConfigKey = ConfigKey, V extends ConfigValue[K] = ConfigValue[K]>(key: K, value: V): void {
     this.sent({ type: WRITE_CONFIG, subtype: key, value });
+  }
+
+  readConfig<K extends ConfigKey = ConfigKey>(key: K): void {
+    this.sent({ type: READ_CONFIG, subtype: key });
   }
 
   sent<T>(obj: EventOption<T>): void {
