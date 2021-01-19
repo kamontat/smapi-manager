@@ -7,7 +7,7 @@ interface TextWithTooltipProperty {
   onClick?: () => void;
 }
 
-const Container = tw.div`relative inline-block w-full`;
+const Container = tw.div`relative inline-block`;
 const Title = tw.h2`
   cursor-pointer
   text-gray-700 font-bold text-lg
