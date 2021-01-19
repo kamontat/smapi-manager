@@ -3,7 +3,7 @@ import { ProcessMetric } from "electron";
 import tw from "twin.macro";
 
 import ProcessorType from "@common/constants/processor-type";
-import { Message, APP_INFO, APP_METRICS, ELECTRON_INFO } from "@common/event";
+import { Message, APP_INFO, APP_METRICS, ELECTRON_INFO, READ_CONFIG } from "@common/event";
 import { AppInfo, defaultAppInfo, ElectronInfo, defaultElectronInfo } from "@common/application";
 import { Logger } from "@common/logger";
 
@@ -34,9 +34,34 @@ interface AppInfoProperty {
   name: string;
 }
 
+type DataObj = { name: string; value: string | number };
+class Data {
+  private array: DataObj[];
+  constructor() {
+    this.array = new Array<DataObj>();
+  }
+
+  add(name: string, value?: string | number | null): this {
+    if (value !== undefined && value !== null) {
+      this.array.push({ name, value });
+    }
+    return this;
+  }
+
+  addIf(condition: boolean, name: string, value?: string | number | null): this {
+    if (condition) return this.add(name, value);
+    return this;
+  }
+
+  toArray() {
+    return this.array;
+  }
+}
+
 const logger = new Logger(ProcessorType.RENDERER, "app-info");
 const message = new Message(ProcessorType.RENDERER);
 const AppInfoPage = ({ name }: AppInfoProperty): JSX.Element => {
+  const [debugMode, setDebug] = useState(false);
   const [appInfo, setAppInfo] = useState(defaultAppInfo);
   const [electronInfo, setElectronInfo] = useState(defaultElectronInfo);
   const [appMetrics, setAppMetrics] = useState<ProcessMetric[]>([]);
@@ -44,6 +69,13 @@ const AppInfoPage = ({ name }: AppInfoProperty): JSX.Element => {
   useEffect(() => {
     message.sent({ type: APP_INFO });
     message.sent({ type: ELECTRON_INFO });
+
+    message.readConfig("debugMode");
+    message.receive<boolean>({
+      type: [READ_CONFIG],
+      subtype: ["debugMode"],
+      callback: data => setDebug(data.value),
+    });
 
     message.receive<AppInfo>({
       type: [APP_INFO],
@@ -72,37 +104,6 @@ const AppInfoPage = ({ name }: AppInfoProperty): JSX.Element => {
     return message.cleanup();
   }, []);
 
-  const data = [
-    {
-      name: "Environment",
-      value: appInfo.env,
-    },
-    {
-      name: "Name",
-      value: appInfo.name,
-    },
-    {
-      name: "Version",
-      value: `${appInfo.version}${appInfo.build ? ` (${appInfo.build})` : ""}`,
-    },
-    {
-      name: "Electron version",
-      value: electronInfo.version,
-    },
-    {
-      name: "Chrome version",
-      value: electronInfo.chrome,
-    },
-    {
-      name: "Path",
-      value: appInfo.path,
-    },
-    {
-      name: "OS",
-      value: appInfo.os,
-    },
-  ].filter(d => !!d.value);
-
   const metrics = appMetrics.reduce((p, c) => {
     return p.concat(
       {
@@ -114,8 +115,24 @@ const AppInfoPage = ({ name }: AppInfoProperty): JSX.Element => {
         value: c.memory.workingSetSize,
       }
     );
-  }, []);
-  data.push(...metrics);
+  }, [] as DataObj[]);
+
+  const data = new Data();
+  data
+    .addIf(debugMode, "Environment", appInfo.env)
+    .add("Name", appInfo.name)
+    .add("Version", `${appInfo.version} (${appInfo.build})`)
+    .add("Author", appInfo.author.name)
+    .add("Author email", appInfo.author.email)
+    .addIf(debugMode, "Electron version", electronInfo.version)
+    .addIf(debugMode, "Chrome version", electronInfo.chrome)
+    .addIf(debugMode, "Application", appInfo.path.app)
+    .addIf(debugMode, "Application data", appInfo.path.data)
+    .addIf(debugMode, "Log", appInfo.path.log)
+    .addIf(debugMode, "Temp", appInfo.path.temp)
+    .addIf(debugMode, "OS", appInfo.os);
+
+  metrics.forEach(m => data.add(m.name, m.value));
 
   return (
     <Container>
@@ -127,7 +144,7 @@ const AppInfoPage = ({ name }: AppInfoProperty): JSX.Element => {
         </DataHeader>
         <DataBodyContainer>
           <DataBody>
-            {data.map((d, i) => {
+            {data.toArray().map((d, i) => {
               const Parent = i % 2 === 0 ? DataBodyElementB : DataBodyElementA;
               return (
                 <Parent key={d.name}>

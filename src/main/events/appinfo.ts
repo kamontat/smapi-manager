@@ -3,16 +3,27 @@ import { app, ProcessMetric } from "electron";
 import { AppInfo, ElectronInfo } from "@common/application";
 
 import { MainHandler } from "../models/main";
-import { buildVersion } from "../../../package.json";
+import { buildVersion, author } from "../../../package.json";
 
 export const getAppInfo: MainHandler<AppInfo> = () => {
   return {
     name: app.getName(),
     version: app.getVersion(),
     build: buildVersion,
-    path: app.getAppPath(),
+    path: {
+      app: app.getAppPath(),
+      user: app.getPath("userData"),
+      data: app.getPath("appData"),
+      log: app.getPath("logs"),
+      temp: app.getPath("temp"),
+    },
     env: process.env.NODE_ENV,
     os: process.platform,
+    author: {
+      name: author.name,
+      email: author.email,
+      url: author.url,
+    },
   };
 };
 
