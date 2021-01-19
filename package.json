@@ -67,7 +67,7 @@
     "babel-plugin-macros": "3.0.1",
     "css-loader": "5.0.1",
     "electron": "11.2.0",
-    "eslint": "7.17.0",
+    "eslint": "7.18.0",
     "eslint-plugin-import": "2.22.1",
     "fork-ts-checker-webpack-plugin": "6.1.0",
     "node-loader": "1.0.2",
