@@ -4,8 +4,6 @@ import { isDevelopment } from "@common/utils/env";
 
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
-export const DEFAULT_NAME = "SMAPI Manager";
-
 export const DEFAULT_HEIGHT = 600;
 export const DEFAULT_MIN_HEIGHT = 470;
 

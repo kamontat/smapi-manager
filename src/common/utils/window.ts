@@ -1,4 +1,4 @@
-import { DEFAULT_NAME } from "@common/constants/windows";
+export const DEFAULT_NAME = "SMAPI Manager";
 
 export const getWindowName = (name: string): string => {
   return `${name} | ${DEFAULT_NAME}`;
