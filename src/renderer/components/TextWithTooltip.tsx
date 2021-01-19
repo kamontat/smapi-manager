@@ -3,7 +3,7 @@ import tw from "twin.macro";
 
 interface TextWithTooltipProperty {
   text: string;
-  tooltip: string;
+  tooltip?: string;
   onClick?: () => void;
 }
 
@@ -34,12 +34,14 @@ const TextWithTooltip = ({ text, tooltip, onClick }: TextWithTooltipProperty): J
       <Title onClick={onClick} css={base}>
         {text}
       </Title>
-      <TooltopContainer>
-        {tooltip}
-        <svg tw="absolute text-black h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255">
-          <polygon tw="fill-current" points="0,0 127.5,127.5 255,0" />
-        </svg>
-      </TooltopContainer>
+      {tooltip && (
+        <TooltopContainer>
+          {tooltip}
+          <svg tw="absolute text-black h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255">
+            <polygon tw="fill-current" points="0,0 127.5,127.5 255,0" />
+          </svg>
+        </TooltopContainer>
+      )}
     </Container>
   );
 };
