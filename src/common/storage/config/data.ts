@@ -3,6 +3,7 @@ import Value from "../core/value";
 interface ConfigValue extends Value {
   debugMode: boolean;
   tutorialMode: boolean;
+  betaMode: boolean;
   modDirectory: string;
   recursiveLimit: number;
   nexusmodsApiKey: string;
@@ -11,6 +12,7 @@ interface ConfigValue extends Value {
 const defaults: ConfigValue = {
   debugMode: false,
   tutorialMode: false,
+  betaMode: false,
   modDirectory: "",
   recursiveLimit: 5,
   nexusmodsApiKey: "",

@@ -140,24 +140,26 @@ const SettingPage = ({ name }: SettingProperty): JSX.Element => {
               </FormElement>
             </div>
 
-            <div>
-              <FormLabel>Nexusmods API Key</FormLabel>
-              <FormElement>
-                <FormInput
-                  tw="rounded-none rounded-l-md"
-                  type="password"
-                  value={configure.nexusmodsApiKey}
-                  onChange={onTextChangeConfig("nexusmodsApiKey")}
-                />
-                <FormButton
-                  type="button"
-                  tw="rounded-r-md border border-l-0"
-                  onClick={() => message.sent({ type: CLIPBOARD_PASTE, subtype: "nexusmodsApiKey" })}
-                >
-                  Paste
-                </FormButton>
-              </FormElement>
-            </div>
+            {configure.betaMode && (
+              <div>
+                <FormLabel>Nexusmods API Key</FormLabel>
+                <FormElement>
+                  <FormInput
+                    tw="rounded-none rounded-l-md"
+                    type="password"
+                    value={configure.nexusmodsApiKey}
+                    onChange={onTextChangeConfig("nexusmodsApiKey")}
+                  />
+                  <FormButton
+                    type="button"
+                    tw="rounded-r-md border border-l-0"
+                    onClick={() => message.sent({ type: CLIPBOARD_PASTE, subtype: "nexusmodsApiKey" })}
+                  >
+                    Paste
+                  </FormButton>
+                </FormElement>
+              </div>
+            )}
 
             <div tw="grid grid-cols-6 gap-6">
               <div tw="col-span-2">
@@ -180,6 +182,15 @@ const SettingPage = ({ name }: SettingProperty): JSX.Element => {
                   onChange={onCheckboxChangeConfig("tutorialMode")}
                 />
                 <FormLabel htmlFor="tutorial-mode">Tutorial mode</FormLabel>
+              </CheckboxContainer>
+              <CheckboxContainer>
+                <Checkbox
+                  name="beta-mode"
+                  type="checkbox"
+                  checked={configure.betaMode}
+                  onChange={onCheckboxChangeConfig("betaMode")}
+                />
+                <FormLabel htmlFor="beta-mode">Beta mode</FormLabel>
               </CheckboxContainer>
               <CheckboxContainer>
                 <Checkbox

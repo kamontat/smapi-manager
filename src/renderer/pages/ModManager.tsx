@@ -8,6 +8,7 @@ import {
   FIND_MODS,
   OPEN_EXTERNAL_LINK,
   READ_CONFIG,
+  QUERY_NEXUS_METADATA,
 } from "@common/event/constants";
 import ProcessorType from "@common/constants/processor-type";
 import { Message } from "@common/event";
@@ -15,11 +16,11 @@ import { Logger } from "@common/logger";
 import { ModData, ModCollection } from "@common/mod";
 
 import Header from "@components/Header";
-import FindDirectory from "@components/FindDirectory";
 import { ListingContainer, ListingRow } from "@components/listing";
 import BadgeContainer, { Badge } from "@components/Badge";
 import LeftContainer from "@components/container/LeftContainer";
 import TextWithTooltip from "@components/TextWithTooltip";
+import Button from "@components/Button";
 
 interface ModManagerProperty {
   name: string;
@@ -51,6 +52,8 @@ const openDirectory = (d: ModData) => {
 const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
   const [debugMode, setDebug] = useState(false);
   const [tutorialMode, setTutorial] = useState(false);
+  const [betaMode, setBeta] = useState(false);
+
   const [directoryName, setDirectoryName] = useState("");
   const [mods, setMods] = useState<ModData[]>([]);
 
@@ -81,14 +84,23 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
       },
     });
 
+    message.receive<ModData[]>({
+      type: [QUERY_NEXUS_METADATA],
+      callback: data => {
+        setMods(data.value);
+      },
+    });
+
     message.readConfig("debugMode");
     message.readConfig("tutorialMode");
+    message.readConfig("betaMode");
     message.receive<boolean>({
       type: [READ_CONFIG],
-      subtype: ["debugMode", "tutorialMode"],
+      subtype: ["debugMode", "tutorialMode", "betaMode"],
       callback: data => {
         if (data.isSubtype("debugMode")) setDebug(data.value);
         else if (data.isSubtype("tutorialMode")) setTutorial(data.value);
+        else if (data.isSubtype("betaMode")) setBeta(data.value);
       },
     });
 
@@ -98,9 +110,11 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
   return (
     <RootContainer>
       <Header name={name}>
-        {/* <FindDirectory name="steam">Steam</FindDirectory>
-        <FindDirectory name="gog">GOG</FindDirectory>
-        <FindDirectory name="custom">Custom</FindDirectory> */}
+        {betaMode && (
+          <Button tw="text-white" onClick={() => message.sent({ type: QUERY_NEXUS_METADATA, value: mods })}>
+            Update
+          </Button>
+        )}
       </Header>
       <Container>
         {debugMode && <p>{directoryName}</p>}
@@ -108,31 +122,32 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
           {mods.map(mod => {
             return (
               <ListingRow key={mod.id}>
-                <LeftContainer>
-                  {debugMode && <small tw="mr-4 text-gray-600 flex">{mod.id}</small>}
-                  <div tw="mt-2 mx-3">
-                    <TextWithTooltip
-                      text={`${mod.manifest.name} (${mod.manifest.version})`}
-                      tooltip={tutorialMode && "click to open directory"}
-                      onClick={openDirectory(mod)}
-                    />
-                    <p>{mod.manifest.description}</p>
-                    <BadgeContainer>
-                      <Badge type="pink">{mod.manifest.category}</Badge>
-                      {mod.manifest.updater.map(({ id, key, url }) => (
-                        <Badge
-                          key={id}
-                          type="blue"
-                          onClick={() => message.sent({ type: OPEN_EXTERNAL_LINK, value: url })}
-                        >
-                          {key}
-                        </Badge>
-                      ))}
-                      <Badge type={mod.status.isHidden ? "yellow" : "green"} onClick={modifyDirectory(mod)}>
-                        {mod.status.isHidden ? "Hidden" : "Shown"}
+                <div tw="flex justify-between mt-2 mx-3">
+                  <small tw="mr-4 text-gray-600 flex">{debugMode && mod.id}</small>
+                  {!mod.status.isLatest && <small tw="mr-4 text-gray-600 flex">{mod.server?.version} (latest)</small>}
+                </div>
+                <LeftContainer tw="mt-2 mx-3">
+                  <TextWithTooltip
+                    text={`${mod.manifest.name} (${mod.manifest.version})`}
+                    tooltip={tutorialMode && "click to open directory"}
+                    onClick={openDirectory(mod)}
+                  />
+                  <p>{mod.manifest.description}</p>
+                  <BadgeContainer>
+                    <Badge type="pink">{mod.manifest.category}</Badge>
+                    {mod.manifest.updater.map(({ id, key, url }) => (
+                      <Badge
+                        key={id}
+                        type="blue"
+                        onClick={() => message.sent({ type: OPEN_EXTERNAL_LINK, value: url })}
+                      >
+                        {key}
                       </Badge>
-                    </BadgeContainer>
-                  </div>
+                    ))}
+                    <Badge type={mod.status.isHidden ? "yellow" : "green"} onClick={modifyDirectory(mod)}>
+                      {mod.status.isHidden ? "Hidden" : "Shown"}
+                    </Badge>
+                  </BadgeContainer>
                 </LeftContainer>
               </ListingRow>
             );
