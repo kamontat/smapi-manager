@@ -7,6 +7,7 @@ import {
   READ_MOD_CONFIG_V2,
   FIND_MODS,
   OPEN_EXTERNAL_LINK,
+  READ_CONFIG,
 } from "@common/event/constants";
 import ProcessorType from "@common/constants/processor-type";
 import { Message } from "@common/event";
@@ -48,12 +49,13 @@ const openDirectory = (d: ModData) => {
 };
 
 const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
+  const [debugMode, setDebug] = useState(false);
+  const [tutorialMode, setTutorial] = useState(false);
   const [directoryName, setDirectoryName] = useState("");
   const [mods, setMods] = useState<ModData[]>([]);
 
   useEffect(() => {
     message.sent({ type: READ_MOD_CONFIG_V2 });
-
     message.receive<ModCollection>({
       type: [FIND_MODS, READ_MOD_CONFIG_V2],
       callback: data => {
@@ -79,27 +81,39 @@ const ModManager = ({ name }: ModManagerProperty): JSX.Element => {
       },
     });
 
+    message.readConfig("debugMode");
+    message.readConfig("tutorialMode");
+    message.receive<boolean>({
+      type: [READ_CONFIG],
+      subtype: ["debugMode", "tutorialMode"],
+      callback: data => {
+        if (data.isSubtype("debugMode")) setDebug(data.value);
+        else if (data.isSubtype("tutorialMode")) setTutorial(data.value);
+      },
+    });
+
     return message.cleanup();
   }, []);
 
   return (
     <RootContainer>
       <Header name={name}>
-        <FindDirectory name="steam">Steam</FindDirectory>
+        {/* <FindDirectory name="steam">Steam</FindDirectory>
         <FindDirectory name="gog">GOG</FindDirectory>
-        <FindDirectory name="custom">Custom</FindDirectory>
+        <FindDirectory name="custom">Custom</FindDirectory> */}
       </Header>
       <Container>
+        {debugMode && <p>{directoryName}</p>}
         <ListingContainer>
           {mods.map(mod => {
             return (
               <ListingRow key={mod.id}>
                 <LeftContainer>
-                  <small tw="mr-4 text-gray-600 flex">{mod.id}</small>
+                  {debugMode && <small tw="mr-4 text-gray-600 flex">{mod.id}</small>}
                   <div tw="mt-2 mx-3">
                     <TextWithTooltip
                       text={`${mod.manifest.name} (${mod.manifest.version})`}
-                      tooltip={"click to open directory"}
+                      tooltip={tutorialMode && "click to open directory"}
                       onClick={openDirectory(mod)}
                     />
                     <p>{mod.manifest.description}</p>
