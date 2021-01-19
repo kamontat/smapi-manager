@@ -29,6 +29,7 @@ const createModData = async (modDirectory: Directory, customId?: string): Promis
     filename: modDirectory.basename,
     status: {
       isHidden: isHidden(modDirectory),
+      isLatest: true,
     },
     transformer: {
       shownName: toShownName(modDirectory),

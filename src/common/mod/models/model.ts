@@ -5,6 +5,7 @@ interface ModTransformer {
 
 interface ModStatus {
   isHidden: boolean;
+  isLatest: boolean;
 }
 
 interface ModUpdater {
@@ -25,6 +26,10 @@ interface ModManifest {
   category: ModCategory;
 }
 
+interface ModServerInfo {
+  version: string;
+}
+
 interface Mod {
   id: string;
   filename: string;
@@ -33,6 +38,8 @@ interface Mod {
   transformer: ModTransformer;
   status: ModStatus;
   manifest: ModManifest;
+
+  server?: ModServerInfo;
 }
 
 export default Mod;

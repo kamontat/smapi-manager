@@ -1,7 +1,7 @@
 import tw from "twin.macro";
 
 const LeftContainer = tw.div`
-  flex flex-col justify-center items-stretch
+  flex flex-col justify-center items-start
 `;
 
 export default LeftContainer;

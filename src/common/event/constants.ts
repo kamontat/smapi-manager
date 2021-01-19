@@ -27,3 +27,5 @@ export const CLIPBOARD_PASTE = "clipboard-paste";
 export const CLIPBOARD_COPY = "clipboard-copy";
 
 export const OPEN_EXTERNAL_LINK = "open-external-link";
+
+export const QUERY_NEXUS_METADATA = "query-nexus-metadata";
