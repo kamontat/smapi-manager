@@ -37,6 +37,7 @@ const Container = tw.div`
 const message = new Message(ProcessorType.RENDERER);
 const logger = new Logger(ProcessorType.RENDERER, "setting");
 const SettingPage = ({ name }: SettingProperty): JSX.Element => {
+  const [saved, setSaved] = useState(-1);
   const [original, setOriginal] = useState(defaultConfig);
   const [configure, _updateConfig] = useState(defaultConfig);
 
@@ -60,18 +61,24 @@ const SettingPage = ({ name }: SettingProperty): JSX.Element => {
 
   const onCheckboxChangeConfig = <K extends ConfigKey>(name: K) => {
     return (event: React.ChangeEvent<HTMLInputElement>) => {
-      logger.debug(`receiving ${event.target.checked} (${typeof event.target.checked})`);
+      logger.debug(`receiving ${event.target.checked} from ${name}`);
       updateConfig<K, any>(name, event.target.checked); // eslint-disable-line @typescript-eslint/no-explicit-any
     };
   };
 
   const onSubmit = () => {
-    (Object.keys(original) as ConfigKey[])
-      .filter(originalKey => original[originalKey] !== configure[originalKey])
-      .forEach(key => {
-        logger.debug(`updating ${key} in config`);
-        message.saveConfig(key, configure[key]);
-      });
+    const keys = Object.keys(configure) as ConfigKey[];
+    const modifiedKeys = keys.filter(originalKey => original[originalKey] !== configure[originalKey]);
+
+    for (const key of modifiedKeys) {
+      logger.debug(`updating ${key} in config`);
+      message.saveConfig(key, configure[key]);
+    }
+
+    if (modifiedKeys.length > 0) {
+      setSaved(modifiedKeys.length);
+      setTimeout(() => setSaved(-1), 800);
+    }
   };
 
   useEffect(() => {
@@ -102,6 +109,8 @@ const SettingPage = ({ name }: SettingProperty): JSX.Element => {
         }
       },
     });
+
+    return message.cleanup();
   }, []);
 
   return (
@@ -165,9 +174,18 @@ const SettingPage = ({ name }: SettingProperty): JSX.Element => {
             <div tw="flex flex-col space-y-3">
               <CheckboxContainer>
                 <Checkbox
-                  checked={configure.debugMode}
+                  name="tutorial-mode"
                   type="checkbox"
+                  checked={configure.tutorialMode}
+                  onChange={onCheckboxChangeConfig("tutorialMode")}
+                />
+                <FormLabel htmlFor="tutorial-mode">Tutorial mode</FormLabel>
+              </CheckboxContainer>
+              <CheckboxContainer>
+                <Checkbox
                   name="debug-mode"
+                  type="checkbox"
+                  checked={configure.debugMode}
                   onChange={onCheckboxChangeConfig("debugMode")}
                 />
                 <FormLabel htmlFor="debug-mode">Debug mode</FormLabel>
@@ -179,6 +197,12 @@ const SettingPage = ({ name }: SettingProperty): JSX.Element => {
               Open
             </FormSubmit>
             <FormSubmit type="info" onClick={onSubmit}>
+              <div
+                tw="absolute bottom-full mb-4 transition duration-300 ease-in-out animate-bounce"
+                style={{ opacity: saved > 0 ? 1 : 0, display: saved > 0 ? "block" : "none" }}
+              >
+                saving..
+              </div>
               Save
             </FormSubmit>
           </FormFooterContainer>
