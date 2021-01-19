@@ -1,12 +1,12 @@
 import { ipcRenderer, clipboard } from "electron";
 
 import ProcessorType from "@common/constants/processor-type";
-import { Logger, DEBUG, ERROR, Global } from "@common/logger";
+import { Logger, DEBUG, Global, WARN } from "@common/logger";
 import { CLIPBOARD_COPY, CLIPBOARD_PASTE, Message } from "@common/event";
 import { isDevelopment } from "@common/utils/env";
 
 process.once("loaded", () => {
-  Global.setLevel(isDevelopment() ? DEBUG : ERROR);
+  Global.setLevel(isDevelopment() ? DEBUG : WARN);
 
   const logger = new Logger(ProcessorType.PRELOAD);
   const message = new Message(ProcessorType.PRELOAD);

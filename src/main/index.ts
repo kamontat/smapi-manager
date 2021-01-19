@@ -15,11 +15,14 @@ import {
   READ_CONFIG_ALL,
   OPEN_CONFIG_FILE,
   OPEN_EXTERNAL_LINK,
+  QUERY_NEXUS_METADATA,
 } from "@common/event";
 import MENU_BAR from "@common/constants/menu";
-import { Logger, Global, DEBUG, ERROR } from "@common/logger";
+import { Logger, Global, DEBUG, WARN } from "@common/logger";
 import { isDevelopment } from "@common/utils/env";
 import { ConfigStore } from "@common/storage";
+
+import Main from "./models/main";
 
 import { createWindow, recreateWindow, quitWindow } from "./events/windows";
 import { getAppInfo, getAppMetrics, getElectronInfo } from "./events/appinfo";
@@ -29,10 +32,9 @@ import findMods from "./events/find-mods";
 import modifyDirectory from "./events/modify-directory";
 import openDirectory from "./events/open-directory";
 import openExternalLink from "./events/open-external-link";
+import { queryNexusMetadata } from "./events/nexus-mods";
 
-import Main from "./models/main";
-
-Global.setLevel(isDevelopment() ? DEBUG : ERROR);
+Global.setLevel(isDevelopment() ? DEBUG : WARN);
 const logger = new Logger(ProcessorType.MAIN, "index");
 
 app.on("ready", createWindow(logger));
@@ -57,4 +59,5 @@ main
   .handle(READ_CONFIG, readConfig)
   .handle(READ_CONFIG_ALL, readConfigAll)
   .handle(READ_MOD_CONFIG_V2, readModConfigV2)
-  .handle(WRITE_CONFIG, writeConfig);
+  .handle(WRITE_CONFIG, writeConfig)
+  .handle(QUERY_NEXUS_METADATA, queryNexusMetadata);
