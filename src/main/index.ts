@@ -20,12 +20,12 @@ import {
 import MENU_BAR from "@common/constants/menu";
 import { Logger, Global, DEBUG, WARN } from "@common/logger";
 import { isDevelopment } from "@common/utils/env";
-import { ConfigStore } from "@common/storage";
+import { Builder, ConfigStore } from "@common/storage";
 
-import Main from "./models/main";
+import Main, { MainV2 } from "./models/main";
 
 import { createWindow, recreateWindow, quitWindow } from "./events/windows";
-import { getAppInfo, getAppMetrics, getElectronInfo } from "./events/appinfo";
+import { getAppInfoV2, getAppMetrics, getElectronInfo } from "./events/appinfo";
 import { loadXmlFile } from "./events/xml";
 import { openConfigFile, readConfig, readConfigAll, readModConfigV2, writeConfig } from "./events/storage";
 import findMods from "./events/find-mods";
@@ -47,7 +47,6 @@ const store = new ConfigStore();
 
 const main = new Main(ipcMain, store);
 main
-  .handle(APP_INFO, getAppInfo)
   .handle(APP_METRICS, getAppMetrics)
   .handle(ELECTRON_INFO, getElectronInfo)
   .handle(FIND_MODS, findMods)
@@ -61,3 +60,6 @@ main
   .handle(READ_MOD_CONFIG_V2, readModConfigV2)
   .handle(WRITE_CONFIG, writeConfig)
   .handle(QUERY_NEXUS_METADATA, queryNexusMetadata);
+
+const mainV2 = new MainV2(ipcMain, Builder());
+mainV2.handle(APP_INFO, getAppInfoV2);

@@ -3,10 +3,12 @@ import Store from "electron-store";
 import Value from "./value";
 import builder from "./default";
 
-abstract class CoreStorage<V extends Value> {
+class CoreStorage<K extends string, V extends Value> {
+  readonly name: K;
   private store: Store<Required<V>>;
 
-  constructor(name: string, defaults: V) {
+  constructor(name: K, defaults: V) {
+    this.name = name;
     const defaultValue = builder<V>(defaults);
     this.store = new Store({
       name: name,

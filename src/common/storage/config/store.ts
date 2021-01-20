@@ -1,7 +1,7 @@
 import CoreStorage from "../core/store";
 import ConfigValue, { defaults } from "./data";
 
-class ConfigStore extends CoreStorage<ConfigValue> {
+class ConfigStore extends CoreStorage<"config", ConfigValue> {
   constructor() {
     super("config", defaults);
   }
