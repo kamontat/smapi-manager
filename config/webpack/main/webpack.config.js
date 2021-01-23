@@ -7,6 +7,6 @@ module.exports = {
   module: {
     rules: rules,
   },
-  plugins: plugins("main", process.cwd()),
-  resolve: resolve,
+  plugins: plugins("main"),
+  resolve,
 };

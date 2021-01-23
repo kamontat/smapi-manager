@@ -1,7 +1,7 @@
 import { dirname, basename, join } from "path";
 
 import { readDir } from "./read-directory";
-import { Directory, File } from "./models";
+import type { Directory, File } from "./models";
 
 const listDirectories = async (fullpath: string, limit: number): Promise<Directory[]> => {
   const ls = await readDir(fullpath);

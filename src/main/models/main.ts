@@ -1,10 +1,10 @@
-import { IpcMain, IpcMainInvokeEvent } from "electron";
+import type { IpcMain, IpcMainInvokeEvent } from "electron";
 
-import { EventObject } from "@common/event";
-import { Fn3 } from "./func";
+import type { EventObject } from "@common/event";
+import type { Fn3 } from "./func";
 import { Logger } from "@common/logger";
 import ProcessorType from "@common/constants/processor-type";
-import { ConfigStore, Storage } from "@common/storage";
+import type { ConfigStore, Storage } from "@common/storage";
 
 type MainHandler<O, I = unknown> = Fn3<ConfigStore, EventObject<I>, IpcMainInvokeEvent, O>;
 type MainHandlerV2<O, I = unknown> = Fn3<Storage, EventObject<I>, IpcMainInvokeEvent, O>;
@@ -47,4 +47,5 @@ class MainV2 {
 }
 
 export default Main;
-export { MainHandler, MainV2, MainHandlerV2 };
+export { MainV2 };
+export type { MainHandler, MainHandlerV2 };

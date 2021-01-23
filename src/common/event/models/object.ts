@@ -1,7 +1,7 @@
 import ProcessorType from "@common/constants/processor-type";
-import { Logger } from "@common/logger";
+import type { Logger } from "@common/logger";
 
-import { EventOption, EventObject } from "./option";
+import type { EventOption, EventObject } from "./option";
 
 class EventData<T> {
   static createRenderer<T>(obj: EventOption<T>): EventData<T> {

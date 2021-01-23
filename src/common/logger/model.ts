@@ -1,4 +1,4 @@
-import { Chalk } from "chalk";
+import type { Chalk } from "chalk";
 
 import colors from "./colors";
 import Global from "./global";

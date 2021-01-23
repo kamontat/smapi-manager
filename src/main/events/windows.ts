@@ -7,7 +7,7 @@ import {
   DEFAULT_MIN_WIDTH,
   DEFAULT_WEB_PREFERENCES,
 } from "@common/constants/windows";
-import { Logger } from "@common/logger";
+import type { Logger } from "@common/logger";
 import { isMacOS } from "@common/utils/os";
 import { isDevelopment } from "@common/utils/env";
 

@@ -1,4 +1,4 @@
-import ProcessorType from "@common/constants/processor-type";
+import type ProcessorType from "@common/constants/processor-type";
 
 interface Checker<T> {
   origin?: ProcessorType;

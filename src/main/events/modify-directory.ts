@@ -2,9 +2,9 @@ import { join } from "path";
 
 import { Logger } from "@common/logger";
 import { rename } from "@common/file-system";
-import { ModData } from "@common/mod";
+import type { ModData } from "@common/mod";
 
-import { MainHandler } from "../models/main";
+import type { MainHandler } from "../models/main";
 
 const logger = new Logger("event", "modify-directory");
 const modifyDirectory: MainHandler<Promise<ModData>, ModData> = async (_, obj) => {

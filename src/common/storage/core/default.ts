@@ -1,4 +1,4 @@
-import StorageValue from "./value";
+import type StorageValue from "./value";
 
 const buildDefault = <T extends StorageValue>(t: T): Readonly<Required<T>> => {
   return {

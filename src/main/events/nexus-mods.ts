@@ -1,10 +1,10 @@
 import ProcessorType from "@common/constants/processor-type";
 import { Logger } from "@common/logger";
-import { ModData } from "@common/mod";
+import type { ModData } from "@common/mod";
 import { Request } from "@common/request";
-import { Header, Metadata } from "@common/nuxus";
+import type { Header, Metadata } from "@common/nuxus";
 
-import { MainHandler } from "../models/main";
+import type { MainHandler } from "../models/main";
 
 const NEXUS_MOD_API_URL = "api.nexusmods.com";
 const NEXUS_MOD_METADATA_PATH = (id: string) => `/v1/games/stardewvalley/mods/${id}.json`;

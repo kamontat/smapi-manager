@@ -4,7 +4,7 @@ import { join } from "path";
 import { Logger } from "@common/logger";
 import { ModData, MANIFEST_JSON } from "@common/mod";
 
-import { MainHandler } from "../models/main";
+import type { MainHandler } from "../models/main";
 
 const logger = new Logger("event", "open-directory");
 

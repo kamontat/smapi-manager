@@ -1,12 +1,13 @@
 import ProcessorType from "@common/constants/processor-type";
 import { Logger } from "@common/logger";
-import ConfigValue, { ConfigKey } from "@common/storage/config/data";
+import type ConfigValue from "@common/storage/config/data";
+import type { ConfigKey } from "@common/storage/config/data";
 
 import { READ_CONFIG, WRITE_CONFIG } from "@common/event/constants";
 import { EventData, EventObject, EventOption } from "@common/event/models";
 
-import Checker from "./checker";
-import { RawListener, Listener } from "./listener";
+import type Checker from "./checker";
+import type { RawListener, Listener } from "./listener";
 import { getTypeFrom } from "./utils";
 
 const logger = new Logger(ProcessorType.COMMON, "message");

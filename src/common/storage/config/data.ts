@@ -1,4 +1,4 @@
-import Value from "../core/value";
+import type Value from "../core/value";
 
 interface ConfigValue extends Value {
   debugMode: boolean;
@@ -21,4 +21,5 @@ const defaults: ConfigValue = {
 type ConfigKey = keyof ConfigValue;
 
 export default ConfigValue;
-export { defaults, ConfigKey };
+export { defaults };
+export type { ConfigKey };

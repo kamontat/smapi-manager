@@ -1,4 +1,4 @@
-import { EventData, EventObject } from "@common/event/models";
+import type { EventData, EventObject } from "@common/event/models";
 
 export type RawListener<T> = (this: Window, event: MessageEvent<EventObject<T>>) => void;
 

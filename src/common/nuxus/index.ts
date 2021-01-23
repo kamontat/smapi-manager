@@ -1,4 +1,4 @@
-import Header from "./header";
-import Metadata from "./metadata";
+import type Header from "./header";
+import type Metadata from "./metadata";
 
-export { Header, Metadata };
+export type { Header, Metadata };

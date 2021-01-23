@@ -1,4 +1,4 @@
 import EventData from "./object";
-import { EventOption, EventObject } from "./option";
 
-export { EventData, EventObject, EventOption };
+export { EventData };
+export type { EventOption, EventObject } from "./option";

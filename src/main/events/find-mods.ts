@@ -8,7 +8,7 @@ import {
   ModCollection,
 } from "@common/mod";
 
-import { MainHandler } from "../models/main";
+import type { MainHandler } from "../models/main";
 
 const logger = new Logger("event", "find-mods");
 const findMods: MainHandler<Promise<ModCollection>, number> = async (store, obj) => {

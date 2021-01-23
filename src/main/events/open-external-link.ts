@@ -1,4 +1,4 @@
-import { MainHandler } from "../models/main";
+import type { MainHandler } from "../models/main";
 
 import { shell } from "electron";
 

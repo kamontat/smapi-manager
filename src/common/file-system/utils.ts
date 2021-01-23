@@ -1,4 +1,4 @@
-import { File } from "./models";
+import type { File } from "./models";
 
 const isHidden = (file: File | string): boolean => {
   const basename = typeof file === "string" ? file : file.basename;

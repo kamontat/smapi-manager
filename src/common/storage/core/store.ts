@@ -1,6 +1,6 @@
 import Store from "electron-store";
 
-import Value from "./value";
+import type Value from "./value";
 import builder from "./default";
 
 class CoreStorage<K extends string, V extends Value> {

@@ -1,4 +1,4 @@
-import { WebPreferences } from "electron";
+import type { WebPreferences } from "electron";
 
 import { isDevelopment } from "@common/utils/env";
 

@@ -11,9 +11,9 @@ import {
 } from "@common/file-system";
 import { uuid } from "@common/utils/uuid";
 
-import ModCollection from "./models/collection";
-import Mod from "./models/model";
-import ManifestData from "./models/manifest";
+import type ModCollection from "./models/collection";
+import type Mod from "./models/model";
+import type ManifestData from "./models/manifest";
 import { CONTENT_JSON, MANIFEST_JSON } from "./constants";
 
 const createModData = async (modDirectory: Directory, customId?: string): Promise<Mod> => {

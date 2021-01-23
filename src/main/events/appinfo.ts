@@ -1,8 +1,8 @@
 import { app, ProcessMetric } from "electron";
 
-import { AppInfo, ElectronInfo } from "@common/application";
+import type { AppInfo, ElectronInfo } from "@common/application";
 
-import { MainHandler, MainHandlerV2 } from "../models/main";
+import type { MainHandler, MainHandlerV2 } from "../models/main";
 import { buildVersion, author } from "../../../package.json";
 
 export const getAppInfo: MainHandler<AppInfo> = () => {

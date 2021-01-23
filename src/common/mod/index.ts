@@ -1,8 +1,8 @@
-import ModData from "./models/model";
-import ModCollection from "./models/collection";
-import ManifestData from "./models/manifest";
+import type ModData from "./models/model";
+import type ModCollection from "./models/collection";
+import type ManifestData from "./models/manifest";
 
-export { ModData, ManifestData, ModCollection };
+export type { ModData, ManifestData, ModCollection };
 export * from "./builder";
 export * from "./directory";
 export * from "./constants";

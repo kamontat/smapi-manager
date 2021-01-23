@@ -14,7 +14,7 @@ const builder = (): Storage => {
 };
 
 export default builder;
-export { Storage };
+export type { Storage };
 
 // class Storage<K = unknown> {
 //   private stores: Map<string, CoreStorage<string, StorageValue>>;

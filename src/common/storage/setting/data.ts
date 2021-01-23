@@ -1,4 +1,4 @@
-import Value from "../core/value";
+import type Value from "../core/value";
 
 interface SettingValue extends Value {
   tutorialMode: boolean;
@@ -14,4 +14,4 @@ const defaults: SettingValue = {
 };
 
 export default defaults;
-export { SettingValue, SettingKey };
+export type { SettingValue, SettingKey };

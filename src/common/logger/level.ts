@@ -36,4 +36,4 @@ export const SILENT: Level = {
   color: chalk.reset,
 };
 
-export { Level };
+export type { Level };

@@ -1,8 +1,26 @@
 import ConfigStore from "./config/store";
 import ConfigValue, { defaults as defaultConfig, ConfigKey } from "./config/data";
 
-// @deprecated
-export { ConfigStore, ConfigValue, ConfigKey, defaultConfig };
+export {
+  /**
+   * @deprecated use Storage instead
+   */
+  ConfigStore,
+  /**
+   * @deprecated use Storage instead
+   */
+  defaultConfig,
+};
+export type {
+  /**
+   * @deprecated use Storage instead
+   */
+  ConfigValue,
+  /**
+   * @deprecated use Storage instead
+   */
+  ConfigKey,
+};
 
 import Builder, { Storage } from "./storage";
 

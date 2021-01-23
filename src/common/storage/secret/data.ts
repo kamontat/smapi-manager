@@ -1,4 +1,4 @@
-import Value from "../core/value";
+import type Value from "../core/value";
 
 interface SecretValue extends Value {
   nexusModsApiKey: string;
@@ -11,4 +11,4 @@ const defaults: SecretValue = {
 };
 
 export default defaults;
-export { SecretValue, SecretKey };
+export type { SecretValue, SecretKey };

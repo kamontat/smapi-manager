@@ -1,8 +1,8 @@
-import { ConfigKey, ConfigValue } from "@common/storage";
+import type { ConfigKey, ConfigValue } from "@common/storage";
 import { Logger } from "@common/logger";
 import { createModCollection, ModCollection } from "@common/mod";
 
-import { MainHandler } from "../models/main";
+import type { MainHandler } from "../models/main";
 
 const logger = new Logger("event", "storage");
 

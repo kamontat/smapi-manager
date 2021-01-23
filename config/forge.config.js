@@ -38,12 +38,12 @@ module.exports = {
     [
       "@electron-forge/plugin-webpack",
       {
-        mainConfig: "./.config/webpack/main/webpack.config.js",
+        mainConfig: "./config/webpack/main/webpack.config.js",
         renderer: {
-          config: "./.config/webpack/renderer/webpack.config.js",
+          config: "./config/webpack/renderer/webpack.config.js",
           entryPoints: [{
             html: "./src/renderer/index.html",
-            js: "./src/renderer/index.tsx",
+            js: "./src/renderer/index.ts",
             preload: {
               js: "./src/renderer/preload.ts",
             },
