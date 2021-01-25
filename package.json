@@ -11,7 +11,9 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "check": "svelte-check",
+    "check:ci": "svelte-check --fail-on-warnings --fail-on-hints --output human-verbose"
   },
   "author": {
     "name": "Kamontat Chantrachirathumrong",
@@ -24,58 +26,29 @@
     "directory": "."
   },
   "dependencies": {
-    "@emotion/react": "11.1.4",
-    "@emotion/styled": "11.0.0",
-    "@tailwindcss/forms": "0.2.1",
     "chalk": "4.1.0",
-    "core-js": "3.8.2",
     "electron-store": "6.0.1",
-    "framer-motion": "3.2.1",
     "jsonrepair": "2.0.0",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "react-router": "5.2.0",
-    "regenerator-runtime": "0.13.7",
     "svelte": "3.31.2",
-    "tailwindcss": "2.0.2",
-    "twin.macro": "2.0.8",
     "xml2js": "0.4.23"
   },
   "devDependencies": {
-    "@babel/core": "7.12.10",
-    "@babel/plugin-proposal-class-properties": "7.12.1",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "7.12.1",
-    "@babel/plugin-proposal-object-rest-spread": "7.12.1",
-    "@babel/plugin-proposal-optional-chaining": "7.12.7",
-    "@babel/preset-env": "7.12.11",
-    "@babel/preset-react": "7.12.10",
-    "@babel/preset-typescript": "7.12.7",
     "@electron-forge/cli": "6.0.0-beta.54",
-    "@electron-forge/maker-deb": "6.0.0-beta.54",
-    "@electron-forge/maker-rpm": "6.0.0-beta.54",
-    "@electron-forge/maker-squirrel": "6.0.0-beta.54",
     "@electron-forge/maker-zip": "6.0.0-beta.54",
-    "@electron-forge/plugin-base": "6.0.0-beta.54",
     "@electron-forge/plugin-webpack": "6.0.0-beta.54",
     "@electron-forge/publisher-github": "6.0.0-beta.54",
-    "@emotion/babel-plugin": "11.1.2",
-    "@emotion/babel-plugin-jsx-pragmatic": "0.1.5",
     "@marshallofsound/webpack-asset-relocator-loader": "0.5.0",
     "@tsconfig/svelte": "1.0.10",
-    "@types/react": "17.0.0",
-    "@types/react-dom": "17.0.0",
-    "@types/react-router": "5.1.11",
     "@types/xml2js": "0.4.7",
     "@typescript-eslint/eslint-plugin": "4.13.0",
     "@typescript-eslint/parser": "4.13.0",
-    "babel-loader": "8.2.2",
-    "babel-plugin-macros": "3.0.1",
     "css-loader": "5.0.1",
     "electron": "11.2.0",
     "eslint": "7.17.0",
     "eslint-plugin-import": "2.22.1",
     "fork-ts-checker-webpack-plugin": "6.1.0",
     "node-loader": "1.0.2",
+    "sass": "1.32.5",
     "style-loader": "2.0.0",
     "svelte-check": "1.1.28",
     "svelte-loader": "3.0.0",
@@ -86,11 +59,5 @@
   },
   "config": {
     "forge": "./config/forge.config.js"
-  },
-  "babelMacros": {
-    "twin": {
-      "preset": "emotion",
-      "config": "./config/tailwind.config.js"
-    }
   }
 }
