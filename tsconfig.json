@@ -8,7 +8,10 @@
       "*": ["node_modules/*"],
       "@common/*": ["src/common/*"],
       "@components/*": ["src/renderer/components/*"],
-      "@pages/*": ["src/renderer/pages/*"]
+      "@pages/*": ["src/renderer/pages/*"],
+      "@layouts/*": ["src/renderer/layouts/*"],
+      "@styles/*": ["src/renderer/styles/*"],
+      "@states/*": ["src/renderer/states/*"]
     }
   },
   "include": ["src/**/*"],
