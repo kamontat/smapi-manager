@@ -1,4 +1,4 @@
-// eslint-disable @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
 
 const fs = require("fs");
 const util = require("util");
@@ -38,14 +38,14 @@ module.exports = {
     [
       "@electron-forge/plugin-webpack",
       {
-        mainConfig: "./config/webpack/main/webpack.config.js",
+        mainConfig: "./config/webpack.main.config.js",
         renderer: {
-          config: "./config/webpack/renderer/webpack.config.js",
+          config: "./config/webpack.renderer.config.js",
           entryPoints: [{
             html: "./src/renderer/index.html",
             js: "./src/renderer/index.ts",
             preload: {
-              js: "./src/renderer/preload.ts",
+              js: "./src/preload/index.ts",
             },
             name: "main_window",
           }, ],
@@ -78,4 +78,4 @@ module.exports = {
   },
 };
 
-// eslint-enable @typescript-eslint/no-var-requires
+/* eslint-enable @typescript-eslint/no-var-requires */
