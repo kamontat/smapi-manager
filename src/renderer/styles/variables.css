@@ -1,0 +1,47 @@
+:root {
+  --primary-color: #6DC1E8;
+  --secondary-color: #FFA6C9;
+  --font-color: #101010;
+  --bg-color: #FFFFFF;
+  --heading-color: #FF3333;
+
+  --font-sans-serif:
+    system-ui,
+    -apple-system,
+    /* Firefox supports this but not yet `system-ui` */
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji';
+
+  --font-serif: serif;
+  --font-mono: monospace;
+}
+
+[theme="dark"] {
+  --primary-color: #4C9AB9;
+  --secondary-color: #FE5BAC;
+  --font-color: #F5F5F5;
+  --bg-color: #000000;
+  --heading-color: #E60000;
+}
+
+[lang="thai"] {
+  --font-sans-serif:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif;
+
+  --font-serif: serif;
+  --font-mono: monospace;
+}

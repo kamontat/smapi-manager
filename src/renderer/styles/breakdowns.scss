@@ -1,0 +1,20 @@
+$screen-md: 800px;
+$screen-lg: 1000px;
+
+@mixin when-sm {
+  @media (max-width: #{$screen-md - 1px}) {
+    @content;
+  }
+}
+
+@mixin when-md {
+  @media (min-width: #{$screen-md}) {
+    @content;
+  }
+}
+
+@mixin when-lg {
+  @media (min-width: #{$screen-lg}) {
+    @content;
+  }
+}
