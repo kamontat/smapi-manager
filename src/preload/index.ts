@@ -1,34 +1,81 @@
-import { ipcRenderer, clipboard } from "electron";
+import { contextBridge, ipcRenderer } from "electron";
 
-import ProcessorType from "@common/constants/processor-type";
-import { Logger, DEBUG, Global, WARN } from "@common/logger";
-import { CLIPBOARD_COPY, CLIPBOARD_PASTE, Message } from "@common/event";
+import { APIKEY } from "@common/constants/secrets";
+import { Global, DEBUG, WARN, Logger } from "@common/logger";
 import { isDevelopment } from "@common/utils/env";
+
+import DataLoader, {
+  DataMapper,
+  apiName,
+  READ_APP_INFO,
+  READ_APP_METRIC,
+  READ_STORAGE,
+  WRITE_STORAGE,
+  READ_ELECTRON_INFO,
+  OPEN_FILE,
+  OPEN_STORAGE,
+  READ_FULL_INFO,
+  UPDATE_SETTINGS,
+  READ_I18N,
+  READ_I18N_PAGE,
+  READ_ALL_STORAGE,
+  FIND_MOD_DIRECTORY,
+  WRITE_ALL_STORAGE,
+} from "@common/communication";
 
 process.once("loaded", () => {
   Global.setLevel(isDevelopment() ? DEBUG : WARN);
 
-  const logger = new Logger(ProcessorType.PRELOAD);
-  const message = new Message(ProcessorType.PRELOAD);
+  const logger = new Logger();
+  const whitelist = [
+    READ_STORAGE,
+    READ_ALL_STORAGE,
+    WRITE_STORAGE,
+    WRITE_ALL_STORAGE,
+    READ_APP_INFO,
+    READ_APP_METRIC,
+    READ_FULL_INFO,
+    READ_ELECTRON_INFO,
+    OPEN_FILE,
+    OPEN_STORAGE,
+    UPDATE_SETTINGS,
+    READ_I18N,
+    READ_I18N_PAGE,
+    FIND_MOD_DIRECTORY,
+  ];
 
-  message.receive({
-    callback: data => {
-      data.log(logger);
+  contextBridge.exposeInMainWorld(apiName, {
+    send: async (raw: DataMapper<string>) => {
+      const input = DataLoader.builder(raw).sendToPreload();
+      input.log(logger);
 
-      if (data.isType(CLIPBOARD_COPY)) {
-        if (data.value) {
-          clipboard.writeText(data.value as string);
-          window.postMessage(data.clone(ProcessorType.PRELOAD).toJSON(), "*");
+      const forwarder = input.sendToMain();
+      // forwarder.log(logger);
+
+      if (whitelist.includes(forwarder.type)) {
+        try {
+          forwarder.valid(APIKEY);
+
+          const result = await ipcRenderer.invoke(raw.type, forwarder.toJSON());
+          const receiver = forwarder.returnToPreload().withOutput(result);
+          // receiver.log(logger);
+
+          const output = receiver.returnToRenderer();
+          output.log(logger);
+
+          return output.toJSON();
+        } catch (e) {
+          logger.error(e);
+          return input
+            .returnToRenderer()
+            .withError(typeof e === "string" ? e : e.toString())
+            .toJSON();
         }
-      } else if (data.isType(CLIPBOARD_PASTE)) {
-        const content = clipboard.readText();
-        logger.debug(`return '${content}'`);
-        window.postMessage(data.clone(ProcessorType.PRELOAD, content).toJSON(), "*");
       } else {
-        ipcRenderer.invoke(data.type, data.toJSON()).then(args => {
-          logger.event(ProcessorType.MAIN, `receiving data from ${data.type}`);
-          window.postMessage(data.clone(ProcessorType.PRELOAD, args).toJSON(), "*");
-        });
+        const err = `${input.type} (${input.subtype}) is not in preload whitelist`;
+        logger.warn(err);
+
+        return input.returnToRenderer().withError(err).toJSON();
       }
     },
   });
