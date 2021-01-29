@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const { join } = require("path");
 const sveltePreprocess = require("svelte-preprocess");
 const isProd = process.env.NODE_ENV === "production";
 
