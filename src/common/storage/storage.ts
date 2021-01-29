@@ -1,20 +1,32 @@
+import type { SecretValue } from "./secret/data";
 import SecertStore from "./secret/store";
+import type { SettingValue } from "./setting/data";
 import SettingStore from "./setting/store";
+import type { ModValue } from "./mod/data";
+import ModStore from "./mod/store";
 
 interface Storage {
   secrets: SecertStore;
   settings: SettingStore;
+  mod: ModStore;
+}
+
+interface StorageType {
+  secrets: SecretValue;
+  settings: SettingValue;
+  mod: ModValue;
 }
 
 const builder = (): Storage => {
   return {
     secrets: new SecertStore(),
     settings: new SettingStore(),
+    mod: new ModStore(),
   };
 };
 
 export default builder;
-export type { Storage };
+export type { Storage, StorageType };
 
 // class Storage<K = unknown> {
 //   private stores: Map<string, CoreStorage<string, StorageValue>>;

@@ -1,28 +1,7 @@
-import ConfigStore from "./config/store";
-import ConfigValue, { defaults as defaultConfig, ConfigKey } from "./config/data";
+import Builder, { Storage, StorageType } from "./storage";
 
-export {
-  /**
-   * @deprecated use Storage instead
-   */
-  ConfigStore,
-  /**
-   * @deprecated use Storage instead
-   */
-  defaultConfig,
-};
-export type {
-  /**
-   * @deprecated use Storage instead
-   */
-  ConfigValue,
-  /**
-   * @deprecated use Storage instead
-   */
-  ConfigKey,
-};
-
-import Builder, { Storage } from "./storage";
+import type CoreStorage from "./core/store";
+import type StorageValue from "./core/value";
 
 export { Builder };
-export type { Storage };
+export type { Storage, StorageType, CoreStorage, StorageValue };
