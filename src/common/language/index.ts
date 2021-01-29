@@ -35,6 +35,13 @@ interface LanguageType {
 
     openButton: string;
   };
+  appInfo: {
+    title: string;
+    description: string;
+    columnName: string;
+    columnVersion: string;
+    columnAuthor: string;
+  };
 }
 
 export default LanguageType;

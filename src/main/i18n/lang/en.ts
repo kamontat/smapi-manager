@@ -1,6 +1,13 @@
 import type LanguageType from "@common/language";
 
 const lang: LanguageType = {
+  appInfo: {
+    title: "Application information",
+    description: "This shown all information relate to application",
+    columnName: "Name",
+    columnVersion: "Version",
+    columnAuthor: "Author",
+  },
   appSetting: {
     languageSwitch: "Language",
     languageTooltip: "(set display language)",
