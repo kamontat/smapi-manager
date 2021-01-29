@@ -1,9 +1,11 @@
 import Store from "electron-store";
+import { Logger } from "@common/logger";
 
 import type Value from "./value";
 import builder from "./default";
 
-class CoreStorage<K extends string, V extends Value> {
+const logger = Logger.Common("storage");
+class CoreStorage<K extends string, V extends Value = Value> {
   readonly name: K;
   private store: Store<Required<V>>;
 
@@ -16,6 +18,10 @@ class CoreStorage<K extends string, V extends Value> {
       clearInvalidConfig: true,
       defaults: defaultValue,
       encryptionKey: defaultValue.encryptedKey,
+    });
+
+    this.store.onDidAnyChange((newValue, oldValue) => {
+      logger.debug(`On '${name}' [event=change]: '${JSON.stringify(oldValue)}' => '${JSON.stringify(newValue)}'`);
     });
   }
 
@@ -39,8 +45,28 @@ class CoreStorage<K extends string, V extends Value> {
     return this.store.get(key) as O;
   }
 
+  update<K extends keyof V, O extends Required<V>[K]>(key: K, fn: (old: O) => O): void {
+    const old = this.get<K, O>(key);
+    const _new = fn(old);
+
+    this.store.set(key, _new);
+  }
+
+  setAll(k: Partial<V>): void {
+    this.store.set(k);
+  }
+
   set<K extends keyof V, O extends Required<V>[K]>(key: K, value: O): void {
-    return this.store.set(key, value);
+    try {
+      this.update(key, old => {
+        if (old === value) {
+          throw new Error("duplicated value");
+        }
+        return value;
+      });
+    } catch (e) {
+      // silent ignore
+    }
   }
 
   open(): void {
