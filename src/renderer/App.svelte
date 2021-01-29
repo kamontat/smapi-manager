@@ -1,26 +1,23 @@
 <script lang="ts">
-  import Container from "@layouts/Container.svelte";
-  import { currentPage } from "@states/pages";
-  import type { Page } from "@states/pages";
+  import EmptyContainer from "@layouts/EmptyContainer.svelte";
 
-  let page: Page;
+  import { currentPage } from "@states/pages";
+  import i18n from "@states/lang";
 
   $: {
-    document.title = `${page.props.pageName} | SMAPI Manager`;
+    document.title = `${$currentPage.props.pageName} | SMAPI Manager`;
+    document.documentElement.setAttribute("lang", $i18n);
+    document.documentElement.setAttribute("theme", "light");
   }
-
-  currentPage.subscribe(p => {
-    page = p;
-  });
 </script>
 
-<Container>
-  <svelte:component this={page.component} {...page.props} />
-</Container>
+<EmptyContainer pageName={$currentPage.props.pageName}>
+  <svelte:component this={$currentPage.component} {...$currentPage.props} />
+</EmptyContainer>
 
 <style global lang="scss">
-  @import "./styles/normalize";
-  @import "./styles/variables";
+  @import "./css/normalize";
+  @import "./css/variables";
 
-  @import "./styles/global.scss";
+  @import "./scss/global.scss";
 </style>

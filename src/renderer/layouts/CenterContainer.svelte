@@ -2,11 +2,13 @@
   <slot />
 </div>
 
-<style>
+<style lang="scss">
   .container {
     display: flex;
-    flex-direction: column;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
+
     height: 100%;
+    width: 100%;
   }
 </style>

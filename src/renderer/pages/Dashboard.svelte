@@ -1,52 +1,134 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+  import { readAllStorage, readStorage } from "@common/communication";
+
+  import CenterContainer from "@layouts/CenterContainer.svelte";
+  import { updateMode } from "@states/mode";
+  import { setLang } from "@states/lang";
   import pages, { openPage } from "@states/pages";
   import type { PageKey } from "@states/pages";
 
   export let pageName: string;
 
   let pageNames: PageKey[] = (Object.keys(pages) as PageKey[]).filter(name => name !== "dashboard");
+
+  onMount(() => {
+    window.api.send(readStorage("settings", "language")).then(l => setLang(l.output));
+    window.api.send(readAllStorage("settings")).then(m => {
+      updateMode("debug", m.output.debugMode);
+      updateMode("beta", m.output.betaMode);
+      updateMode("tutorial", m.output.tutorialMode);
+    });
+  });
+
+  const prefix = "<|";
+  const suffix = "|>";
 </script>
 
-<div name={pageName}>
+<div class="container" name={pageName}>
   {#each pageNames as page (page)}
-    <button on:click={() => openPage(page)}>{pages[page].props.pageName}</button>
+    <div class="card bounce" on:click={() => openPage(page)}>
+      <CenterContainer>
+        <span class="left">{prefix}</span>
+        <span>
+          {pages[page].props.pageName}
+        </span>
+        <span class="right">{suffix}</span>
+      </CenterContainer>
+    </div>
   {/each}
 </div>
 
-<!-- h-full p-4
-  grid grid-cols-5 grid-rows-3 gap-x-8 gap-y-4 grid-cols-3
-  bg-gradient-to-br from-yellow-500 via-green-500 to-blue-500 -->
 <style lang="scss">
-  @import "../styles/variables.scss";
-  @import "../styles/breakdowns.scss";
+  @import "../scss/variables.scss";
+  @import "../scss/breakdowns.scss";
 
-  $col: 3;
-  $row: 3;
+  div.container {
+    --grid-col: 2;
+    --grid-row: 4;
 
-  $bg-from: #f59e0b;
-  $bg-via: #10b981;
-  $bg-to: #3b82f6;
-
-  div {
     height: 100%;
-    padding: $md;
 
     display: grid;
-    grid-template-columns: repeat($col, minmax(0, 1fr));
-    grid-template-rows: repeat($row, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--grid-col), minmax(0, 1fr));
+    grid-template-rows: repeat(var(--grid-row), minmax(0, 1fr));
     column-gap: $lg;
-    row-gap: $md;
+    row-gap: $xl;
 
-    background-image: linear-gradient(to bottom right, $bg-from, $bg-via, $bg-to);
+    @include when-md {
+      --grid-col: 3;
+      --grid-row: 3;
+    }
+
+    @include when-lg {
+      --grid-col: 5;
+      --grid-row: 2;
+    }
   }
 
-  @include when-md {
-    div {
-      $col: 5;
-      $row: 3;
+  div.card {
+    width: 100%;
+    height: 100%;
+    max-height: 15vw;
 
-      grid-template-columns: repeat($col, minmax(0, 1fr));
-      grid-template-rows: repeat($row, minmax(0, 1fr));
+    color: var(--font-color);
+    background-color: var(--bg-color);
+
+    // border: $xs solid;
+    // border-color: rgba(229, 231, 235, 0.75);
+    border-radius: $md;
+
+    box-shadow: $shadow-sm;
+
+    cursor: pointer;
+
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+
+    &:hover {
+      box-shadow: $shadow-lg;
+      transform: translateY(-$xs) scaleX(1.05) scaleY(1.05);
+    }
+
+    span {
+      font-size: $font-lg;
+      font-weight: bold;
+      font-family: var(--font-mono);
+    }
+  }
+
+  .bounce {
+    &:hover {
+      .left {
+        animation: bounce-left 1s infinite;
+        @keyframes bounce-left {
+          0%,
+          100% {
+            transform: translateX(-25%);
+            animationtimingfunction: cubic-bezier(0.8, 0, 1, 1);
+          }
+          50% {
+            transform: translateX(0);
+            animationtimingfunction: cubic-bezier(0, 0, 0.2, 1);
+          }
+        }
+      }
+
+      .right {
+        animation: bounce-right 1s infinite;
+        @keyframes bounce-right {
+          0%,
+          100% {
+            transform: translateX(25%);
+            animationtimingfunction: cubic-bezier(0.8, 0, 1, 1);
+          }
+          50% {
+            transform: translateX(0);
+            animationtimingfunction: cubic-bezier(0, 0, 0.2, 1);
+          }
+        }
+      }
     }
   }
 </style>
