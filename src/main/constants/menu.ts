@@ -1,4 +1,4 @@
-import { app, Menu, MenuItem, MenuItemConstructorOptions, shell } from "electron";
+import { app, BrowserWindow, Menu, MenuItem, MenuItemConstructorOptions, shell } from "electron";
 
 import { isDevelopment } from "@common/utils/env";
 
@@ -8,12 +8,25 @@ const templates: (MenuItem | MenuItemConstructorOptions)[] = [
   {
     label: app.name,
     submenu: [
-      { role: "about" },
-      { type: "separator" },
-      { role: "services" },
-      { type: "separator" },
-      { role: "hide" },
-      { role: "unhide" },
+      {
+        label: "Process manager",
+        click: async () => {
+          const psm = new BrowserWindow({
+            width: 800,
+            height: 300,
+            webPreferences: {
+              contextIsolation: true,
+              devTools: false,
+            },
+          });
+
+          psm.loadURL("https://google.com");
+          psm.on("ready-to-show", () => {
+            psm.show();
+            psm.focus();
+          });
+        },
+      },
       { type: "separator" },
       { role: "quit" },
     ],
