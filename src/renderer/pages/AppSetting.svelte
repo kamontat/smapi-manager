@@ -4,12 +4,18 @@
 
   import FlexContainer from "@layouts/FlexContainer.svelte";
   import Header from "@components/Header.svelte";
-  import Switch from "@components/Switch.svelte";
-  import InlineTooltip from "@components/InlineTooltip.svelte";
+
+  import FormContainer from "@components/form/Container.svelte";
+  import FormLabelContainer from "@components/form/LabelContainer.svelte";
+  import FormDataContainer from "@components/form/DataContainer.svelte";
+  import FormFooterContainer from "@components/form/FooterContainer.svelte";
+  import FormLabel from "@components/form/Label.svelte";
+  import FormSelect from "@components/form/Select.svelte";
+  import FormSubmit from "@components/form/Submit.svelte";
 
   import mode from "@states/mode";
   import i18n from "@states/lang";
-  import { onTooltip } from "@states/tooltip";
+  import Switch from "@components/Switch.svelte";
 
   export let pageName: string;
 
@@ -45,126 +51,63 @@
 <Header {pageName} />
 
 <FlexContainer>
-  <div class="form">
-    <div class="input-container">
-      {#await baseContent then content}
-        <div class="element">
-          <div class="label toggle">
-            <label
-              for="languages"
-              use:onTooltip={{
-                context: InlineTooltip,
-                text: content.output.languageTooltip,
-                disabled: $mode.tutorial !== true,
-              }}>{content.output.languageSwitch}</label
-            >
-          </div>
-          <select bind:value={$i18n}>
-            <option value="en">English</option>
-            <option value="th">Thai</option>
-          </select>
-        </div>
-        <div class="element">
-          <div class="label toggle">
-            <label
-              for="debug-mode"
-              use:onTooltip={{
-                context: InlineTooltip,
-                text: content.output.debugTooltip,
-                disabled: $mode.tutorial !== true,
-              }}>{content.output.debugMode}</label
-            >
-          </div>
-          <Switch name="debug-mode" bind:checked={$mode.debug} rounded={true} />
-        </div>
-        <div class="element">
-          <div class="label toggle">
-            <label
-              for="beta-mode"
-              use:onTooltip={{
-                context: InlineTooltip,
-                text: content.output.betaTooltip,
-                disabled: $mode.tutorial !== true,
-              }}>{content.output.betaMode}</label
-            >
-          </div>
-          <Switch name="beta-mode" bind:checked={$mode.beta} rounded={true} />
-        </div>
-        <div class="element">
-          <div class="label toggle">
-            <label
-              for="tutorial-mode"
-              use:onTooltip={{
-                context: InlineTooltip,
-                text: content.output.tutorialTooltip,
-                disabled: $mode.tutorial !== true,
-              }}>{content.output.tutorialMode}</label
-            >
-          </div>
-          <Switch name="tutorial-mode" bind:checked={$mode.tutorial} rounded={true} />
-        </div>
-      {/await}
-    </div>
-    <div class="submit-container">
-      {#await baseContent then content}
-        <button name="open" type="button" on:click={onOpen}>
-          {content.output.openButton}
-        </button>
+  <FormContainer>
+    {#await baseContent then content}
+      <FormLabelContainer>
+        <FormLabel
+          on="languages"
+          text={content.output.languageSwitch}
+          tooltip={content.output.languageTooltip}
+          disabled={$mode.tutorial !== true}
+        />
+      </FormLabelContainer>
+      <FormDataContainer>
+        <FormSelect
+          bind:value={$i18n}
+          values={[
+            { key: "en", value: "English" },
+            { key: "th", value: "Thai" },
+          ]}
+        />
+      </FormDataContainer>
 
-        <button name="submit" type="button" on:click={onSubmit(content.output)}>
-          {message ? message : content.output.submitButton}
-        </button>
-      {/await}
-    </div>
-  </div>
+      <FormLabelContainer>
+        <FormLabel text={content.output.mode} />
+      </FormLabelContainer>
+      <FormDataContainer>
+        <Switch name="debug-mode" bind:checked={$mode.debug} rounded={true} />
+        <FormLabel
+          on="debug-mode"
+          text={content.output.debugMode}
+          tooltip={content.output.debugTooltip}
+          disabled={$mode.tutorial !== true}
+        />
+      </FormDataContainer>
+      <FormLabelContainer />
+      <FormDataContainer>
+        <Switch name="beta-mode" bind:checked={$mode.beta} rounded={true} />
+        <FormLabel
+          on="beta-mode"
+          text={content.output.betaMode}
+          tooltip={content.output.betaTooltip}
+          disabled={$mode.tutorial !== true}
+        />
+      </FormDataContainer>
+      <FormLabelContainer />
+      <FormDataContainer>
+        <Switch name="tutorial-mode" bind:checked={$mode.tutorial} rounded={true} />
+        <FormLabel
+          on="tutorial-mode"
+          text={content.output.tutorialMode}
+          tooltip={content.output.tutorialTooltip}
+          disabled={$mode.tutorial !== true}
+        />
+      </FormDataContainer>
+
+      <FormFooterContainer>
+        <FormSubmit text={content.output.openButton} on:click={onOpen} />
+        <FormSubmit text={message ? message : content.output.submitButton} on:click={onSubmit(content.output)} />
+      </FormFooterContainer>
+    {/await}
+  </FormContainer>
 </FlexContainer>
-
-<style lang="scss">
-  @import "../scss/variables.scss";
-
-  .form {
-    color: var(--font-color);
-  }
-
-  .input-container {
-    border-top-left-radius: $md;
-    border-top-right-radius: $md;
-    background-color: var(--bg-color);
-
-    padding: $md;
-
-    .element {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: $sm;
-
-      padding-bottom: $md;
-      padding-left: $md;
-      &:nth-child(1) {
-        padding-top: $md;
-      }
-
-      .label {
-        grid-column-start: 1;
-      }
-
-      .toggle {
-        grid-column-end: 11;
-      }
-    }
-  }
-
-  .submit-container {
-    border-bottom-right-radius: $md;
-    border-bottom-left-radius: $md;
-
-    /* border-color: var(--bg-color); */
-    background-color: var(--lighter-gray);
-    text-align: right;
-
-    button[type="button"] {
-      padding: $md;
-      padding-right: $lg;
-    }
-  }
-</style>
