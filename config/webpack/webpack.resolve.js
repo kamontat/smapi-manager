@@ -10,7 +10,6 @@ module.exports = {
     "@components": path.resolve(pwd, "src", "renderer", "components"),
     "@pages": path.resolve(pwd, "src", "renderer", "pages"),
     "@layouts": path.resolve(pwd, "src", "renderer", "layouts"),
-    "@styles": path.resolve(pwd, "src", "renderer", "styles"),
     "@states": path.resolve(pwd, "src", "renderer", "states")
   },
 };
