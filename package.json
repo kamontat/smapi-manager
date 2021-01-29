@@ -26,7 +26,6 @@
     "directory": "."
   },
   "dependencies": {
-    "chalk": "4.1.0",
     "electron-store": "6.0.1",
     "jsonrepair": "2.0.0",
     "svelte": "3.31.2",
