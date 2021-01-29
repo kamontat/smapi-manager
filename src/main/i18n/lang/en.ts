@@ -5,6 +5,8 @@ const lang: LanguageType = {
     languageSwitch: "Language",
     languageTooltip: "(set display language)",
 
+    mode: "Mode",
+
     debugMode: "Debug mode",
     debugTooltip: "(enable some extra information to ui)",
 
@@ -15,24 +17,24 @@ const lang: LanguageType = {
     tutorialTooltip: "(add extra tooltip to describe information)",
 
     submitButton: "Submit",
-    submitMessage: "Saved",
+    submitMessage: "Saved !!!",
 
     openButton: "Open",
   },
   modSetting: {
-    directory: "",
-    directoryTooltip: "",
+    directory: "Directory",
+    directoryTooltip: "(mod directory path)",
 
     directoryFetch: "Fetch",
     directoryFetchTooltip: "(auto find current mod directory)",
     directoryCustom: "Custom",
     directoryCustomTooltip: "(manually find mod directory)",
 
-    limit: "",
-    limitTooltip: "",
+    limit: "Searching limit",
+    limitTooltip: "(how many subdirectory to look, increase this might effect performance)",
 
     submitButton: "Submit",
-    submitMessage: "Saved",
+    submitMessage: "Saved !!!",
 
     openButton: "Open",
   },

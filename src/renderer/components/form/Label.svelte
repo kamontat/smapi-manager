@@ -2,7 +2,7 @@
   import Tooltip from "@components/InlineTooltip.svelte";
   import { onTooltip } from "@states/tooltip";
 
-  export let on: string;
+  export let on: string = "";
   export let text: string;
 
   export let tooltip: string = "";
@@ -16,8 +16,5 @@
 
   label {
     position: relative;
-
-    padding-top: $md;
-    padding-bottom: $md;
   }
 </style>

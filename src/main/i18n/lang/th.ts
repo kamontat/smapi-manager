@@ -2,8 +2,8 @@ import type LanguageType from "@common/language";
 
 const lang: LanguageType = {
   appSetting: {
-    languageSwitch: "",
-    languageTooltip: "",
+    languageSwitch: "ภาษา",
+    languageTooltip: "(เปลื่ยนภาษาของโปรแกรม)",
 
     debugMode: "ดีบักโหมด",
     debugTooltip: "(แสดงข้อมูลบางอย่างเพิ่มเติม)",
@@ -15,7 +15,7 @@ const lang: LanguageType = {
     tutorialTooltip: "",
 
     submitButton: "บันทึก",
-    submitMessage: "",
+    submitMessage: "เสร็จสิ้น",
 
     openButton: "เปิด",
   },

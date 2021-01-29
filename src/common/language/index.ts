@@ -3,6 +3,8 @@ interface LanguageType {
     languageSwitch: string;
     languageTooltip: string;
 
+    mode: string;
+
     debugMode: string;
     debugTooltip: string;
 

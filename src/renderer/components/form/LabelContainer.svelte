@@ -1,6 +1,6 @@
 <div class="label-container">
   <slot>
-    <span name="empty" />
+    <span class="empty" />
   </slot>
 </div>
 
@@ -15,12 +15,20 @@
     display: flex;
     justify-content: flex-start;
 
+    padding-top: $md;
+    padding-bottom: $md;
+
     @include when-sm {
       grid-column-end: span 4;
     }
 
     @include when-md {
       grid-column-end: span 5;
+    }
+
+    .empty {
+      padding-top: $sm;
+      padding-bottom: $md;
     }
   }
 </style>

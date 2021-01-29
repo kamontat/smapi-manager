@@ -12,6 +12,7 @@
   import FormLabel from "@components/form/Label.svelte";
   import FormInput from "@components/form/Input.svelte";
   import FormButton from "@components/form/Button.svelte";
+  import FormSubmit from "@components/form/Submit.svelte";
 
   import i18n from "@states/lang";
   import mode from "@states/mode";
@@ -93,76 +94,23 @@
           />
         </FlexContainer>
       </FormDataContainer>
+
+      <FormLabelContainer>
+        <FormLabel
+          on="limit"
+          text={content.output.limit}
+          tooltip={content.output.limitTooltip}
+          disabled={$mode.tutorial !== true}
+        />
+      </FormLabelContainer>
+      <FormDataContainer>
+        <FormInput name="limit" bind:value={limit} />
+      </FormDataContainer>
+
+      <FormFooterContainer>
+        <FormSubmit text={content.output.openButton} on:click={onOpen} />
+        <FormSubmit text={message ? message : content.output.submitButton} on:click={onSubmit(content.output)} />
+      </FormFooterContainer>
     {/await}
-
-    <FormFooterContainer>
-      {#await baseContent then content}
-        <button on:click={onOpen}>Open</button>
-        <button on:click={onSubmit(content.output)}>Submit</button>
-      {/await}
-    </FormFooterContainer>
   </FormContainer>
-  <!-- <div class="form">
-    <div class="body">
-      {#await baseContent then content}
-        <div class="element">
-          <div class="label input">
-            <label
-              for="directory"
-              use:onTooltip={{
-                context: InlineTooltip,
-                disabled: $mode.tutorial !== true,
-                text: content.output.directoryTooltip,
-              }}>{content.output.directory}</label
-            >
-          </div>
-          <div class="input-container">
-            <input name="directory" type="text" disabled={true} bind:value={directory} />
-            <button
-              class="middle relative"
-              use:onTooltip={{
-                context: TopTooltip,
-                text: content.output.directoryFetchTooltip,
-                props: { top: -30, left: -50, right: -50 },
-                disabled: $mode.tutorial !== true,
-              }}>{content.output.directoryFetch}</button
-            >
-            <button
-              class="end"
-              use:onTooltip={{
-                context: TopTooltip,
-                text: content.output.directoryCustomTooltip,
-                props: { top: -30, left: -50, right: -50 },
-                disabled: $mode.tutorial !== true,
-              }}>{content.output.directoryCustom}</button
-            >
-          </div>
-        </div>
-        <div class="element">
-          <div class="label input">
-            <label
-              for="limit"
-              use:onTooltip={{
-                context: InlineTooltip,
-                disabled: $mode.tutorial !== true,
-                text: content.output.limitTooltip,
-              }}>{content.output.limit}</label
-            >
-          </div>
-          <input name="limit" type="number" bind:value={limit} />
-        </div>
-      {/await}
-    </div>
-    <div class="footer">
-      {#await baseContent then content}
-        <button name="open" type="button" on:click={onOpen}>
-          {content.output.openButton}
-        </button>
-
-        <button name="submit" type="button" on:click={onSubmit(content.output)}>
-          {message ? message : content.output.submitButton}
-        </button>
-      {/await}
-    </div>
-  </div> -->
 </FlexContainer>

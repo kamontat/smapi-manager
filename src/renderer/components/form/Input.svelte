@@ -1,11 +1,12 @@
 <script lang="ts">
   export let name: string;
-  export const type: string = "text";
-  export let value: string;
+  export let value: string | number;
 
   export let placeholder: string = "";
   export let disabled: boolean = false;
   export let hasGroup: boolean = false;
+
+  const type: string = typeof value === "number" ? "number" : "text";
 </script>
 
 <input id={name} {type} {name} {value} {placeholder} {disabled} class:hasGroup />
