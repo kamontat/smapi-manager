@@ -21,6 +21,7 @@ import DataLoader, {
   READ_ALL_STORAGE,
   FIND_MOD_DIRECTORY,
   WRITE_ALL_STORAGE,
+  READ_ALL_EVENT_COUNTER_ANALYTIC,
 } from "@common/communication";
 
 process.once("loaded", () => {
@@ -42,6 +43,7 @@ process.once("loaded", () => {
     READ_I18N,
     READ_I18N_PAGE,
     FIND_MOD_DIRECTORY,
+    READ_ALL_EVENT_COUNTER_ANALYTIC,
   ];
 
   contextBridge.exposeInMainWorld(apiName, {

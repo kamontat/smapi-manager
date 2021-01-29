@@ -33,6 +33,9 @@ import readI18n, { READ_I18N } from "./implements/read-i18n";
 import readI18nPage, { READ_I18N_PAGE } from "./implements/read-i18n-page";
 import findModDirectory, { FIND_MOD_DIRECTORY } from "./implements/find-mod-directory";
 import writeAllStorage, { WRITE_ALL_STORAGE } from "./implements/write-all-storage";
+import readAllEventCounterAnalytic, {
+  READ_ALL_EVENT_COUNTER_ANALYTIC,
+} from "./implements/read-all-event-counter-analytic";
 
 const main = new MainBuilder(ipcMain);
 main
@@ -51,4 +54,5 @@ main
   .handle(READ_XML_FILE, readXmlFile)
   .handle(READ_I18N, readI18n)
   .handle(READ_I18N_PAGE, readI18nPage)
-  .handle(FIND_MOD_DIRECTORY, findModDirectory);
+  .handle(FIND_MOD_DIRECTORY, findModDirectory)
+  .handle(READ_ALL_EVENT_COUNTER_ANALYTIC, readAllEventCounterAnalytic);
