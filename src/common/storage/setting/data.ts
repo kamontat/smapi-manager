@@ -1,6 +1,7 @@
 import type Value from "../core/value";
 
 interface SettingValue extends Value {
+  language: string;
   tutorialMode: boolean;
   betaMode: boolean;
   debugMode: boolean;
@@ -8,7 +9,8 @@ interface SettingValue extends Value {
 type SettingKey = keyof SettingValue;
 
 const defaults: SettingValue = {
-  tutorialMode: false,
+  language: "en",
+  tutorialMode: true,
   betaMode: false,
   debugMode: false,
 };
