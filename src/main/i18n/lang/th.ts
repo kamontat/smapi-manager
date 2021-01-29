@@ -8,6 +8,8 @@ const lang: LanguageType = {
     debugMode: "ดีบักโหมด",
     debugTooltip: "(แสดงข้อมูลบางอย่างเพิ่มเติม)",
 
+    mode: "",
+
     betaMode: "เบต้าโหมด",
     betaTooltip: "(เปิดบางความสามารถที่อาจจะทำให้โปรแกรมทำงานไม่ถูกต้อง)",
 
