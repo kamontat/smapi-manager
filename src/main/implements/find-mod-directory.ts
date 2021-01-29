@@ -4,7 +4,7 @@ import { Logger } from "@common/logger";
 import { createModCollection, getGOGModDirectory, getModDirectory, getSteamModDirectory } from "@common/mod";
 
 const logger = new Logger(DataOrigin.COMMON, "find-mod-directory");
-const findModDirectory: MainAPIs[typeof FIND_MOD_DIRECTORY] = async (store, data) => {
+const findModDirectory: MainAPIs[typeof FIND_MOD_DIRECTORY] = async ({ store, data }) => {
   logger.debug(`finding base on input type (${data.subtype})`);
 
   let directoryName: string | undefined = undefined;

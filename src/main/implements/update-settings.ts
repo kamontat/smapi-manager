@@ -1,6 +1,6 @@
 import { MainAPIs, UPDATE_SETTINGS } from "@common/communication";
 
-const updateSettings: MainAPIs[typeof UPDATE_SETTINGS] = async (store, data) => {
+const updateSettings: MainAPIs[typeof UPDATE_SETTINGS] = async ({ store, data }) => {
   store.settings.setAll(data.input);
 };
 

@@ -4,10 +4,10 @@ import ConditionArray, { KeyValue } from "@common/utils/array";
 import readAppInfo from "./read-app-info";
 import readElectronInfo from "./read-electron-info";
 
-const readFullInfo: MainAPIs[typeof READ_FULL_INFO] = async (store, data, event) => {
+const readFullInfo: MainAPIs[typeof READ_FULL_INFO] = async ({ store, data, event, analytic }) => {
   const isDebug = store.settings.get("debugMode");
-  const appInfo = await readAppInfo(store, data as any, event); // eslint-disable-line @typescript-eslint/no-explicit-any
-  const electronInfo = await readElectronInfo(store, data as any, event); // eslint-disable-line @typescript-eslint/no-explicit-any
+  const appInfo = await readAppInfo({ store, data: data as any, event, analytic }); // eslint-disable-line @typescript-eslint/no-explicit-any
+  const electronInfo = await readElectronInfo({ store, data: data as any, event, analytic }); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   return new ConditionArray<KeyValue<string>>()
     .addIf(isDebug, { key: "Environment", value: appInfo.env })

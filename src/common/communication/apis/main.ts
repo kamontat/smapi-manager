@@ -41,12 +41,14 @@ import type {
   FindModDirectory,
 } from "..";
 
-type Executor<M extends DataMapper<string>> = (
-  store: Storage,
-  data: DataLoader<M>,
-  analytic: Analytics,
-  event: IpcMainInvokeEvent
-) => Promise<M["output"]>;
+interface ExecutorArguments<M extends DataMapper<string>> {
+  store: Storage;
+  data: DataLoader<M>;
+  analytic: Analytics;
+  event: IpcMainInvokeEvent;
+}
+
+type Executor<M extends DataMapper<string>> = (args: ExecutorArguments<M>) => Promise<M["output"]>;
 
 interface MainAPIs {
   [READ_STORAGE]: Executor<
