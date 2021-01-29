@@ -2,6 +2,7 @@ import type { IpcMainInvokeEvent } from "electron";
 
 import type { Storage, StorageType } from "@common/storage";
 import type LanguageType from "@common/language";
+import type { Analytics } from "@common/analytics";
 
 import type DataLoader from "../models/data-loader";
 import type {
@@ -43,6 +44,7 @@ import type {
 type Executor<M extends DataMapper<string>> = (
   store: Storage,
   data: DataLoader<M>,
+  analytic: Analytics,
   event: IpcMainInvokeEvent
 ) => Promise<M["output"]>;
 
