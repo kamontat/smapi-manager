@@ -1,5 +1,5 @@
-$screen-md: 800px;
-$screen-lg: 1000px;
+$screen-md: 1000px;
+$screen-lg: 1300px;
 
 @mixin when-sm {
   @media (max-width: #{$screen-md - 1px}) {

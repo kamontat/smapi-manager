@@ -1,9 +1,19 @@
 :root {
   --primary-color: #6DC1E8;
   --secondary-color: #FFA6C9;
+  --root-font-color: #F5F5F5;
   --font-color: #101010;
   --bg-color: #FFFFFF;
   --heading-color: #FF3333;
+
+  --invert-bg-color: #7E7E7E;
+
+  --lighter-gray: #E5E7EB;
+  --light-gray: #9CA3AF;
+  --dark-gray: #4B5563;
+  --darker-gray: #1F2937;
+
+  --info-color: #BBFAF7;
 
   --font-sans-serif:
     system-ui,
@@ -18,7 +28,7 @@
     'Segoe UI Emoji';
 
   --font-serif: serif;
-  --font-mono: monospace;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 [theme="dark"] {
@@ -29,7 +39,7 @@
   --heading-color: #E60000;
 }
 
-[lang="thai"] {
+[lang="th"] {
   --font-sans-serif:
     ui-sans-serif,
     system-ui,
@@ -43,5 +53,5 @@
     sans-serif;
 
   --font-serif: serif;
-  --font-mono: monospace;
+  --font-mono: 'JetBrains Mono', monospace;
 }
