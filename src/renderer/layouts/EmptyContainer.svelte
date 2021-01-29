@@ -22,6 +22,10 @@
 <style lang="scss">
   @import "../scss/variables.scss";
 
+  $from: var(--bg-color-from);
+  $via: var(--bg-color-via) !default;
+  $to: var(--bg-color-to);
+
   .container {
     display: flex;
     flex-direction: column;
@@ -30,11 +34,10 @@
 
     padding: $lg;
 
-    background-image: linear-gradient(
-      to var(--bg-direction),
-      var(--bg-color-from),
-      var(--bg-color-via),
-      var(--bg-color-to)
-    );
+    @if variable-exists($via) {
+      background-image: linear-gradient(to var(--bg-direction), $from, $via, $to);
+    } @else {
+      background-image: linear-gradient(to var(--bg-direction), $from, $to);
+    }
   }
 </style>
