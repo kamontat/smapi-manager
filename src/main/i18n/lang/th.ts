@@ -40,6 +40,17 @@ const lang: LanguageType = {
     limit: "",
     limitTooltip: "",
 
+    threshold: "",
+    thresholdTooltip: "",
+
+    timeUnitInstant: "",
+    timeUnit1Minute: "",
+    timeUnit20Minute: "",
+    timeUnit1Hour: "",
+    timeUnit1Day: "",
+    timeUnit1Week: "",
+    timeUnitForever: "",
+
     submitButton: "",
     submitMessage: "",
 

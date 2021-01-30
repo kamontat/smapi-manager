@@ -40,6 +40,17 @@ const lang: LanguageType = {
     limit: "Searching limit",
     limitTooltip: "(how many subdirectory to look, increase this might effect performance)",
 
+    threshold: "Update threshold",
+    thresholdTooltip: "(application will search mod after this threshold)",
+
+    timeUnitInstant: "Instant",
+    timeUnit1Minute: "1 Minute",
+    timeUnit20Minute: "20 Minutes",
+    timeUnit1Hour: "1 Hour",
+    timeUnit1Day: "1 Day",
+    timeUnit1Week: "1 Week",
+    timeUnitForever: "Forever",
+
     submitButton: "Submit",
     submitMessage: "Saved !!!",
 

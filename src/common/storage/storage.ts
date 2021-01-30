@@ -4,17 +4,21 @@ import type { SettingValue } from "./setting/data";
 import SettingStore from "./setting/store";
 import type { ModValue } from "./mod/data";
 import ModStore from "./mod/store";
+import type { CachesValue } from "./caches/data";
+import CachesStore from "./caches/store";
 
 interface Storage {
   secrets: SecertStore;
   settings: SettingStore;
   mod: ModStore;
+  caches: CachesStore;
 }
 
 interface StorageType {
   secrets: SecretValue;
   settings: SettingValue;
   mod: ModValue;
+  caches: CachesValue;
 }
 
 const builder = (): Storage => {
@@ -22,6 +26,7 @@ const builder = (): Storage => {
     secrets: new SecertStore(),
     settings: new SettingStore(),
     mod: new ModStore(),
+    caches: new CachesStore(),
   };
 };
 

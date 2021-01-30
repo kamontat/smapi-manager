@@ -1,11 +1,5 @@
 import type { SvelteComponent } from "svelte";
-
-type ActionReturn<P> = {
-  update?: (parameters: P) => void;
-  destroy?: () => void;
-};
-
-type Action<P> = (node: HTMLElement, parameters: P) => ActionReturn<P>;
+import type { UseAction } from "./models/UseAction";
 
 interface Tooltip {
   context: typeof SvelteComponent;
@@ -15,7 +9,7 @@ interface Tooltip {
   props?: Record<string, string | number | boolean>;
 }
 
-const onTooltip: Action<Tooltip> = (node, { context, text, disabled, props }) => {
+const onTooltip: UseAction<Tooltip> = (node, { context, text, disabled, props }) => {
   let component: SvelteComponent;
 
   const attachTooltip = () => {

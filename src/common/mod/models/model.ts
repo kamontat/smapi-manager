@@ -43,3 +43,4 @@ interface Mod {
 }
 
 export default Mod;
+export type { ModUpdater };
