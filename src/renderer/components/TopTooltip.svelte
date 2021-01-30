@@ -1,9 +1,9 @@
 <script lang="ts">
   export let text: string;
 
-  export let top: number | undefined;
-  export let left: number | undefined;
-  export let right: number | undefined;
+  export let top: number = -20;
+  export let left: number = -10;
+  export let right: number = -10;
 
   $: topVar = top ? `--dynamic-top: ${top}px;` : ``;
   $: leftVar = left ? `--dynamic-left: ${left}px;` : ``;
