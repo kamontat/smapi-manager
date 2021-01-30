@@ -1,4 +1,7 @@
 <script lang="ts">
+  import type { Validity } from "@states/validate";
+  import type { UseAction } from "@states/models/UseAction";
+
   export let name: string;
   export let value: string | number;
 
@@ -6,10 +9,21 @@
   export let disabled: boolean = false;
   export let hasGroup: boolean = false;
 
-  const type: string = typeof value === "number" ? "number" : "text";
+  export let validate: UseAction<string> = () => ({});
+  export let validity: Validity = { valid: true };
 </script>
 
-<input id={name} {type} {name} {value} {placeholder} {disabled} class:hasGroup />
+<input
+  id={name}
+  type="text"
+  {name}
+  bind:value
+  use:validate={value.toString()}
+  {placeholder}
+  {disabled}
+  class:invalid={!validity.valid}
+  class:hasGroup
+/>
 
 <style lang="scss">
   @import "../../scss/variables.scss";
@@ -28,6 +42,10 @@
     padding-bottom: $xs;
 
     border-radius: $md;
+  }
+
+  .invalid {
+    border-color: red;
   }
 
   .hasGroup {
