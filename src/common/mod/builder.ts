@@ -13,8 +13,25 @@ import { uuid } from "@common/utils/uuid";
 
 import type ModCollection from "./models/collection";
 import type Mod from "./models/model";
+import type { ModUpdater } from "./models/model";
 import type ManifestData from "./models/manifest";
 import { CONTENT_JSON, MANIFEST_JSON } from "./constants";
+
+const createUpdater = (key: string): ModUpdater | undefined => {
+  const arr = key.split(":");
+  if (arr.length !== 2) return undefined;
+
+  const type = arr[0];
+  const id = arr[1];
+
+  let url = "";
+  switch (type.toLowerCase()) {
+    case "nexus":
+      url = `https://www.nexusmods.com/stardewvalley/mods/${id}`;
+  }
+
+  return { key: type, id, url };
+};
 
 const createModData = async (modDirectory: Directory, customId?: string): Promise<Mod> => {
   const id = customId ?? uuid();
@@ -40,28 +57,14 @@ const createModData = async (modDirectory: Directory, customId?: string): Promis
       name: manifest.Name,
       version: manifest.Version,
       description: manifest.Description,
-      updater: updateKeys
-        .map(k => {
-          const arr = k.split(":");
-          const key = arr[0];
-          const id = arr[1];
-
-          let url = "";
-          if (key.toLowerCase() === "nexus") {
-            url = `https://www.nexusmods.com/stardewvalley/mods/${id}`;
-          }
-
-          if (arr.length === 2) return { key, id, url };
-          return undefined;
-        })
-        .filter(v => v !== undefined),
+      updater: updateKeys.map(createUpdater).filter(v => v !== undefined),
       category: isContentExist ? "Portrait" : "Mod",
     },
   };
 };
 
-const createModCollection = async (dirpath?: string, limit = 5): Promise<ModCollection> => {
-  if (dirpath === undefined) return { path: "", mods: [] };
+const createModCollection = async (dirpath?: string, limit = 5, lastUpdate = +new Date()): Promise<ModCollection> => {
+  if (dirpath === undefined) return { path: "", mods: [], lastUpdate };
 
   const subdirectories = await listDirectories(dirpath, limit);
   const mods = subdirectories.filter(d => d.files.find(f => f.basename === MANIFEST_JSON));
@@ -70,6 +73,7 @@ const createModCollection = async (dirpath?: string, limit = 5): Promise<ModColl
   return {
     path: dirpath,
     mods: modData,
+    lastUpdate,
   };
 };
 
