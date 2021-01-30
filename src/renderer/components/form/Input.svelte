@@ -3,7 +3,7 @@
   import type { UseAction } from "@states/models/UseAction";
 
   export let name: string;
-  export let value: string | number;
+  export let value: string;
 
   export let placeholder: string = "";
   export let disabled: boolean = false;
@@ -31,7 +31,6 @@
   input {
     display: block;
     flex-grow: 1;
-
     width: 100%;
 
     border-width: $xs;

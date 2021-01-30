@@ -11,13 +11,13 @@
   import FormFooterContainer from "@components/form/FooterContainer.svelte";
   import FormLabel from "@components/form/Label.svelte";
   import FormInput from "@components/form/Input.svelte";
+  import FormRange from "@components/form/Range.svelte";
   import FormButton from "@components/form/Button.svelte";
   import FormSubmit from "@components/form/Submit.svelte";
   import FormSelect from "@components/form/Select.svelte";
 
   import i18n from "@states/lang";
   import mode from "@states/mode";
-  import createValidation, { numberValidator } from "@states/validate";
 
   export let pageName: string;
   $: baseContent = window.api.send(readI18nPage($i18n, "modSetting"));
@@ -26,7 +26,6 @@
   let limit: number = 0;
   let threshold = "";
   let message: string = "";
-  const { validity, validate } = createValidation(numberValidator);
 
   window.api.send(readAllStorage("mod")).then(v => {
     directory = v.output.directory;
@@ -104,13 +103,16 @@
       <FormLabelContainer>
         <FormLabel
           on="limit"
-          text={$validity.message ? $validity.message : content.output.limit}
+          text={content.output.limit}
           tooltip={content.output.limitTooltip}
           disabled={$mode.tutorial !== true}
         />
       </FormLabelContainer>
       <FormDataContainer>
-        <FormInput name="limit" bind:value={limit} {validate} bind:validity={$validity} />
+        <FlexContainer column={false} full={false}>
+          <FormRange name="limit" bind:value={limit} min={1} max={8} />
+          <FormLabel text={limit.toString()} disabled={true} />
+        </FlexContainer>
       </FormDataContainer>
 
       <FormLabelContainer>
