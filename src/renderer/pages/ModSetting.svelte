@@ -13,20 +13,25 @@
   import FormInput from "@components/form/Input.svelte";
   import FormButton from "@components/form/Button.svelte";
   import FormSubmit from "@components/form/Submit.svelte";
+  import FormSelect from "@components/form/Select.svelte";
 
   import i18n from "@states/lang";
   import mode from "@states/mode";
+  import createValidation, { numberValidator } from "@states/validate";
 
   export let pageName: string;
   $: baseContent = window.api.send(readI18nPage($i18n, "modSetting"));
 
   let directory: string = "";
   let limit: number = 0;
+  let threshold = "";
   let message: string = "";
+  const { validity, validate } = createValidation(numberValidator);
 
   window.api.send(readAllStorage("mod")).then(v => {
     directory = v.output.directory;
     limit = v.output.recusiveLimit;
+    threshold = v.output.updateThreshold.toString();
   });
 
   const findMods = (searchType: FindModDirectory["subtype"]) => {
@@ -44,6 +49,7 @@
           writeAllStorage("mod", {
             directory,
             recusiveLimit: limit,
+            updateThreshold: isNaN(parseInt(threshold)) ? undefined : parseInt(threshold),
           })
         )
         .then(() => {
@@ -98,13 +104,36 @@
       <FormLabelContainer>
         <FormLabel
           on="limit"
-          text={content.output.limit}
+          text={$validity.message ? $validity.message : content.output.limit}
           tooltip={content.output.limitTooltip}
           disabled={$mode.tutorial !== true}
         />
       </FormLabelContainer>
       <FormDataContainer>
-        <FormInput name="limit" bind:value={limit} />
+        <FormInput name="limit" bind:value={limit} {validate} bind:validity={$validity} />
+      </FormDataContainer>
+
+      <FormLabelContainer>
+        <FormLabel
+          on="threshold"
+          text={content.output.threshold}
+          tooltip={content.output.thresholdTooltip}
+          disabled={$mode.tutorial !== true}
+        />
+      </FormLabelContainer>
+      <FormDataContainer>
+        <FormSelect
+          bind:value={threshold}
+          values={[
+            { key: "0", value: content.output.timeUnitInstant },
+            { key: "60000", value: content.output.timeUnit1Minute },
+            { key: "1200000", value: content.output.timeUnit20Minute },
+            { key: "3600000", value: content.output.timeUnit1Hour },
+            { key: "86400000", value: content.output.timeUnit1Day },
+            { key: "604800000", value: content.output.timeUnit1Week },
+            { key: "3153600000000", value: content.output.timeUnitForever },
+          ]}
+        />
       </FormDataContainer>
 
       <FormFooterContainer>

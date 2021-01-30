@@ -30,6 +30,17 @@ interface LanguageType {
     limit: string;
     limitTooltip: string;
 
+    threshold: string;
+    thresholdTooltip: string;
+
+    timeUnitInstant: string;
+    timeUnit1Minute: string;
+    timeUnit20Minute: string;
+    timeUnit1Hour: string;
+    timeUnit1Day: string;
+    timeUnit1Week: string;
+    timeUnitForever: string;
+
     submitButton: string;
     submitMessage: string;
 
