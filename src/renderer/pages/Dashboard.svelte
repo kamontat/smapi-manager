@@ -1,16 +1,18 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { readAllStorage, readStorage } from "@common/communication";
+  import { readAllStorage, readI18nPage, readStorage } from "@common/communication";
 
   import CenterContainer from "@layouts/CenterContainer.svelte";
   import { updateMode } from "@states/mode";
-  import { setLang } from "@states/lang";
+  import i18n, { setLang } from "@states/lang";
   import pages, { openPage } from "@states/pages";
   import type { PageKey } from "@states/pages";
 
   export let pageName: string;
 
   let pageNames: PageKey[] = (Object.keys(pages) as PageKey[]).filter(name => name !== "dashboard");
+
+  const baseContent = window.api.send(readI18nPage($i18n, "dashboard"));
 
   onMount(() => {
     window.api.send(readStorage("settings", "language")).then(l => setLang(l.output));
@@ -26,17 +28,19 @@
 </script>
 
 <div class="container" name={pageName}>
-  {#each pageNames as page (page)}
-    <div class="card bounce" on:click={() => openPage(page)}>
-      <CenterContainer>
-        <span class="left">{prefix}</span>
-        <span>
-          {pages[page].props.pageName}
-        </span>
-        <span class="right">{suffix}</span>
-      </CenterContainer>
-    </div>
-  {/each}
+  {#await baseContent then content}
+    {#each pageNames as page (page)}
+      <div class="card bounce" on:click={() => openPage(page)}>
+        <CenterContainer>
+          <span class="left">{prefix}</span>
+          <span>
+            {content.output[page]}
+          </span>
+          <span class="right">{suffix}</span>
+        </CenterContainer>
+      </div>
+    {/each}
+  {/await}
 </div>
 
 <style lang="scss">

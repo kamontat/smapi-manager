@@ -1,6 +1,12 @@
 import type LanguageType from "@common/language";
 
 const lang: LanguageType = {
+  dashboard: {
+    modManager: "การจัดการมอด",
+    modSetting: "การตั้งค่ามอด",
+    appSetting: "การตั้งค่าโปรแกรม",
+    appInfo: "ข้อมูลโปรแกรม",
+  },
   appInfo: {
     title: "",
     description: "",

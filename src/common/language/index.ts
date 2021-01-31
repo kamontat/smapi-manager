@@ -1,4 +1,10 @@
 interface LanguageType {
+  dashboard: {
+    modManager: string;
+    modSetting: string;
+    appSetting: string;
+    appInfo: string;
+  };
   appSetting: {
     languageSwitch: string;
     languageTooltip: string;
