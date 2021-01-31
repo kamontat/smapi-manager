@@ -37,7 +37,7 @@
     "react-router": "5.2.0",
     "regenerator-runtime": "0.13.7",
     "tailwindcss": "2.0.2",
-    "twin.macro": "2.0.8",
+    "twin.macro": "2.2.0",
     "xml2js": "0.4.23"
   },
   "devDependencies": {
