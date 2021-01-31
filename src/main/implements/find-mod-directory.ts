@@ -7,14 +7,6 @@ const logger = new Logger(DataOrigin.COMMON, "find-mod-directory");
 const findModDirectory: MainAPIs[typeof FIND_MOD_DIRECTORY] = async ({ store, data }) => {
   logger.debug(`finding base on input type (${data.subtype})`);
 
-  const datetime = +new Date();
-  const threshold = store.mod.get("updateThreshold");
-  const cachedData = store.caches.get("modDirectories");
-  if (Math.abs(cachedData.lastUpdate - datetime) <= threshold) {
-    logger.debug(`return cached mod directory without query anything`);
-    return cachedData;
-  }
-
   let directoryName: string | undefined = undefined;
   switch (data.subtype) {
     case "auto":
@@ -56,7 +48,7 @@ const findModDirectory: MainAPIs[typeof FIND_MOD_DIRECTORY] = async ({ store, da
   }
 
   const limit = store.mod.get("recusiveLimit");
-  const collection = await createModCollection(directoryName, limit, datetime);
+  const collection = await createModCollection(directoryName, limit, +new Date());
 
   logger.debug(`caching mod directory`);
   store.caches.set("modDirectories", collection);

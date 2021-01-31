@@ -36,6 +36,7 @@ import writeAllStorage, { WRITE_ALL_STORAGE } from "./implements/write-all-stora
 import readAllEventCounterAnalytic, {
   READ_ALL_EVENT_COUNTER_ANALYTIC,
 } from "./implements/read-all-event-counter-analytic";
+import readModCollection, { READ_MOD_COLLECTION } from "./implements/read-mod-collection";
 
 const main = new MainBuilder(ipcMain);
 main
@@ -55,4 +56,5 @@ main
   .handle(READ_I18N, readI18n)
   .handle(READ_I18N_PAGE, readI18nPage)
   .handle(FIND_MOD_DIRECTORY, findModDirectory)
+  .handle(READ_MOD_COLLECTION, readModCollection)
   .handle(READ_ALL_EVENT_COUNTER_ANALYTIC, readAllEventCounterAnalytic);

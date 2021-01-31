@@ -41,6 +41,8 @@ import type {
   FindModDirectory,
   READ_ALL_EVENT_COUNTER_ANALYTIC,
   ReadAllEventCounterAnalytic,
+  READ_MOD_COLLECTION,
+  ReadModCollection,
 } from "..";
 
 interface ExecutorArguments<M extends DataMapper<string>> {
@@ -85,6 +87,7 @@ interface MainAPIs {
   [READ_I18N_PAGE]: Executor<ReadI18NPage<keyof LanguageType>>;
 
   [FIND_MOD_DIRECTORY]: Executor<FindModDirectory>;
+  [READ_MOD_COLLECTION]: Executor<ReadModCollection>;
 
   [READ_ALL_EVENT_COUNTER_ANALYTIC]: Executor<ReadAllEventCounterAnalytic>;
 }

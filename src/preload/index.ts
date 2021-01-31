@@ -22,6 +22,7 @@ import DataLoader, {
   FIND_MOD_DIRECTORY,
   WRITE_ALL_STORAGE,
   READ_ALL_EVENT_COUNTER_ANALYTIC,
+  READ_MOD_COLLECTION,
 } from "@common/communication";
 
 process.once("loaded", () => {
@@ -43,6 +44,7 @@ process.once("loaded", () => {
     READ_I18N,
     READ_I18N_PAGE,
     FIND_MOD_DIRECTORY,
+    READ_MOD_COLLECTION,
     READ_ALL_EVENT_COUNTER_ANALYTIC,
   ];
 
@@ -68,16 +70,19 @@ process.once("loaded", () => {
           return output.toJSON();
         } catch (e) {
           logger.error(e);
-          return input
-            .returnToRenderer()
-            .withError(typeof e === "string" ? e : e.toString())
-            .toJSON();
+
+          return Promise.reject(e);
+          // return input
+          // .returnToRenderer()
+          // .withError(typeof e === "string" ? e : e.toString())
+          // .toJSON();
         }
       } else {
         const err = `${input.type} (${input.subtype}) is not in preload whitelist`;
         logger.warn(err);
 
-        return input.returnToRenderer().withError(err).toJSON();
+        return Promise.reject(new Error(err));
+        // return input.returnToRenderer().withError(err).toJSON();
       }
     },
   });

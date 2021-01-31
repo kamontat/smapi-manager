@@ -18,6 +18,7 @@ import updateSettings, { UPDATE_SETTINGS, UpdateSettings } from "./mappers/updat
 import readI18n, { READ_I18N, ReadI18N } from "./mappers/read-i18n";
 import readI18nPage, { READ_I18N_PAGE, ReadI18NPage } from "./mappers/read-i18n-page";
 import findModDirectory, { FIND_MOD_DIRECTORY, FindModDirectory } from "./mappers/find-mod-directory";
+import readModCollection, { READ_MOD_COLLECTION, ReadModCollection } from "./mappers/read-mod-collection";
 import readAllEventCounterAnalytic, {
   READ_ALL_EVENT_COUNTER_ANALYTIC,
   ReadAllEventCounterAnalytic,
@@ -67,6 +68,8 @@ export {
   FIND_MOD_DIRECTORY,
   readAllEventCounterAnalytic,
   READ_ALL_EVENT_COUNTER_ANALYTIC,
+  readModCollection,
+  READ_MOD_COLLECTION,
 };
 
 export type {
@@ -91,6 +94,7 @@ export type {
   ReadI18NPage,
   FindModDirectory,
   ReadAllEventCounterAnalytic,
+  ReadModCollection,
 };
 
 export { apiName } from "./apis/renderer";
