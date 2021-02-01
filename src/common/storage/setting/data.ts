@@ -1,6 +1,8 @@
+import { uuid } from "@common/utils/uuid";
 import type Value from "../core/value";
 
 interface SettingValue extends Value {
+  uniqueid: string;
   language: string;
   tutorialMode: boolean;
   betaMode: boolean;
@@ -9,6 +11,7 @@ interface SettingValue extends Value {
 type SettingKey = keyof SettingValue;
 
 const defaults: SettingValue = {
+  uniqueid: uuid(18),
   language: "en",
   tutorialMode: true,
   betaMode: false,

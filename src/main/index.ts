@@ -1,21 +1,12 @@
 import { app, ipcMain, Menu } from "electron";
-import { Logger, Global } from "@common/logger";
+import { Global } from "@common/logger";
 
 import MENU_BAR from "./constants/menu";
+import MainBuilder from "./models/builder";
+
 import createWindow from "./implements/create-window";
 import recreateWindow from "./implements/recreate-window";
 import quitWindow from "./implements/quit-window";
-
-Global.auto();
-const logger = Logger.Main("index");
-
-app.on("ready", createWindow(logger));
-app.on("window-all-closed", quitWindow(logger));
-app.on("activate", recreateWindow(logger));
-
-Menu.setApplicationMenu(MENU_BAR);
-
-import MainBuilder from "./models/builder";
 
 import readStorage, { READ_STORAGE } from "./implements/read-storage";
 import readAllStorage, { READ_ALL_STORAGE } from "./implements/read-all-storage";
@@ -37,9 +28,15 @@ import readAllEventCounterAnalytic, {
   READ_ALL_EVENT_COUNTER_ANALYTIC,
 } from "./implements/read-all-event-counter-analytic";
 import readModCollection, { READ_MOD_COLLECTION } from "./implements/read-mod-collection";
+import updateUniqueId, { UPDATE_UNIQUE_ID } from "./implements/update-unique-id";
 
-const main = new MainBuilder(ipcMain);
+Global.auto();
+
+const main = new MainBuilder(app, ipcMain);
 main
+  .onReady(createWindow)
+  .onReactivate(recreateWindow)
+  .onQuit(quitWindow)
   .handle(READ_STORAGE, readStorage)
   .handle(READ_ALL_STORAGE, readAllStorage)
   .handle(WRITE_STORAGE, writeStorage)
@@ -57,4 +54,7 @@ main
   .handle(READ_I18N_PAGE, readI18nPage)
   .handle(FIND_MOD_DIRECTORY, findModDirectory)
   .handle(READ_MOD_COLLECTION, readModCollection)
-  .handle(READ_ALL_EVENT_COUNTER_ANALYTIC, readAllEventCounterAnalytic);
+  .handle(READ_ALL_EVENT_COUNTER_ANALYTIC, readAllEventCounterAnalytic)
+  .handle(UPDATE_UNIQUE_ID, updateUniqueId);
+
+Menu.setApplicationMenu(MENU_BAR);

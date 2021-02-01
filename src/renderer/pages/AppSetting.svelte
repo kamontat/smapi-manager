@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { openStorage, readI18nPage, updateSettings } from "@common/communication";
+  import { openStorage, readI18nPage, readStorage, updateSettings, updateUniqueId } from "@common/communication";
   import type { ReadI18NPage } from "@common/communication";
 
   import FlexContainer from "@layouts/FlexContainer.svelte";
@@ -10,6 +10,8 @@
   import FormDataContainer from "@components/form/DataContainer.svelte";
   import FormFooterContainer from "@components/form/FooterContainer.svelte";
   import FormLabel from "@components/form/Label.svelte";
+  import FormInput from "@components/form/Input.svelte";
+  import FormButton from "@components/form/Button.svelte";
   import FormSelect from "@components/form/Select.svelte";
   import FormSubmit from "@components/form/Submit.svelte";
 
@@ -22,6 +24,9 @@
   $: baseContent = window.api.send(readI18nPage($i18n, "appSetting"));
 
   let message: string = "";
+  let uid: string = "";
+
+  window.api.send(readStorage("settings", "uniqueid")).then(v => (uid = v.output));
 
   const onSubmit = (content: ReadI18NPage<"appSetting">["output"]) => {
     return () => {
@@ -69,6 +74,28 @@
             { key: "th", value: "Thai" },
           ]}
         />
+      </FormDataContainer>
+
+      <FormLabelContainer>
+        <FormLabel
+          on="uniqueid"
+          text={content.output.uniqueID}
+          tooltip={content.output.uniqueIDTooltip}
+          disabled={$mode.tutorial !== true}
+        />
+      </FormLabelContainer>
+      <FormDataContainer>
+        <FlexContainer full={false} column={false}>
+          <FormInput name="uniqueid" bind:value={uid} hasGroup={true} disabled={true} />
+          <FormButton
+            text={content.output.uniqueIDRandom}
+            tooltip={content.output.uniqueIDRandomTooltip}
+            disabled={$mode.tutorial !== true}
+            hasGroup={true}
+            isEnded={true}
+            on:click={() => window.api.send(updateUniqueId()).then(v => (uid = v.output))}
+          />
+        </FlexContainer>
       </FormDataContainer>
 
       <FormLabelContainer>
