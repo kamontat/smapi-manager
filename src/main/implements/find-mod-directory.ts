@@ -50,8 +50,8 @@ const findModDirectory: MainAPIs[typeof FIND_MOD_DIRECTORY] = async ({ store, da
   const limit = store.mod.get("recusiveLimit");
   const collection = await createModCollection(directoryName, limit, +new Date());
 
-  logger.debug(`caching mod directory`);
-  store.caches.set("modDirectories", collection);
+  // logger.debug(`caching mod directory`);
+  // store.caches.set("modDirectories", collection);
 
   return collection;
 };
