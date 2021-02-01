@@ -1,9 +1,9 @@
-import { DEBUG, Global, WARN } from "@common/logger";
-import { isDevelopment } from "@common/utils/env";
+// import { readAppInfo } from "@common/communication";
+// import { Global } from "@common/logger";
 
 import App from "./App.svelte";
 
-Global.setLevel(isDevelopment() ? DEBUG : WARN);
+// window.api.send(readAppInfo()).then(v => Global.byEnvironment(v.output.env));
 
 const app = new App({
   target: document.getElementById("root"),
