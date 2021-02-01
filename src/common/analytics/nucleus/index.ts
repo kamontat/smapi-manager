@@ -1,5 +1,9 @@
 import nucleus from "nucleus-nodejs";
+import type { Storage } from "@common/storage";
+import { getNodeEnv } from "@common/utils/env";
+
 import { NUCLEUS_APPID } from "./constants";
+import { Events, OPEN_PAGE } from "./events";
 
 type SecondParam<T> = T extends (id: string, option: infer O) => void ? O : never;
 
@@ -8,20 +12,22 @@ class Nucleus {
   private appOption: SecondParam<typeof nucleus.init>;
   private enabled: boolean;
 
-  constructor() {
+  constructor(store: Storage) {
     this.enabled = true;
 
     this.appid = NUCLEUS_APPID;
     this.appOption = {
       autoUserId: false,
-      debug: true,
+      debug: getNodeEnv().is("development"),
       disableInDev: false,
       disableErrorReports: false,
       disableTracking: !this.enabled,
-      reportInterval: 20, // seconds
+      reportInterval: 30, // seconds
     };
 
     nucleus.init(this.appid, this.appOption);
+    const id = store.settings.get("uniqueid");
+    if (id) nucleus.setUserId(id);
   }
 
   setUser(id: string): void {
@@ -51,7 +57,13 @@ class Nucleus {
     nucleus.appStarted();
   }
 
-  track(event: string, data: Record<string, string | number | boolean>): void {
+  openPage(pageName: string): void {
+    this.track(OPEN_PAGE, {
+      pageName,
+    });
+  }
+
+  track<K extends keyof Events>(event: K, data: Events[K]): void {
     nucleus.track(event, data);
   }
 

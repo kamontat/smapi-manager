@@ -1,3 +1,5 @@
+import type { Storage } from "@common/storage";
+
 import EventCounter from "./models/EventCounter";
 import Nucleus from "./nucleus";
 
@@ -7,10 +9,10 @@ interface Analytics {
 }
 
 class Analytic {
-  static build(): Analytics {
+  static build(store: Storage): Analytics {
     return {
       eventCounter: new EventCounter(),
-      nucleus: new Nucleus(),
+      nucleus: new Nucleus(store),
     };
   }
 }
