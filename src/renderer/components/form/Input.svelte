@@ -41,6 +41,10 @@
     padding-bottom: $xs;
 
     border-radius: $md;
+
+    &:disabled {
+      background-color: var(--lighter-gray);
+    }
   }
 
   .invalid {
@@ -51,5 +55,7 @@
     border-radius: unset;
     border-top-left-radius: $md;
     border-bottom-left-radius: $md;
+
+    border-right-width: 0;
   }
 </style>
