@@ -20,8 +20,8 @@ class CoreStorage<K extends string, V extends Value = Value> {
       encryptionKey: defaultValue.encryptedKey,
     });
 
-    this.store.onDidAnyChange((newValue, oldValue) => {
-      logger.debug(`On '${name}' [event=change]: '${JSON.stringify(oldValue)}' => '${JSON.stringify(newValue)}'`);
+    this.store.onDidAnyChange(() => {
+      logger.debug(`[change] data has been updated on '${name}' storage`);
     });
   }
 
