@@ -1,21 +1,59 @@
-import type { IpcMain } from "electron";
+import type { IpcMain, App } from "electron";
+import type { DataMapper } from "@common/communication/models/data-mapper";
+import type { Analytics } from "@common/analytics";
+import type { AppExecutor } from "./app-executor";
 
 import { Builder, Storage } from "@common/storage";
-import DataLoader, { DataOrigin, Executor } from "@common/communication";
-import type { DataMapper } from "@common/communication/models/data-mapper";
+import DataLoader, { Executor } from "@common/communication";
 import { Logger } from "@common/logger";
 import Analytic from "@common/analytics";
-import type { Analytics } from "@common/analytics";
 
-const logger = new Logger(DataOrigin.MAIN, "builder");
+const mainLogger = Logger.Main();
+const logger = Logger.Main("builder");
 class MainBuilder {
+  private app: App;
   private ipc: IpcMain;
   private store: Storage;
   private analytic: Analytics;
-  constructor(ipc: IpcMain) {
+  constructor(app: App, ipc: IpcMain) {
+    this.app = app;
     this.ipc = ipc;
     this.store = Builder();
-    this.analytic = Analytic.build();
+    this.analytic = Analytic.build(this.store);
+  }
+
+  onReady(executor: AppExecutor): this {
+    this.app.on("ready", () => {
+      executor({
+        event: "ready",
+        store: this.store,
+        analytic: this.analytic,
+        logger: mainLogger,
+      });
+    });
+
+    return this;
+  }
+
+  onQuit(executor: AppExecutor): this {
+    this.app.on("window-all-closed", () => {
+      executor({ event: "window-all-closed", store: this.store, analytic: this.analytic, logger: mainLogger });
+    });
+
+    return this;
+  }
+
+  onReactivate(executor: AppExecutor): this {
+    this.app.on("activate", () => {
+      executor({
+        event: "activate",
+        store: this.store,
+        analytic: this.analytic,
+        logger: mainLogger,
+      });
+    });
+
+    return this;
   }
 
   handle<M extends DataMapper<string>>(key: M["type"], executor: Executor<M>): this {
