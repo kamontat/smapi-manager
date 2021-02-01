@@ -1,5 +1,12 @@
 <script lang="ts">
-  import { findModDirectory, openStorage, readAllStorage, readI18nPage, writeAllStorage } from "@common/communication";
+  import {
+    findModDirectory,
+    openStorage,
+    readAllStorage,
+    readI18nPage,
+    writeAllStorage,
+    writeStorage,
+  } from "@common/communication";
   import type { ReadI18NPage, FindModDirectory } from "@common/communication";
 
   import FlexContainer from "@layouts/FlexContainer.svelte";
@@ -18,17 +25,18 @@
 
   import i18n from "@states/lang";
   import mode from "@states/mode";
+  import type { ModCollection } from "@common/mod";
 
   export let pageName: string;
   $: baseContent = window.api.send(readI18nPage($i18n, "modSetting"));
 
-  let directory: string = "";
+  let mod: ModCollection = { path: "", mods: [], lastUpdate: -1 };
   let limit: number = 0;
   let threshold = "";
   let message: string = "";
 
   window.api.send(readAllStorage("mod")).then(v => {
-    directory = v.output.directory;
+    mod.path = v.output.directory;
     limit = v.output.recusiveLimit;
     threshold = v.output.updateThreshold.toString();
   });
@@ -36,7 +44,7 @@
   const findMods = (searchType: FindModDirectory["subtype"]) => {
     return () => {
       window.api.send(findModDirectory(searchType)).then(v => {
-        directory = v.output.path;
+        mod = v.output;
       });
     };
   };
@@ -46,11 +54,12 @@
       window.api
         .send(
           writeAllStorage("mod", {
-            directory,
+            directory: mod.path,
             recusiveLimit: limit,
             updateThreshold: isNaN(parseInt(threshold)) ? undefined : parseInt(threshold),
           })
         )
+        .then(() => window.api.send(writeStorage("caches", "modDirectories", mod)))
         .then(() => {
           message = content.submitMessage;
           setTimeout(() => {
@@ -80,7 +89,7 @@
       </FormLabelContainer>
       <FormDataContainer>
         <FlexContainer full={false} column={false}>
-          <FormInput name="directory" bind:value={directory} hasGroup={true} disabled={true} />
+          <FormInput name="directory" bind:value={mod.path} hasGroup={true} disabled={true} />
           <FormButton
             text={content.output.directoryFetch}
             tooltip={content.output.directoryFetchTooltip}
