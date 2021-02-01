@@ -9,7 +9,6 @@ cmd_exist() {
 }
 
 pjson="$PWD/package.json"
-
 version="v$(jq -r ".version" "$pjson")"
 
 is_exist "$version" && echo "Update new version in $pjson" >&2 && exit 2
