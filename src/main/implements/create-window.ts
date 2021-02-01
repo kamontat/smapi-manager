@@ -1,4 +1,6 @@
 import type { Logger } from "@common/logger";
+import { getNodeEnv } from "@common/utils/env";
+
 import { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 
 import {
@@ -8,7 +10,6 @@ import {
   DEFAULT_MIN_WIDTH,
   DEFAULT_WEB_PREFERENCES,
 } from "../constants/windows";
-import { isDevelopment } from "@common/utils/env";
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -33,7 +34,7 @@ const createWindow = (
       opt
     );
 
-    logger.debug(`current environment: `, process.env.NODE_ENV);
+    logger.debug(`current environment: `, getNodeEnv().value());
     logger.debug(`create window option: `, JSON.stringify(option));
 
     // Create the browser window.
@@ -42,8 +43,8 @@ const createWindow = (
     // and load the index.html of the app.
     wins.loadURL(entry);
 
-    // Open the DevTools.
-    if (isDevelopment()) {
+    // Auto open the DevTools.
+    if (getNodeEnv().is("development")) {
       wins.webContents.openDevTools();
     }
   };

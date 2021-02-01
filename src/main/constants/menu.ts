@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, MenuItem, MenuItemConstructorOptions, shell } from "electron";
 
-import { isDevelopment } from "@common/utils/env";
+import { getDebug, getNodeEnv } from "@common/utils/env";
 
 import { version, repository } from "../../../package.json";
 
@@ -44,7 +44,7 @@ const templates: (MenuItem | MenuItemConstructorOptions)[] = [
   },
 ];
 
-if (isDevelopment()) {
+if (getNodeEnv().is("development") || getDebug().is(true)) {
   templates.push({
     label: "Debug",
     submenu: [{ role: "reload" }, { role: "forceReload" }, { role: "toggleDevTools" }],
