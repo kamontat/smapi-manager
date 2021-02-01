@@ -9,6 +9,11 @@ interface LanguageType {
     languageSwitch: string;
     languageTooltip: string;
 
+    uniqueID: string;
+    uniqueIDTooltip: string;
+    uniqueIDRandom: string;
+    uniqueIDRandomTooltip: string;
+
     mode: string;
 
     debugMode: string;

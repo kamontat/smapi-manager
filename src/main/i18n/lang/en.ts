@@ -18,6 +18,11 @@ const lang: LanguageType = {
     languageSwitch: "Language",
     languageTooltip: "(set display language)",
 
+    uniqueID: "Unique ID",
+    uniqueIDTooltip: "(unique id for debugger purpose)",
+    uniqueIDRandom: "Random",
+    uniqueIDRandomTooltip: "(regenerate)",
+
     mode: "Mode",
 
     debugMode: "Debug mode",

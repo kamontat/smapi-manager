@@ -21,6 +21,11 @@ const lang: LanguageType = {
     debugMode: "ดีบักโหมด",
     debugTooltip: "(แสดงข้อมูลบางอย่างเพิ่มเติม)",
 
+    uniqueID: "",
+    uniqueIDTooltip: "",
+    uniqueIDRandom: "",
+    uniqueIDRandomTooltip: "",
+
     mode: "",
 
     betaMode: "เบต้าโหมด",

@@ -23,6 +23,7 @@ import readAllEventCounterAnalytic, {
   READ_ALL_EVENT_COUNTER_ANALYTIC,
   ReadAllEventCounterAnalytic,
 } from "./mappers/read-all-event-counter-analytic";
+import updateUniqueId, { UPDATE_UNIQUE_ID, UpdateUniqueId } from "./mappers/update-unique-id";
 
 export default DataLoader;
 export { DataOrigin };
@@ -70,6 +71,8 @@ export {
   READ_ALL_EVENT_COUNTER_ANALYTIC,
   readModCollection,
   READ_MOD_COLLECTION,
+  updateUniqueId,
+  UPDATE_UNIQUE_ID,
 };
 
 export type {
@@ -95,6 +98,7 @@ export type {
   FindModDirectory,
   ReadAllEventCounterAnalytic,
   ReadModCollection,
+  UpdateUniqueId,
 };
 
 export { apiName } from "./apis/renderer";

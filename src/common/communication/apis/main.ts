@@ -43,6 +43,8 @@ import type {
   ReadAllEventCounterAnalytic,
   READ_MOD_COLLECTION,
   ReadModCollection,
+  UPDATE_UNIQUE_ID,
+  UpdateUniqueId,
 } from "..";
 
 interface ExecutorArguments<M extends DataMapper<string>> {
@@ -90,6 +92,8 @@ interface MainAPIs {
   [READ_MOD_COLLECTION]: Executor<ReadModCollection>;
 
   [READ_ALL_EVENT_COUNTER_ANALYTIC]: Executor<ReadAllEventCounterAnalytic>;
+
+  [UPDATE_UNIQUE_ID]: Executor<UpdateUniqueId>;
 }
 
 export type { MainAPIs, Executor };
