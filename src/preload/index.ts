@@ -1,8 +1,7 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 import { APIKEY } from "@common/constants/secrets";
-import { Global, DEBUG, WARN, Logger } from "@common/logger";
-import { isDevelopment } from "@common/utils/env";
+import { Global, Logger } from "@common/logger";
 
 import DataLoader, {
   DataMapper,
@@ -26,7 +25,7 @@ import DataLoader, {
 } from "@common/communication";
 
 process.once("loaded", () => {
-  Global.setLevel(isDevelopment() ? DEBUG : WARN);
+  Global.auto();
 
   const logger = new Logger();
   const whitelist = [
