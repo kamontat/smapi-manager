@@ -1,30 +1,28 @@
-import { app, BrowserWindow, Menu, MenuItem, MenuItemConstructorOptions, shell } from "electron";
+import { app, Menu, MenuItem, MenuItemConstructorOptions, shell } from "electron";
 
 import { getDebug, getNodeEnv } from "@common/utils/env";
 
 import { version, repository } from "../../../package.json";
+import { Request } from "@common/request";
 
 const templates: (MenuItem | MenuItemConstructorOptions)[] = [
   {
     label: app.name,
     submenu: [
       {
-        label: "Process manager",
+        label: "Check for updates",
         click: async () => {
-          const psm = new BrowserWindow({
-            width: 800,
-            height: 300,
-            webPreferences: {
-              contextIsolation: true,
-              devTools: false,
-            },
-          });
+          const request = new Request("api.github.com", "/repos/kamontat/smapi-manager/releases/latest");
+          const response = await request.request();
 
-          psm.loadURL("https://google.com");
-          psm.on("ready-to-show", () => {
-            psm.show();
-            psm.focus();
-          });
+          const currentVersion = `v${app.getVersion()}`;
+
+          const latestVersion = response.json["tag_name"];
+          const latestUrl = response.json["html_url"];
+
+          if (currentVersion !== latestVersion) {
+            await shell.openExternal(latestUrl);
+          }
         },
       },
       { type: "separator" },
