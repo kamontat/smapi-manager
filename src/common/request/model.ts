@@ -1,8 +1,8 @@
 import { ClientRequest, net } from "electron";
-import ProcessorType from "@common/constants/processor-type";
 import { Logger } from "@common/logger";
 
-interface Response<H, T> {
+interface Response<C extends number = number, H = unknown, T = unknown> {
+  code: C;
   headers: H;
   json: T;
 }
@@ -16,7 +16,7 @@ class Request {
     this.hostname = hostname;
     this.path = path;
 
-    this.logger = new Logger(ProcessorType.COMMON, "request");
+    this.logger = Logger.Common("request");
     this.requester = net.request({
       method: "GET",
       protocol: "https:",
@@ -31,8 +31,8 @@ class Request {
     return this;
   }
 
-  request<H, T>(): Promise<Response<H, T>> {
-    return new Promise<Response<H, T>>((res, rej) => {
+  request<R extends Response>(): Promise<R> {
+    return new Promise<R>((res, rej) => {
       this.requester.on("response", response => {
         this.logger.debug(`response from ${this.hostname}${this.path} (${response.statusCode})`);
 
@@ -42,7 +42,7 @@ class Request {
         });
 
         response.on("end", () => {
-          res({ headers: (response.headers as unknown) as H, json: JSON.parse(data) });
+          res({ code: response.statusCode, headers: response.headers as unknown, json: JSON.parse(data) } as R);
         });
 
         response.on("error", (error: Error) => {
@@ -57,3 +57,4 @@ class Request {
 }
 
 export default Request;
+export type { Response };
