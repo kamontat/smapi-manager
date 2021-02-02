@@ -14,7 +14,6 @@ import DataLoader, {
   OPEN_FILE,
   OPEN_STORAGE,
   READ_FULL_INFO,
-  UPDATE_SETTINGS,
   READ_I18N,
   READ_I18N_PAGE,
   READ_ALL_STORAGE,
@@ -23,6 +22,9 @@ import DataLoader, {
   READ_ALL_EVENT_COUNTER_ANALYTIC,
   READ_MOD_COLLECTION,
   UPDATE_UNIQUE_ID,
+  VALIDATE_NEXUS_APIKEY,
+  TOGGLE_MOD_DIRECTORY,
+  OPEN_EXTERNAL_LINK,
 } from "@common/communication";
 
 process.once("loaded", () => {
@@ -40,13 +42,15 @@ process.once("loaded", () => {
     READ_ELECTRON_INFO,
     OPEN_FILE,
     OPEN_STORAGE,
-    UPDATE_SETTINGS,
+    OPEN_EXTERNAL_LINK,
     READ_I18N,
     READ_I18N_PAGE,
     FIND_MOD_DIRECTORY,
     READ_MOD_COLLECTION,
     READ_ALL_EVENT_COUNTER_ANALYTIC,
     UPDATE_UNIQUE_ID,
+    VALIDATE_NEXUS_APIKEY,
+    TOGGLE_MOD_DIRECTORY,
   ];
 
   contextBridge.exposeInMainWorld(apiName, {
