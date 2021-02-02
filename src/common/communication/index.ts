@@ -14,7 +14,6 @@ import openStorage, { OPEN_STORAGE, OpenStorage } from "./mappers/open-storage";
 import openExternalLink, { OPEN_EXTERNAL_LINK, OpenExternalLink } from "./mappers/open-external-link";
 import readFullInfo, { READ_FULL_INFO, ReadFullInfo } from "./mappers/read-full-info";
 import readXmlFile, { READ_XML_FILE, ReadXmlFile } from "./mappers/read-xml-file";
-import updateSettings, { UPDATE_SETTINGS, UpdateSettings } from "./mappers/update-settings";
 import readI18n, { READ_I18N, ReadI18N } from "./mappers/read-i18n";
 import readI18nPage, { READ_I18N_PAGE, ReadI18NPage } from "./mappers/read-i18n-page";
 import findModDirectory, { FIND_MOD_DIRECTORY, FindModDirectory } from "./mappers/find-mod-directory";
@@ -24,6 +23,8 @@ import readAllEventCounterAnalytic, {
   ReadAllEventCounterAnalytic,
 } from "./mappers/read-all-event-counter-analytic";
 import updateUniqueId, { UPDATE_UNIQUE_ID, UpdateUniqueId } from "./mappers/update-unique-id";
+import validateNexusApikey, { VALIDATE_NEXUS_APIKEY, ValidateNexusApikey } from "./mappers/validate-nexus-apikey";
+import toggleModDirectory, { TOGGLE_MOD_DIRECTORY, ToggleModDirectory } from "./mappers/toggle-mod-directory";
 
 export default DataLoader;
 export { DataOrigin };
@@ -53,14 +54,6 @@ export {
   OPEN_EXTERNAL_LINK,
   readXmlFile,
   READ_XML_FILE,
-  /**
-   * @deprecated - use writeAllStorage() instead
-   */
-  updateSettings,
-  /**
-   * @deprecated - use WRITE_ALL_STORAGE instead
-   */
-  UPDATE_SETTINGS,
   readI18n,
   READ_I18N,
   readI18nPage,
@@ -73,6 +66,10 @@ export {
   READ_MOD_COLLECTION,
   updateUniqueId,
   UPDATE_UNIQUE_ID,
+  validateNexusApikey,
+  VALIDATE_NEXUS_APIKEY,
+  toggleModDirectory,
+  TOGGLE_MOD_DIRECTORY,
 };
 
 export type {
@@ -91,7 +88,6 @@ export type {
   /**
    * @deprecated - use WriteAllStorage instead
    */
-  UpdateSettings,
   WriteAllStorage,
   ReadI18N,
   ReadI18NPage,
@@ -99,12 +95,11 @@ export type {
   ReadAllEventCounterAnalytic,
   ReadModCollection,
   UpdateUniqueId,
+  ValidateNexusApikey,
+  ToggleModDirectory,
 };
 
 export { apiName } from "./apis/renderer";
 export type { RendererAPIs } from "./apis/renderer";
 
 export type { MainAPIs, Executor } from "./apis/main";
-
-// const data = DataLoader.builder(readStorage("mod", "directory"));
-// data.sendToPreload().withOutput("hello").toJSON();

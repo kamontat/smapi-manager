@@ -27,8 +27,6 @@ import type {
   OpenStorage,
   OpenExternalLink,
   OPEN_EXTERNAL_LINK,
-  UPDATE_SETTINGS,
-  UpdateSettings,
   READ_I18N,
   ReadI18N,
   READ_I18N_PAGE,
@@ -45,6 +43,10 @@ import type {
   ReadModCollection,
   UPDATE_UNIQUE_ID,
   UpdateUniqueId,
+  VALIDATE_NEXUS_APIKEY,
+  ValidateNexusApikey,
+  TOGGLE_MOD_DIRECTORY,
+  ToggleModDirectory,
 } from "..";
 
 interface ExecutorArguments<M extends DataMapper<string>> {
@@ -72,7 +74,6 @@ interface MainAPIs {
       StorageType[keyof StorageType][keyof StorageType[keyof StorageType]]
     >
   >;
-  [UPDATE_SETTINGS]: Executor<UpdateSettings>;
   [WRITE_ALL_STORAGE]: Executor<WriteAllStorage<keyof StorageType>>;
 
   [READ_APP_INFO]: Executor<ReadAppInfo>;
@@ -90,10 +91,13 @@ interface MainAPIs {
 
   [FIND_MOD_DIRECTORY]: Executor<FindModDirectory>;
   [READ_MOD_COLLECTION]: Executor<ReadModCollection>;
+  [TOGGLE_MOD_DIRECTORY]: Executor<ToggleModDirectory>;
 
   [READ_ALL_EVENT_COUNTER_ANALYTIC]: Executor<ReadAllEventCounterAnalytic>;
 
   [UPDATE_UNIQUE_ID]: Executor<UpdateUniqueId>;
+
+  [VALIDATE_NEXUS_APIKEY]: Executor<ValidateNexusApikey>;
 }
 
 export type { MainAPIs, Executor };
