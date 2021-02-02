@@ -73,7 +73,7 @@
   div.card {
     width: 100%;
     height: 100%;
-    max-height: 15vw;
+    max-height: 25vw;
 
     color: var(--font-color);
     background-color: var(--bg-color);
