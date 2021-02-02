@@ -7,8 +7,8 @@ interface Response<C extends number = number, H = unknown, T = unknown> {
   json: T;
 }
 
+const logger = Logger.Common("request");
 class Request {
-  private logger: Logger;
   private requester: ClientRequest;
   private hostname: string;
   private path: string;
@@ -16,7 +16,6 @@ class Request {
     this.hostname = hostname;
     this.path = path;
 
-    this.logger = Logger.Common("request");
     this.requester = net.request({
       method: "GET",
       protocol: "https:",
@@ -34,7 +33,7 @@ class Request {
   request<R extends Response>(): Promise<R> {
     return new Promise<R>((res, rej) => {
       this.requester.on("response", response => {
-        this.logger.debug(`response from ${this.hostname}${this.path} (${response.statusCode})`);
+        logger.debug(`response from ${this.hostname}${this.path} (${response.statusCode})`);
 
         let data = "";
         response.on("data", (chunk: Buffer) => {
@@ -46,7 +45,7 @@ class Request {
         });
 
         response.on("error", (error: Error) => {
-          this.logger.debug(`error occurred`);
+          logger.debug(`error occurred`);
           rej(error);
         });
       });
