@@ -1,4 +1,8 @@
-<div class="label-container">
+<script lang="ts">
+  export let hidden: boolean = false;
+</script>
+
+<div class="label-container" class:hidden>
   <slot>
     <span class="empty" />
   </slot>
@@ -30,5 +34,11 @@
       padding-top: $sm;
       padding-bottom: $md;
     }
+  }
+
+  .hidden {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
   }
 </style>

@@ -1,4 +1,8 @@
-<div class="data-container">
+<script lang="ts">
+  export let hidden: boolean = false;
+</script>
+
+<div class="data-container" class:hidden>
   <slot />
 </div>
 
@@ -17,5 +21,11 @@
     @include when-md {
       grid-column-start: 6;
     }
+  }
+
+  .hidden {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
   }
 </style>
