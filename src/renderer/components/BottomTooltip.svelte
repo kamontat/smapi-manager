@@ -1,20 +1,18 @@
 <script lang="ts">
   export let text: string;
 
-  export let top: number = -20;
-  export let left: number = -10;
-  export let right: number = -10;
+  export let bottom: number = -20;
+  export let shift: number = -20;
 
-  $: topVar = top ? `--dynamic-top: ${top}px;` : ``;
-  $: leftVar = left ? `--dynamic-left: ${left}px;` : ``;
-  $: rightVar = right ? `--dynamic-right: ${right}px;` : ``;
+  $: bottomVar = bottom ? `--dynamic-bottom: ${bottom}px;` : ``;
+  $: shiftVar = shift ? `--dynamic-shift: ${shift}px;` : ``;
 </script>
 
-<div class="container" style={topVar + leftVar + rightVar}>
-  <span>{text}</span>
+<div class="container" style={bottomVar + shiftVar}>
   <svg x="0px" y="0px" viewBox="0 0 255 255">
-    <polygon points="0,0 127.5,127.5 255,0" />
+    <polygon points="0 255,127.5 0,255 255" />
   </svg>
+  <span>{text}</span>
 </div>
 
 <!-- absolute z-10 bottom-full
@@ -31,9 +29,9 @@ transition-opacity duration-300 ease-in-out -->
 
   .container {
     position: absolute;
-    top: var(--dynamic-top);
-    left: var(--dynamic-left);
-    right: var(--dynamic-right);
+    bottom: var(--dynamic-bottom);
+    left: var(--dynamic-shift);
+    right: var(--dynamic-shift);
 
     text-align: center;
     font-size: $font-sm;
