@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { openStorage, readI18nPage, readStorage, updateSettings, updateUniqueId } from "@common/communication";
+  import { openStorage, readI18nPage, readStorage, writeAllStorage, updateUniqueId } from "@common/communication";
   import type { ReadI18NPage } from "@common/communication";
 
   import FlexContainer from "@layouts/FlexContainer.svelte";
@@ -32,7 +32,7 @@
     return () => {
       window.api
         .send(
-          updateSettings({
+          writeAllStorage("settings", {
             tutorialMode: $mode.tutorial,
             debugMode: $mode.debug,
             betaMode: $mode.beta,
