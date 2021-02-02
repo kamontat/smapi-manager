@@ -4,6 +4,8 @@
     openStorage,
     readAllStorage,
     readI18nPage,
+    readStorage,
+    validateNexusApikey,
     writeAllStorage,
     writeStorage,
   } from "@common/communication";
@@ -33,12 +35,18 @@
   let mod: ModCollection = { path: "", mods: [], lastUpdate: -1 };
   let limit: number = 0;
   let threshold = "";
+  let apikey: string = "";
   let message: string = "";
+  let error: string = "";
 
   window.api.send(readAllStorage("mod")).then(v => {
     mod.path = v.output.directory;
     limit = v.output.recusiveLimit;
     threshold = v.output.updateThreshold.toString();
+  });
+
+  window.api.send(readStorage("secrets", "nexusModsApiKey")).then(v => {
+    apikey = v.output;
   });
 
   const findMods = (searchType: FindModDirectory["subtype"]) => {
@@ -47,6 +55,17 @@
         mod = v.output;
       });
     };
+  };
+
+  const onValidate = () => {
+    window.api.send(validateNexusApikey(apikey)).then(data => {
+      if (data.output.code === 401) {
+        error = data.output.json.message;
+        apikey = "";
+      } else if (data.output.code === 200) {
+        error = "";
+      }
+    });
   };
 
   const onSubmit = (content: ReadI18NPage<"modSetting">["output"]) => {
@@ -60,6 +79,7 @@
           })
         )
         .then(() => window.api.send(writeStorage("caches", "modDirectories", mod)))
+        .then(() => window.api.send(writeStorage("secrets", "nexusModsApiKey", apikey)))
         .then(() => {
           message = content.submitMessage;
           setTimeout(() => {
@@ -109,6 +129,28 @@
         </FlexContainer>
       </FormDataContainer>
 
+      <FormLabelContainer hidden={!$mode.beta}>
+        <FormLabel
+          on="nexus-mod-api-key"
+          text="NexusMod API Key"
+          tooltip="example"
+          disabled={$mode.tutorial !== true}
+        />
+      </FormLabelContainer>
+      <FormDataContainer hidden={!$mode.beta}>
+        <FlexContainer column={false} full={false}>
+          <FormInput name="nexus-mod-api-key" bind:value={apikey} hasGroup={true} />
+          <FormButton
+            text="Validate"
+            tooltip="example"
+            disabled={$mode.tutorial !== true}
+            hasGroup={true}
+            isEnded={true}
+            on:click={onValidate}
+          />
+        </FlexContainer>
+      </FormDataContainer>
+
       <FormLabelContainer>
         <FormLabel
           on="limit"
@@ -148,8 +190,13 @@
       </FormDataContainer>
 
       <FormFooterContainer>
+        <FormLabel text={error} />
         <FormSubmit text={content.output.openButton} on:click={onOpen} />
-        <FormSubmit text={message ? message : content.output.submitButton} on:click={onSubmit(content.output)} />
+        <FormSubmit
+          disabled={error.length > 0}
+          text={message ? message : content.output.submitButton}
+          on:click={onSubmit(content.output)}
+        />
       </FormFooterContainer>
     {/await}
   </FormContainer>
