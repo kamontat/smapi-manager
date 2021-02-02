@@ -3,10 +3,13 @@
   const dispatch = createEventDispatcher();
 
   export let text: string;
-  export const click = () => dispatch("click");
+  export let disabled: boolean = false;
+  export const click = () => {
+    if (!disabled) dispatch("click");
+  };
 </script>
 
-<button type="button" on:click={click}>{text}</button>
+<button {disabled} type="button" on:click={click}>{text}</button>
 
 <style lang="scss">
   @import "../../scss/variables.scss";
@@ -17,6 +20,14 @@
 
     &:hover {
       text-decoration: underline;
+    }
+
+    &:disabled {
+      text-decoration: line-through;
+
+      &:hover {
+        text-decoration: line-through;
+      }
     }
   }
 </style>
