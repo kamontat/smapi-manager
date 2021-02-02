@@ -28,6 +28,7 @@ interface ModManifest {
 
 interface ModServerInfo {
   version: string;
+  lastUpdate: number;
 }
 
 interface Mod {
