@@ -19,7 +19,7 @@ class Nucleus {
     this.appOption = {
       autoUserId: false,
       debug: getNodeEnv().is("development"),
-      disableInDev: false,
+      disableInDev: true,
       disableErrorReports: false,
       disableTracking: !this.enabled,
       reportInterval: 30, // seconds
