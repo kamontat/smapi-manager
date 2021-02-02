@@ -54,6 +54,9 @@ const lang: LanguageType = {
     threshold: "",
     thresholdTooltip: "",
 
+    nexusUpdateThreshold: "",
+    nexusUpdateThresholdTooltip: "",
+
     timeUnitInstant: "",
     timeUnit1Minute: "",
     timeUnit20Minute: "",

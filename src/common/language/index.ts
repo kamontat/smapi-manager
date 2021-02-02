@@ -44,6 +44,9 @@ interface LanguageType {
     threshold: string;
     thresholdTooltip: string;
 
+    nexusUpdateThreshold: string;
+    nexusUpdateThresholdTooltip: string;
+
     timeUnitInstant: string;
     timeUnit1Minute: string;
     timeUnit20Minute: string;

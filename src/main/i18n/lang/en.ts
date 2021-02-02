@@ -51,8 +51,11 @@ const lang: LanguageType = {
     limit: "Searching limit",
     limitTooltip: "(how many subdirectory to look, increase this might effect performance)",
 
-    threshold: "Update threshold",
-    thresholdTooltip: "(application will search mod after this threshold)",
+    threshold: "Local update threshold",
+    thresholdTooltip: "(application will update local mod after passed threshold)",
+
+    nexusUpdateThreshold: "Nexus update threshold",
+    nexusUpdateThresholdTooltip: "(application will get latest general information from nexus-mod)",
 
     timeUnitInstant: "Instant",
     timeUnit1Minute: "1 Minute",
