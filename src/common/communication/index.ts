@@ -16,8 +16,8 @@ import readFullInfo, { READ_FULL_INFO, ReadFullInfo } from "./mappers/read-full-
 import readXmlFile, { READ_XML_FILE, ReadXmlFile } from "./mappers/read-xml-file";
 import readI18n, { READ_I18N, ReadI18N } from "./mappers/read-i18n";
 import readI18nPage, { READ_I18N_PAGE, ReadI18NPage } from "./mappers/read-i18n-page";
-import findModDirectory, { FIND_MOD_DIRECTORY, FindModDirectory } from "./mappers/find-mod-directory";
-import readModCollection, { READ_MOD_COLLECTION, ReadModCollection } from "./mappers/read-mod-collection";
+import findModDirectoryV2, { FIND_MOD_DIRECTORY_V2, FindModDirectoryV2 } from "./mappers/find-mod-directory-v2";
+import readModCollectionV2, { READ_MOD_COLLECTION_V2, ReadModCollectionV2 } from "./mappers/read-mod-collection-v2";
 import readAllEventCounterAnalytic, {
   READ_ALL_EVENT_COUNTER_ANALYTIC,
   ReadAllEventCounterAnalytic,
@@ -25,6 +25,8 @@ import readAllEventCounterAnalytic, {
 import updateUniqueId, { UPDATE_UNIQUE_ID, UpdateUniqueId } from "./mappers/update-unique-id";
 import validateNexusApikey, { VALIDATE_NEXUS_APIKEY, ValidateNexusApikey } from "./mappers/validate-nexus-apikey";
 import toggleModDirectory, { TOGGLE_MOD_DIRECTORY, ToggleModDirectory } from "./mappers/toggle-mod-directory";
+import clearStorage, { CLEAR_STORAGE, ClearStorage } from "./mappers/clear-storage";
+import openMod, { OPEN_MOD, OpenMod } from "./mappers/open-mod";
 
 export default DataLoader;
 export { DataOrigin };
@@ -58,18 +60,22 @@ export {
   READ_I18N,
   readI18nPage,
   READ_I18N_PAGE,
-  findModDirectory,
-  FIND_MOD_DIRECTORY,
+  findModDirectoryV2,
+  FIND_MOD_DIRECTORY_V2,
   readAllEventCounterAnalytic,
   READ_ALL_EVENT_COUNTER_ANALYTIC,
-  readModCollection,
-  READ_MOD_COLLECTION,
+  readModCollectionV2,
+  READ_MOD_COLLECTION_V2,
   updateUniqueId,
   UPDATE_UNIQUE_ID,
   validateNexusApikey,
   VALIDATE_NEXUS_APIKEY,
   toggleModDirectory,
   TOGGLE_MOD_DIRECTORY,
+  clearStorage,
+  CLEAR_STORAGE,
+  openMod,
+  OPEN_MOD,
 };
 
 export type {
@@ -85,18 +91,17 @@ export type {
   OpenStorage,
   OpenExternalLink,
   ReadXmlFile,
-  /**
-   * @deprecated - use WriteAllStorage instead
-   */
   WriteAllStorage,
   ReadI18N,
   ReadI18NPage,
-  FindModDirectory,
+  FindModDirectoryV2,
   ReadAllEventCounterAnalytic,
-  ReadModCollection,
+  ReadModCollectionV2,
   UpdateUniqueId,
   ValidateNexusApikey,
   ToggleModDirectory,
+  ClearStorage,
+  OpenMod,
 };
 
 export { apiName } from "./apis/renderer";

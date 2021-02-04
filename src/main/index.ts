@@ -21,15 +21,17 @@ import readXmlFile, { READ_XML_FILE } from "./implements/read-xml-file";
 import openExternalLink, { OPEN_EXTERNAL_LINK } from "./implements/open-external-link";
 import readI18n, { READ_I18N } from "./implements/read-i18n";
 import readI18nPage, { READ_I18N_PAGE } from "./implements/read-i18n-page";
-import findModDirectory, { FIND_MOD_DIRECTORY } from "./implements/find-mod-directory";
+import findModDirectoryV2, { FIND_MOD_DIRECTORY_V2 } from "./implements/find-mod-directory-v2";
 import writeAllStorage, { WRITE_ALL_STORAGE } from "./implements/write-all-storage";
 import readAllEventCounterAnalytic, {
   READ_ALL_EVENT_COUNTER_ANALYTIC,
 } from "./implements/read-all-event-counter-analytic";
-import readModCollection, { READ_MOD_COLLECTION } from "./implements/read-mod-collection";
 import updateUniqueId, { UPDATE_UNIQUE_ID } from "./implements/update-unique-id";
 import validateNexusApikey, { VALIDATE_NEXUS_APIKEY } from "./implements/validate-nexus-apikey";
 import toggleModDirectory, { TOGGLE_MOD_DIRECTORY } from "./implements/toggle-mod-directory";
+import readModCollectionV2, { READ_MOD_COLLECTION_V2 } from "./implements/read-mod-collection-v2";
+import clearStorage, { CLEAR_STORAGE } from "./implements/clear-storage";
+import openMod, { OPEN_MOD } from "./implements/open-mod";
 
 Global.auto();
 
@@ -49,14 +51,16 @@ main
   .handle(OPEN_FILE, openFile)
   .handle(OPEN_STORAGE, openStorage)
   .handle(OPEN_EXTERNAL_LINK, openExternalLink)
+  .handle(OPEN_MOD, openMod)
   .handle(READ_XML_FILE, readXmlFile)
   .handle(READ_I18N, readI18n)
   .handle(READ_I18N_PAGE, readI18nPage)
-  .handle(FIND_MOD_DIRECTORY, findModDirectory)
-  .handle(READ_MOD_COLLECTION, readModCollection)
+  .handle(FIND_MOD_DIRECTORY_V2, findModDirectoryV2)
+  .handle(READ_MOD_COLLECTION_V2, readModCollectionV2)
   .handle(READ_ALL_EVENT_COUNTER_ANALYTIC, readAllEventCounterAnalytic)
   .handle(UPDATE_UNIQUE_ID, updateUniqueId)
   .handle(VALIDATE_NEXUS_APIKEY, validateNexusApikey)
-  .handle(TOGGLE_MOD_DIRECTORY, toggleModDirectory);
+  .handle(TOGGLE_MOD_DIRECTORY, toggleModDirectory)
+  .handle(CLEAR_STORAGE, clearStorage);
 
 Menu.setApplicationMenu(MENU_BAR);

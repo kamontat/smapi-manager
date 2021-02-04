@@ -8,7 +8,7 @@ const OPEN_STORAGE = "open-storage";
 type OpenStorage = DataMapper<typeof OPEN_STORAGE, keyof StorageType>;
 const builder = (key: keyof StorageType): OpenStorage => {
   return wrapper({
-    type: "open-storage",
+    type: OPEN_STORAGE,
     subtype: key,
   });
 };

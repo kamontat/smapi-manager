@@ -38,10 +38,24 @@ class DataLoader<M extends DataMapper<string>> {
     return this.carrier.output;
   }
 
+  get apikey(): string {
+    return this.carrier.apikey;
+  }
+
   valid(apikey: string): void {
     if (this.carrier.apikey !== apikey) {
       throw new Error(`Invalid APIKEY data, you shouldn't call api by yourself`);
     }
+  }
+
+  withSubtype(subtype: M["subtype"]): this {
+    this.carrier.subtype = subtype;
+    return this;
+  }
+
+  withInput(input: M["input"]): this {
+    this.carrier.input = input;
+    return this;
   }
 
   withOutput(output: M["output"]): this {

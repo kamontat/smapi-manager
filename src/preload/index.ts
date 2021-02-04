@@ -17,14 +17,16 @@ import DataLoader, {
   READ_I18N,
   READ_I18N_PAGE,
   READ_ALL_STORAGE,
-  FIND_MOD_DIRECTORY,
+  FIND_MOD_DIRECTORY_V2,
   WRITE_ALL_STORAGE,
   READ_ALL_EVENT_COUNTER_ANALYTIC,
-  READ_MOD_COLLECTION,
   UPDATE_UNIQUE_ID,
   VALIDATE_NEXUS_APIKEY,
   TOGGLE_MOD_DIRECTORY,
   OPEN_EXTERNAL_LINK,
+  READ_MOD_COLLECTION_V2,
+  CLEAR_STORAGE,
+  OPEN_MOD,
 } from "@common/communication";
 
 process.once("loaded", () => {
@@ -45,12 +47,14 @@ process.once("loaded", () => {
     OPEN_EXTERNAL_LINK,
     READ_I18N,
     READ_I18N_PAGE,
-    FIND_MOD_DIRECTORY,
-    READ_MOD_COLLECTION,
+    FIND_MOD_DIRECTORY_V2,
+    READ_MOD_COLLECTION_V2,
     READ_ALL_EVENT_COUNTER_ANALYTIC,
     UPDATE_UNIQUE_ID,
     VALIDATE_NEXUS_APIKEY,
     TOGGLE_MOD_DIRECTORY,
+    CLEAR_STORAGE,
+    OPEN_MOD,
   ];
 
   contextBridge.exposeInMainWorld(apiName, {
@@ -59,15 +63,12 @@ process.once("loaded", () => {
       input.log(logger);
 
       const forwarder = input.sendToMain();
-      // forwarder.log(logger);
-
       if (whitelist.includes(forwarder.type)) {
         try {
           forwarder.valid(APIKEY);
 
           const result = await ipcRenderer.invoke(raw.type, forwarder.toJSON());
           const receiver = forwarder.returnToPreload().withOutput(result);
-          // receiver.log(logger);
 
           const output = receiver.returnToRenderer();
           output.log(logger);
@@ -77,17 +78,12 @@ process.once("loaded", () => {
           logger.error(e);
 
           return Promise.reject(e);
-          // return input
-          // .returnToRenderer()
-          // .withError(typeof e === "string" ? e : e.toString())
-          // .toJSON();
         }
       } else {
         const err = `${input.type} (${input.subtype}) is not in preload whitelist`;
         logger.warn(err);
 
         return Promise.reject(new Error(err));
-        // return input.returnToRenderer().withError(err).toJSON();
       }
     },
   });
