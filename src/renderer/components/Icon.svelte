@@ -31,6 +31,8 @@
 </div>
 
 <style lang="scss">
+  @import "../scss/variables.scss";
+
   svg {
     width: 100%;
     height: 100%;
@@ -43,6 +45,8 @@
     width: var(--dynamic-size);
 
     cursor: pointer;
+
+    margin: $sm;
   }
 
   .sm {
