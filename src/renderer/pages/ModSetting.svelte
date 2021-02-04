@@ -1,6 +1,7 @@
 <script lang="ts">
   import {
-    findModDirectory,
+    clearStorage,
+    findModDirectoryV2,
     openStorage,
     readAllStorage,
     readI18nPage,
@@ -9,7 +10,7 @@
     writeAllStorage,
     writeStorage,
   } from "@common/communication";
-  import type { ReadI18NPage, FindModDirectory } from "@common/communication";
+  import type { ReadI18NPage, FindModDirectoryV2 } from "@common/communication";
 
   import FlexContainer from "@layouts/FlexContainer.svelte";
   import Header from "@components/Header.svelte";
@@ -27,32 +28,34 @@
 
   import i18n from "@states/lang";
   import mode from "@states/mode";
-  import type { ModCollection } from "@common/mod";
 
   export let pageName: string;
   $: baseContent = window.api.send(readI18nPage($i18n, "modSetting"));
 
-  let mod: ModCollection = { path: "", mods: [], lastUpdate: -1 };
+  let directory: string = "";
   let limit: number = 0;
   let threshold = "";
   let apikey: string = "";
   let message: string = "";
   let error: string = "";
 
-  window.api.send(readAllStorage("mod")).then(v => {
-    mod.path = v.output.directory;
-    limit = v.output.recusiveLimit;
-    threshold = v.output.updateThreshold.toString();
-  });
+  const setupModSettings = () => {
+    window.api.send(readAllStorage("mod")).then(v => {
+      directory = v.output.directory;
+      limit = v.output.recusiveLimit;
+      threshold = v.output.updateThreshold.toString();
+    });
+  };
 
+  setupModSettings();
   window.api.send(readStorage("secrets", "nexusModsApiKey")).then(v => {
     apikey = v.output;
   });
 
-  const findMods = (searchType: FindModDirectory["subtype"]) => {
+  const findMods = (searchType: FindModDirectoryV2["subtype"]) => {
     return () => {
-      window.api.send(findModDirectory(searchType)).then(v => {
-        mod = v.output;
+      window.api.send(findModDirectoryV2(searchType)).then(v => {
+        directory = v.output;
       });
     };
   };
@@ -73,12 +76,11 @@
       window.api
         .send(
           writeAllStorage("mod", {
-            directory: mod.path,
+            directory,
             recusiveLimit: limit,
             updateThreshold: isNaN(parseInt(threshold)) ? undefined : parseInt(threshold),
           })
         )
-        .then(() => window.api.send(writeStorage("caches", "modDirectories", mod)))
         .then(() => window.api.send(writeStorage("secrets", "nexusModsApiKey", apikey)))
         .then(() => {
           message = content.submitMessage;
@@ -91,6 +93,10 @@
 
   const onOpen = () => {
     window.api.send(openStorage("mod"));
+  };
+
+  const onClearCaches = () => {
+    window.api.send(clearStorage("mod", "caches")).then(setupModSettings);
   };
 </script>
 
@@ -109,7 +115,7 @@
       </FormLabelContainer>
       <FormDataContainer>
         <FlexContainer full={false} column={false}>
-          <FormInput name="directory" bind:value={mod.path} hasGroup={true} disabled={true} />
+          <FormInput name="directory" bind:value={directory} hasGroup={true} disabled={true} />
           <FormButton
             text={content.output.directoryFetch}
             tooltip={content.output.directoryFetchTooltip}
@@ -190,14 +196,27 @@
       </FormDataContainer>
 
       <FormFooterContainer>
-        <FormLabel text={error} />
-        <FormSubmit text={content.output.openButton} on:click={onOpen} />
-        <FormSubmit
-          disabled={error.length > 0}
-          text={message ? message : content.output.submitButton}
-          on:click={onSubmit(content.output)}
-        />
+        <div slot="left" class:hidden={!$mode.beta}>
+          <FormSubmit text="Clear" on:click={onClearCaches} />
+        </div>
+        <div slot="right">
+          <FormLabel text={error} />
+          <FormSubmit text={content.output.openButton} on:click={onOpen} />
+          <FormSubmit
+            disabled={error.length > 0}
+            text={message ? message : content.output.submitButton}
+            on:click={onSubmit(content.output)}
+          />
+        </div>
       </FormFooterContainer>
     {/await}
   </FormContainer>
 </FlexContainer>
+
+<style lang="scss">
+  .hidden {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+</style>
