@@ -1,26 +1,23 @@
-import { join } from "path";
 import { MainAPIs, TOGGLE_MOD_DIRECTORY } from "@common/communication";
 import { Logger } from "@common/logger";
 import { rename } from "@common/file-system";
+import { loadFromCaches, saveToCaches, buildDirectoryPath, buildTogglePath } from "@common/mod/utils";
 
 const logger = Logger.Common("toggle-mod-directory");
-const toggleModDirectory: MainAPIs[typeof TOGGLE_MOD_DIRECTORY] = async ({ data }) => {
-  const mod = data.input;
+const toggleModDirectory: MainAPIs[typeof TOGGLE_MOD_DIRECTORY] = async ({ data, store }) => {
+  const mod = loadFromCaches(store, data.input);
 
-  const newName = mod.status.isHidden ? mod.transformer.shownName : mod.transformer.hiddenName;
+  const current = buildDirectoryPath(mod);
+  const next = buildTogglePath(mod);
 
-  const from = join(mod.dirpath, mod.filename);
-  const to = join(mod.dirpath, newName);
+  logger.debug(`update ${current} => ${next}`);
+  await rename(current, next);
 
-  logger.debug(`update ${from} => ${to}`);
-  await rename(from, to);
+  mod.status.visibility = !mod.status.visibility;
 
-  const newMod = Object.assign({}, mod);
+  saveToCaches(store, mod);
 
-  newMod.status.isHidden = !newMod.status.isHidden;
-  newMod.filename = newName;
-
-  return newMod;
+  return mod;
 };
 
 export default toggleModDirectory;
