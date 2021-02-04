@@ -17,19 +17,10 @@ export const createMod = async (directory: Directory): Promise<Mod> => {
   return modBuilder(directory, manifest);
 };
 
-export const updateMod = async (mods: Mod[], directory: Directory): Promise<Mod> => {
+export const updateMod = async (mods: Record<string, Mod>, directory: Directory): Promise<Mod> => {
   const manifest = await readJsonFile<Manifest>(join(directory.fullpath, MANIFEST_JSON));
 
-  return modBuilder(
-    directory,
-    manifest,
-    mods.find(mod => {
-      const byId = mod.id === manifest.UniqueID;
-      const byName = mod.name === manifest.Name;
-
-      return byId || byName;
-    })
-  );
+  return modBuilder(directory, manifest, mods[manifest.UniqueID]);
 };
 
 export const createCollection = async (
@@ -49,7 +40,11 @@ export const createCollection = async (
   return {
     uuid,
     path: rootpath,
-    mods,
+    mods: mods.reduce((p, c) => {
+      return Object.assign(p, {
+        [c.id]: c,
+      });
+    }, {} as Record<string, Mod>),
     lastUpdated,
   };
 };
@@ -66,7 +61,11 @@ export const updateCollection = async (collection: ModCollection, limit: number)
   return {
     uuid: collection.uuid,
     path: rootpath,
-    mods,
+    mods: mods.reduce((p, c) => {
+      return Object.assign(p, {
+        [c.id]: c,
+      });
+    }, {} as Record<string, Mod>),
     lastUpdated: +new Date(),
   };
 };

@@ -14,7 +14,7 @@ interface ModCollection {
   /**
    * all mods in this collection
    */
-  mods: Mod[];
+  mods: Record<string, Mod>;
 
   /**
    * last updated of this collection
@@ -26,7 +26,7 @@ const emptyCollectionBuilder = (): ModCollection => {
   return {
     uuid: "",
     path: "",
-    mods: [],
+    mods: {},
     lastUpdated: -1,
   };
 };
