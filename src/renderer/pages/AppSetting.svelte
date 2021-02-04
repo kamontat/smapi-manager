@@ -132,8 +132,10 @@
       </FormDataContainer>
 
       <FormFooterContainer>
-        <FormSubmit text={content.output.openButton} on:click={onOpen} />
-        <FormSubmit text={message ? message : content.output.submitButton} on:click={onSubmit(content.output)} />
+        <div slot="right">
+          <FormSubmit text={content.output.openButton} on:click={onOpen} />
+          <FormSubmit text={message ? message : content.output.submitButton} on:click={onSubmit(content.output)} />
+        </div>
       </FormFooterContainer>
     {/await}
   </FormContainer>

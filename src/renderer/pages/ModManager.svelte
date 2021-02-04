@@ -1,8 +1,8 @@
 <script lang="ts">
   import { writable } from "svelte/store";
 
-  import { openExternalLink, readModCollection, toggleModDirectory } from "@common/communication";
-  import type { ModCollection, ModData } from "@common/mod";
+  import { openMod, readModCollectionV2, toggleModDirectory } from "@common/communication";
+  import { emptyCollectionBuilder } from "@common/mod/renderer";
 
   import Badge from "@components/Badge.svelte";
   import BadgeContainer from "@components/BadgeContainer.svelte";
@@ -13,17 +13,17 @@
 
   export let pageName: string;
 
-  const collection = writable({ path: "", mods: [], lastUpdate: -1 } as ModCollection, set => {
-    window.api.send(readModCollection(true)).then(v => set(v.output));
+  const collection = writable(emptyCollectionBuilder(), set => {
+    window.api.send(readModCollectionV2()).then(v => set(v.output));
   });
 
-  const onToggleModStatus = (mod: ModData) => {
+  const onToggleModStatus = (id: string) => {
     return () => {
-      window.api.send(toggleModDirectory(mod)).then(result => {
+      window.api.send(toggleModDirectory(id)).then(result => {
         collection.update(mods => {
           const newCollection = Object.assign({}, mods);
-          const index = newCollection.mods.findIndex(mod => mod.id === result.output.id);
-          newCollection.mods[index] = result.output;
+
+          newCollection.mods[result.output.id] = result.output;
 
           return newCollection;
         });
@@ -31,9 +31,15 @@
     };
   };
 
-  const onOpenExternalLink = (updater: ModData["manifest"]["updater"][0]) => {
+  const onOpenModDirectory = (id: string) => {
     return () => {
-      window.api.send(openExternalLink(updater.url));
+      window.api.send(openMod("directory", id));
+    };
+  };
+
+  const onOpenModUpdater = (id: string) => {
+    return () => {
+      window.api.send(openMod("updater", id));
     };
   };
 </script>
@@ -42,36 +48,49 @@
   <small class:hidden={!$mode.debug} slot="right">Debug = {$mode.debug}, Beta = {$mode.beta}</small>
 </Header>
 <div class="container">
-  {#each $collection.mods as each}
-    <div class="row">
+  {#each Object.entries($collection.mods) as [id, each]}
+    <div class="row" name={id}>
       <div class="header">
         <small class:hidden={!$mode.debug}>{each.id}</small>
-        {#if each.manifest.updater.find(u => u.url !== "")}
+
+        <div class="header-right">
           <Icon
-            tooltip={each.manifest.updater.find(u => u.url !== "").key}
+            tooltip="Directory"
             disabledTooltip={$mode.tutorial !== true}
             size="sm"
-            on:click={onOpenExternalLink(each.manifest.updater.find(u => u.url !== ""))}
+            on:click={onOpenModDirectory(each.id)}
           >
             <path
-              d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"
+              d="M1.979 8l-.979-6h6.972c1.265 1.583 1.327 2 3.306 2h11.722l-.96 4h-2.04l.469-2h-9.191c-2.326 0-3.166-.612-4.278-2h-3.694l.694 4h-2.021zm22.021 2l-2 12h-20l-2-12h6.278l2.308-3 3.9 3h1.97l-1.429-1.097 1.465-1.903 3.9 3h5.608zm-2.331 2h-19.338l1.385 8h16.568l1.385-8z"
             />
           </Icon>
-        {/if}
+          {#if each.updater.provider !== "none"}
+            <Icon
+              tooltip={each.updater.provider}
+              disabledTooltip={$mode.tutorial !== true}
+              size="sm"
+              on:click={onOpenModUpdater(each.id)}
+            >
+              <path
+                d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"
+              />
+            </Icon>
+          {/if}
+        </div>
       </div>
       <div class="body">
-        <h1>{each.manifest.name} <span class:hidden={!$mode.debug}>({each.manifest.version})</span></h1>
-        <p>{each.manifest.description}</p>
+        <h1>{each.name} <span class:hidden={!$mode.debug}>({each.version})</span></h1>
+        <p>{each.description}</p>
         <BadgeContainer center={true}>
           <Badge
-            text={each.status.isHidden ? "Hidden" : "Shown"}
-            color={each.status.isHidden ? "red" : "green"}
-            on:click={onToggleModStatus(each)}
+            text={each.status.visibility ? "Shown" : "Hidden"}
+            color={each.status.visibility ? "green" : "red"}
+            on:click={onToggleModStatus(each.id)}
           />
         </BadgeContainer>
       </div>
       <div class="footer">
-        <p>footer</p>
+        <span />
       </div>
     </div>
   {/each}
@@ -134,13 +153,19 @@
 
       .header {
         display: flex;
-        justify-content: space-between;
+        align-items: center;
 
         margin: $sm;
 
         small {
           font-size: $font-sm;
           color: var(--light-gray);
+        }
+
+        .header-right {
+          display: flex;
+          flex-grow: 1;
+          justify-content: flex-end;
         }
       }
 
