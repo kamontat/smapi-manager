@@ -3,18 +3,17 @@ import type { Information } from "@common/nexus";
 import type Value from "../core/value";
 
 interface CachesValue extends Value {
-  modDirectories: ModCollection;
+  /**
+   * key of mod collection is modCollection id generated from directory path
+   */
+  modCollections: Record<string, ModCollection>;
   nexusInformation: Information | undefined;
 }
 type CachesKey = keyof CachesValue;
 
 const defaults: CachesValue = {
   encryptedKey: "reAdONlY-CacHE",
-  modDirectories: {
-    path: "",
-    mods: [],
-    lastUpdate: -1,
-  },
+  modCollections: {},
   nexusInformation: undefined,
 };
 

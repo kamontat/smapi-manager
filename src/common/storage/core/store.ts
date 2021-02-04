@@ -45,6 +45,10 @@ class CoreStorage<K extends string, V extends Value = Value> {
     return this.store.get(key) as O;
   }
 
+  getAny<O, K extends string = string>(key: Exclude<K, keyof V>, def?: O): O {
+    return this.store.get(key, def);
+  }
+
   update<K extends keyof V, O extends Required<V>[K]>(key: K, fn: (old: O) => O): void {
     const old = this.get<K, O>(key);
     const _new = fn(old);
@@ -69,8 +73,16 @@ class CoreStorage<K extends string, V extends Value = Value> {
     }
   }
 
+  setAny<O>(key: string, value: O): void {
+    this.store.set(key, value);
+  }
+
   open(): void {
     this.store.openInEditor();
+  }
+
+  clear(): void {
+    this.store.clear();
   }
 }
 
