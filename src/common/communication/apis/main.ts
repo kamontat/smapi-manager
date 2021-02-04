@@ -1,12 +1,8 @@
-import type { IpcMainInvokeEvent } from "electron";
-
-import type { Storage, StorageType } from "@common/storage";
+import type { StorageType } from "@common/storage";
 import type LanguageType from "@common/language";
-import type { Analytics } from "@common/analytics";
+import type { Executor } from "../models/executor";
 
-import type DataLoader from "../models/data-loader";
 import type {
-  DataMapper,
   ReadStorage,
   READ_STORAGE,
   WriteStorage,
@@ -35,28 +31,23 @@ import type {
   ReadAllStorage,
   WRITE_ALL_STORAGE,
   WriteAllStorage,
-  FIND_MOD_DIRECTORY,
-  FindModDirectory,
+  FIND_MOD_DIRECTORY_V2,
+  FindModDirectoryV2,
   READ_ALL_EVENT_COUNTER_ANALYTIC,
   ReadAllEventCounterAnalytic,
-  READ_MOD_COLLECTION,
-  ReadModCollection,
   UPDATE_UNIQUE_ID,
   UpdateUniqueId,
   VALIDATE_NEXUS_APIKEY,
   ValidateNexusApikey,
   TOGGLE_MOD_DIRECTORY,
   ToggleModDirectory,
+  READ_MOD_COLLECTION_V2,
+  ReadModCollectionV2,
+  CLEAR_STORAGE,
+  ClearStorage,
+  OPEN_MOD,
+  OpenMod,
 } from "..";
-
-interface ExecutorArguments<M extends DataMapper<string>> {
-  store: Storage;
-  data: DataLoader<M>;
-  analytic: Analytics;
-  event: IpcMainInvokeEvent;
-}
-
-type Executor<M extends DataMapper<string>> = (args: ExecutorArguments<M>) => Promise<M["output"]>;
 
 interface MainAPIs {
   [READ_STORAGE]: Executor<
@@ -84,13 +75,14 @@ interface MainAPIs {
   [OPEN_FILE]: Executor<OpenFile>;
   [OPEN_STORAGE]: Executor<OpenStorage>;
   [OPEN_EXTERNAL_LINK]: Executor<OpenExternalLink>;
+  [OPEN_MOD]: Executor<OpenMod>;
 
   [READ_XML_FILE]: Executor<ReadXmlFile>;
   [READ_I18N]: Executor<ReadI18N<keyof LanguageType, keyof LanguageType[keyof LanguageType]>>;
   [READ_I18N_PAGE]: Executor<ReadI18NPage<keyof LanguageType>>;
 
-  [FIND_MOD_DIRECTORY]: Executor<FindModDirectory>;
-  [READ_MOD_COLLECTION]: Executor<ReadModCollection>;
+  [FIND_MOD_DIRECTORY_V2]: Executor<FindModDirectoryV2>;
+  [READ_MOD_COLLECTION_V2]: Executor<ReadModCollectionV2>;
   [TOGGLE_MOD_DIRECTORY]: Executor<ToggleModDirectory>;
 
   [READ_ALL_EVENT_COUNTER_ANALYTIC]: Executor<ReadAllEventCounterAnalytic>;
@@ -98,6 +90,8 @@ interface MainAPIs {
   [UPDATE_UNIQUE_ID]: Executor<UpdateUniqueId>;
 
   [VALIDATE_NEXUS_APIKEY]: Executor<ValidateNexusApikey>;
+
+  [CLEAR_STORAGE]: Executor<ClearStorage>;
 }
 
 export type { MainAPIs, Executor };
