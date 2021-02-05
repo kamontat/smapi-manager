@@ -3,8 +3,7 @@ import type { Storage } from "@common/storage";
 import { getNodeEnv } from "@common/utils/env";
 
 import { NUCLEUS_APPID } from "./constants";
-import { Events, OPEN_PAGE } from "./events";
-import { UPDATE_SETTINGS } from "./events/update-settings";
+import { Events, OPEN_PAGE, UPDATE_SETTINGS, TOGGLE_MOD_DIRECTORY } from "./events";
 
 type SecondParam<T> = T extends (id: string, option: infer O) => void ? O : never;
 
@@ -56,6 +55,13 @@ class Nucleus {
 
   start(): void {
     nucleus.appStarted();
+  }
+
+  toggleModDirectory(modId: string, visibility: boolean): void {
+    this.track(TOGGLE_MOD_DIRECTORY, {
+      modId,
+      visibility,
+    });
   }
 
   updateStorage(settingName: string, newValue: string): void {

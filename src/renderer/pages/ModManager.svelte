@@ -55,7 +55,7 @@
 
         <div class="header-right">
           <Icon
-            tooltip="Directory"
+            tooltip="directory"
             disabledTooltip={$mode.tutorial !== true}
             size="sm"
             on:click={onOpenModDirectory(each.id)}

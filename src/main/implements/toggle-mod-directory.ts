@@ -4,7 +4,7 @@ import { rename } from "@common/file-system";
 import { loadFromCaches, saveToCaches, buildDirectoryPath, buildTogglePath } from "@common/mod/utils";
 
 const logger = Logger.Common("toggle-mod-directory");
-const toggleModDirectory: MainAPIs[typeof TOGGLE_MOD_DIRECTORY] = async ({ data, store }) => {
+const toggleModDirectory: MainAPIs[typeof TOGGLE_MOD_DIRECTORY] = async ({ data, store, analytic }) => {
   const mod = loadFromCaches(store, data.input);
 
   const current = buildDirectoryPath(mod);
@@ -15,6 +15,7 @@ const toggleModDirectory: MainAPIs[typeof TOGGLE_MOD_DIRECTORY] = async ({ data,
 
   mod.status.visibility = !mod.status.visibility;
 
+  analytic.nucleus.toggleModDirectory(mod.id, mod.status.visibility);
   saveToCaches(store, mod);
 
   return mod;
