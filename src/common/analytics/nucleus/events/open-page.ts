@@ -1,4 +1,4 @@
-export const OPEN_PAGE = "OPEN_PAGE";
+export const OPEN_PAGE = "open-page";
 export type OpenPageProps = {
   pageName: string;
 };

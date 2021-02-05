@@ -4,6 +4,7 @@ import { getNodeEnv } from "@common/utils/env";
 
 import { NUCLEUS_APPID } from "./constants";
 import { Events, OPEN_PAGE } from "./events";
+import { UPDATE_SETTINGS } from "./events/update-settings";
 
 type SecondParam<T> = T extends (id: string, option: infer O) => void ? O : never;
 
@@ -57,17 +58,24 @@ class Nucleus {
     nucleus.appStarted();
   }
 
+  updateStorage(settingName: string, newValue: string): void {
+    this.track(UPDATE_SETTINGS, {
+      settingName: settingName,
+      settingValue: newValue,
+    });
+  }
+
   openPage(pageName: string): void {
     this.track(OPEN_PAGE, {
       pageName,
     });
   }
 
-  track<K extends keyof Events>(event: K, data: Events[K]): void {
+  private track<K extends keyof Events>(event: K, data: Events[K]): void {
     nucleus.track(event, data);
   }
 
-  trackError(name: string, error: Error): void {
+  private trackError(name: string, error: Error): void {
     nucleus.trackError(name, error);
   }
 }
