@@ -25,9 +25,6 @@ jobs:
         with:
           node-version: "15"
 
-      - name: Generate APIKey
-        run: ./scripts/generate.sh
-
       - name: Install dependencies
         run: yarn
 

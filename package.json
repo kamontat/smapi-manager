@@ -8,8 +8,10 @@
   "license": "BSD-3-Clause",
   "scripts": {
     "start": "electron-forge start",
+    "prepackage": "node ./scripts/create-secrets.js",
     "package": "electron-forge package",
     "make": "electron-forge make",
+    "prepublish": "node ./scripts/create-secrets.js",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx .",
     "check": "svelte-check",

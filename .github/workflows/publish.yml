@@ -23,7 +23,7 @@ jobs:
           node-version: "15"
 
       - name: Generate APIKey
-        run: ./scripts/generate.sh
+        run: node ./scripts/create-secrets.js
 
       - name: Install dependencies
         run: yarn
