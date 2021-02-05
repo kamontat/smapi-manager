@@ -88,3 +88,5 @@ out/
 
 # Reports
 reports/
+
+src/common/constants/secrets.ts

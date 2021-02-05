@@ -1,23 +1,35 @@
-import { Chalk } from "chalk";
+import { DataOrigin } from "@common/communication";
 
-import colors from "./colors";
 import Global from "./global";
 import { DEBUG, ERROR, INFO, Level, WARN } from "./level";
-import { getLevelName, isAcceptedLevel } from "./utils";
+import { isAcceptedLevel } from "./utils";
 
 class Logger {
+  static Main(...namespaces: string[]): Logger {
+    return new Logger(DataOrigin.MAIN, ...namespaces);
+  }
+
+  static Renderer(...namespaces: string[]): Logger {
+    return new Logger(DataOrigin.RENDERER, ...namespaces);
+  }
+
+  static Preload(...namespaces: string[]): Logger {
+    return new Logger(DataOrigin.PRELOAD, ...namespaces);
+  }
+
+  static Common(...namespaces: string[]): Logger {
+    return new Logger(DataOrigin.COMMON, ...namespaces);
+  }
+
   private namespace: string;
-  private color: Chalk;
   constructor(...namespaces: string[]) {
     this.namespace = namespaces.join(":");
-
-    const size = this.namespace.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0) % colors.length;
-    this.color = colors[size];
   }
 
   private log(level: Level, ...msg: string[]) {
     if (isAcceptedLevel(Global.level, level)) {
-      console.log(`[${getLevelName(level)}] ${this.color(this.namespace)}`, ...msg);
+      if (this.namespace) console.log(`[${level.name.padStart(5)}] ${this.namespace}`, ...msg);
+      else console.log(`[${level.name.padStart(5)}]`, ...msg);
     }
   }
 
@@ -37,8 +49,8 @@ class Logger {
     this.log(WARN, ...msg);
   }
 
-  error(...msg: string[]): void {
-    this.log(ERROR, ...msg);
+  error(error: Error): void {
+    this.log(ERROR, `${error.name}: ${error.message}`);
   }
 }
 

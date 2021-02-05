@@ -13,3 +13,11 @@ export const uuid = (digit = 6): string => {
 
   return result;
 };
+
+export const base64 = (data: string): string => {
+  return Buffer.from(data, "utf-8").toString("base64");
+};
+
+export const debase64 = (data: string): string => {
+  return Buffer.from(data, "base64").toString("utf-8");
+};

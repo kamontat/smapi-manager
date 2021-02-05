@@ -1,4 +1,4 @@
-import File from "./file";
-import Directory from "./directory";
+import type File from "./file";
+import type Directory from "./directory";
 
-export { Directory, File };
+export type { Directory, File };

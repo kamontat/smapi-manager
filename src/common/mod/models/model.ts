@@ -28,6 +28,7 @@ interface ModManifest {
 
 interface ModServerInfo {
   version: string;
+  lastUpdate: number;
 }
 
 interface Mod {
@@ -43,3 +44,4 @@ interface Mod {
 }
 
 export default Mod;
+export type { ModUpdater };

@@ -34,4 +34,6 @@
   <a href="docs/analytics.md">Analytics</a>
   <span> · </span>
   <a href="docs/ci-cd.md">CI/CD</a>
+  <span> · </span>
+  <a href="docs/line-of-code.md">Line of Code</a>
 </h3>

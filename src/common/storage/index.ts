@@ -1,4 +1,7 @@
-import ConfigStore from "./config/store";
-import ConfigValue, { defaults as defaultConfig, ConfigKey } from "./config/data";
+import Builder, { Storage, StorageType } from "./storage";
 
-export { ConfigStore, ConfigValue, ConfigKey, defaultConfig };
+import type CoreStorage from "./core/store";
+import type StorageValue from "./core/value";
+
+export { Builder };
+export type { Storage, StorageType, CoreStorage, StorageValue };

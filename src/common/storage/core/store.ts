@@ -1,12 +1,16 @@
 import Store from "electron-store";
+import { Logger } from "@common/logger";
 
-import Value from "./value";
+import type Value from "./value";
 import builder from "./default";
 
-abstract class CoreStorage<V extends Value> {
+const logger = Logger.Common("storage");
+class CoreStorage<K extends string, V extends Value = Value> {
+  readonly name: K;
   private store: Store<Required<V>>;
 
-  constructor(name: string, defaults: V) {
+  constructor(name: K, defaults: V) {
+    this.name = name;
     const defaultValue = builder<V>(defaults);
     this.store = new Store({
       name: name,
@@ -14,6 +18,10 @@ abstract class CoreStorage<V extends Value> {
       clearInvalidConfig: true,
       defaults: defaultValue,
       encryptionKey: defaultValue.encryptedKey,
+    });
+
+    this.store.onDidAnyChange(() => {
+      logger.debug(`[change] data has been updated on '${name}' storage`);
     });
   }
 
@@ -37,12 +45,44 @@ abstract class CoreStorage<V extends Value> {
     return this.store.get(key) as O;
   }
 
+  getAny<O, K extends string = string>(key: Exclude<K, keyof V>, def?: O): O {
+    return this.store.get(key, def);
+  }
+
+  update<K extends keyof V, O extends Required<V>[K]>(key: K, fn: (old: O) => O): void {
+    const old = this.get<K, O>(key);
+    const _new = fn(old);
+
+    this.store.set(key, _new);
+  }
+
+  setAll(k: Partial<V>): void {
+    this.store.set(k);
+  }
+
   set<K extends keyof V, O extends Required<V>[K]>(key: K, value: O): void {
-    return this.store.set(key, value);
+    try {
+      this.update(key, old => {
+        if (old === value) {
+          throw new Error("duplicated value");
+        }
+        return value;
+      });
+    } catch (e) {
+      // silent ignore
+    }
+  }
+
+  setAny<O>(key: string, value: O): void {
+    this.store.set(key, value);
   }
 
   open(): void {
     this.store.openInEditor();
+  }
+
+  clear(): void {
+    this.store.clear();
   }
 }
 

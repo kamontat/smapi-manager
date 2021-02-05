@@ -1,24 +1,19 @@
 {
+  "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
-    "jsx": "react",
-    "allowJs": true,
-    "module": "CommonJS",
-    "target": "ES2015",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "sourceMap": true,
     "baseUrl": ".",
     "outDir": "dist",
-    "moduleResolution": "node",
     "resolveJsonModule": true,
+    "types": ["src/global.d.ts", "svelte"],
     "paths": {
       "*": ["node_modules/*"],
       "@common/*": ["src/common/*"],
       "@components/*": ["src/renderer/components/*"],
-      "@pages/*": ["src/renderer/pages/*"]
+      "@pages/*": ["src/renderer/pages/*"],
+      "@layouts/*": ["src/renderer/layouts/*"],
+      "@states/*": ["src/renderer/states/*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/*"]
 }
