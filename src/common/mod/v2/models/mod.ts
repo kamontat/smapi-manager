@@ -44,7 +44,16 @@ interface Mod {
    */
   updater: ModUpdater;
 
+  /**
+   * file-system location.
+   * this will include directory path and it own application folder
+   */
   location: ModLocation;
+
+  /**
+   * timestamp of last updated data
+   */
+  lastUpdated: number;
 }
 
 const builder = (dir: Directory, manifest?: Manifest, old?: Mod): Mod => {
@@ -56,8 +65,8 @@ const builder = (dir: Directory, manifest?: Manifest, old?: Mod): Mod => {
   const version = manifest?.Version ?? old?.version ?? "0.0.0";
   const status = statusBuilder(dir);
   const updater = updaterBuilder(manifest.UpdateKeys ?? []);
-
   const location = locationBuilder(dir.dirpath, shownFileName);
+  const lastUpdated = old?.lastUpdated ?? +new Date();
 
   return {
     id,
@@ -67,6 +76,7 @@ const builder = (dir: Directory, manifest?: Manifest, old?: Mod): Mod => {
     status,
     updater,
     location,
+    lastUpdated,
   };
 };
 
