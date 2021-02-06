@@ -58,18 +58,26 @@ class MainBuilder {
 
   handle<M extends DataMapper<string>>(key: M["type"], executor: Executor<M>): this {
     this.analytic.eventCounter.setup(key);
-    this.ipc.handle(key, (event, data) => {
+    this.ipc.handle(key, async (event, data) => {
       this.analytic.eventCounter.count(key);
 
       const loader = DataLoader.load<M>(data);
       loader.log(logger);
 
-      return executor({
-        store: this.store,
-        data: loader,
-        analytic: this.analytic,
-        event,
-      });
+      try {
+        const result = await executor({
+          store: this.store,
+          data: loader,
+          analytic: this.analytic,
+          event,
+        });
+
+        return result;
+      } catch (e) {
+        // This should be change by using @kcutils/error instead
+        this.analytic.nucleus.trackError("unknown", e);
+        throw e;
+      }
     });
 
     return this;

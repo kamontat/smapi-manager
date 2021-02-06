@@ -81,7 +81,7 @@ class Nucleus {
     nucleus.track(event, data);
   }
 
-  private trackError(name: string, error: Error): void {
+  trackError(name: string, error: Error): void {
     nucleus.trackError(name, error);
   }
 }
