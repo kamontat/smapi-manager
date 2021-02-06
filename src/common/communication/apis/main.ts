@@ -47,6 +47,8 @@ import type {
   ClearStorage,
   OPEN_MOD,
   OpenMod,
+  FETCH_MOD_DATA,
+  FetchModData,
 } from "..";
 
 interface MainAPIs {
@@ -84,6 +86,7 @@ interface MainAPIs {
   [FIND_MOD_DIRECTORY_V2]: Executor<FindModDirectoryV2>;
   [READ_MOD_COLLECTION_V2]: Executor<ReadModCollectionV2>;
   [TOGGLE_MOD_DIRECTORY]: Executor<ToggleModDirectory>;
+  [FETCH_MOD_DATA]: Executor<FetchModData>;
 
   [READ_ALL_EVENT_COUNTER_ANALYTIC]: Executor<ReadAllEventCounterAnalytic>;
 

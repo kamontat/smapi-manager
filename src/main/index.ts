@@ -32,6 +32,7 @@ import toggleModDirectory, { TOGGLE_MOD_DIRECTORY } from "./implements/toggle-mo
 import readModCollectionV2, { READ_MOD_COLLECTION_V2 } from "./implements/read-mod-collection-v2";
 import clearStorage, { CLEAR_STORAGE } from "./implements/clear-storage";
 import openMod, { OPEN_MOD } from "./implements/open-mod";
+import fetchModData, { FETCH_MOD_DATA } from "./implements/fetch-mod-data";
 
 Global.auto();
 
@@ -51,16 +52,17 @@ main
   .handle(OPEN_FILE, openFile)
   .handle(OPEN_STORAGE, openStorage)
   .handle(OPEN_EXTERNAL_LINK, openExternalLink)
-  .handle(OPEN_MOD, openMod)
   .handle(READ_XML_FILE, readXmlFile)
   .handle(READ_I18N, readI18n)
   .handle(READ_I18N_PAGE, readI18nPage)
   .handle(FIND_MOD_DIRECTORY_V2, findModDirectoryV2)
   .handle(READ_MOD_COLLECTION_V2, readModCollectionV2)
+  .handle(OPEN_MOD, openMod)
   .handle(READ_ALL_EVENT_COUNTER_ANALYTIC, readAllEventCounterAnalytic)
   .handle(UPDATE_UNIQUE_ID, updateUniqueId)
   .handle(VALIDATE_NEXUS_APIKEY, validateNexusApikey)
   .handle(TOGGLE_MOD_DIRECTORY, toggleModDirectory)
-  .handle(CLEAR_STORAGE, clearStorage);
+  .handle(CLEAR_STORAGE, clearStorage)
+  .handle(FETCH_MOD_DATA, fetchModData);
 
 Menu.setApplicationMenu(MENU_BAR);

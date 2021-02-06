@@ -27,6 +27,7 @@ import validateNexusApikey, { VALIDATE_NEXUS_APIKEY, ValidateNexusApikey } from 
 import toggleModDirectory, { TOGGLE_MOD_DIRECTORY, ToggleModDirectory } from "./mappers/toggle-mod-directory";
 import clearStorage, { CLEAR_STORAGE, ClearStorage } from "./mappers/clear-storage";
 import openMod, { OPEN_MOD, OpenMod } from "./mappers/open-mod";
+import fetchModData, { FETCH_MOD_DATA, FetchModData } from "./mappers/fetch-mod-data";
 
 export default DataLoader;
 export { DataOrigin };
@@ -76,6 +77,8 @@ export {
   CLEAR_STORAGE,
   openMod,
   OPEN_MOD,
+  fetchModData,
+  FETCH_MOD_DATA,
 };
 
 export type {
@@ -102,6 +105,7 @@ export type {
   ToggleModDirectory,
   ClearStorage,
   OpenMod,
+  FetchModData,
 };
 
 export { apiName } from "./apis/renderer";
