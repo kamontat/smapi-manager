@@ -26,7 +26,7 @@ const builder: MainAPIs[typeof READ_MOD_COLLECTION_V2] = async ({ store, data })
   const isCacheExpired = Math.abs(cache.lastUpdated - datetime) > threshold;
   const allowUpdate = data.input.allowAutoLoad;
 
-  logger.debug(`Settings: allow_auto_update=${allowUpdate}, threshold=${threshold}`);
+  logger.debug(`Settings: Updating enabled_auto=${allowUpdate}, threshold=${threshold}`);
   logger.debug(`Cache system: exist=${isCacheExist}, expired=${isCacheExpired}`);
 
   // valid caches
