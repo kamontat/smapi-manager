@@ -1,8 +1,10 @@
 <script lang="ts">
-  import { writable } from "svelte/store";
+  import type LanguageType from "@common/language";
 
-  import { openMod, readModCollectionV2, toggleModDirectory } from "@common/communication";
-  import { emptyCollectionBuilder } from "@common/mod/renderer";
+  import { readable, writable } from "svelte/store";
+
+  import { fetchModData, openMod, readI18nPage, readModCollectionV2, toggleModDirectory } from "@common/communication";
+  import { emptyCollectionBuilder, isModServerExtender } from "@common/mod/renderer";
 
   import Badge from "@components/Badge.svelte";
   import BadgeContainer from "@components/BadgeContainer.svelte";
@@ -10,6 +12,7 @@
 
   import mode from "@states/mode";
   import Icon from "@components/Icon.svelte";
+  import i18n from "@states/lang";
 
   export let pageName: string;
 
@@ -17,15 +20,16 @@
     window.api.send(readModCollectionV2()).then(v => set(v.output));
   });
 
+  const content = readable<Partial<LanguageType["modManager"]>>({}, set => {
+    window.api.send(readI18nPage($i18n, "modManager")).then(v => set(v.output));
+  });
+
   const onToggleModStatus = (id: string) => {
     return () => {
       window.api.send(toggleModDirectory(id)).then(result => {
         collection.update(mods => {
-          const newCollection = Object.assign({}, mods);
-
-          newCollection.mods[result.output.id] = result.output;
-
-          return newCollection;
+          mods.mods[result.output.id] = result.output;
+          return mods;
         });
       });
     };
@@ -55,7 +59,7 @@
 
         <div class="header-right">
           <Icon
-            tooltip="directory"
+            tooltip={$content.directory}
             disabledTooltip={$mode.tutorial !== true}
             size="sm"
             on:click={onOpenModDirectory(each.id)}
@@ -82,8 +86,11 @@
         <h1>{each.name} <span class:hidden={!$mode.debug}>({each.version})</span></h1>
         <p>{each.description}</p>
         <BadgeContainer center={true}>
+          {#if isModServerExtender(each)}
+            <Badge text={each.external.category} color="purple" />
+          {/if}
           <Badge
-            text={each.status.visibility ? "Shown" : "Hidden"}
+            text={each.status.visibility ? $content.shown : $content.hidden}
             color={each.status.visibility ? "green" : "red"}
             on:click={onToggleModStatus(each.id)}
           />
