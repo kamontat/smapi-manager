@@ -138,8 +138,8 @@
       <FormLabelContainer hidden={!$mode.beta}>
         <FormLabel
           on="nexus-mod-api-key"
-          text="NexusMod API Key"
-          tooltip="example"
+          text={content.output.nexusApikey}
+          tooltip={content.output.nexusApikeyTooltip}
           disabled={$mode.tutorial !== true}
         />
       </FormLabelContainer>

@@ -5,6 +5,11 @@ interface LanguageType {
     appSetting: string;
     appInfo: string;
   };
+  modManager: {
+    shown: string;
+    hidden: string;
+    directory: string;
+  };
   appSetting: {
     languageSwitch: string;
     languageTooltip: string;
@@ -44,6 +49,8 @@ interface LanguageType {
     threshold: string;
     thresholdTooltip: string;
 
+    nexusApikey: string;
+    nexusApikeyTooltip: string;
     nexusUpdateThreshold: string;
     nexusUpdateThresholdTooltip: string;
 

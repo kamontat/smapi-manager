@@ -7,6 +7,11 @@ const lang: LanguageType = {
     appSetting: "App Setting",
     appInfo: "App Information",
   },
+  modManager: {
+    shown: "Shown",
+    hidden: "Hidden",
+    directory: "directory",
+  },
   appInfo: {
     title: "Application information",
     description: "This shown all information relate to application",
@@ -54,6 +59,8 @@ const lang: LanguageType = {
     threshold: "Local update threshold",
     thresholdTooltip: "(application will update local mod after passed threshold)",
 
+    nexusApikey: "Nexus Apikey",
+    nexusApikeyTooltip: "(apikey generated in nexus-mod website for connect to server)",
     nexusUpdateThreshold: "Nexus update threshold",
     nexusUpdateThresholdTooltip: "(application will get latest general information from nexus-mod)",
 

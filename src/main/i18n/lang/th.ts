@@ -7,12 +7,17 @@ const lang: LanguageType = {
     appSetting: "การตั้งค่าโปรแกรม",
     appInfo: "ข้อมูลโปรแกรม",
   },
+  modManager: {
+    shown: "แสดงอยู่",
+    hidden: "ซ่อนอยู่",
+    directory: "เปิดไฟล์",
+  },
   appInfo: {
-    title: "",
-    description: "",
-    columnName: "",
-    columnVersion: "",
-    columnAuthor: "",
+    title: "ข้อมูลทั่วไป",
+    description: "หน้านี้จะแสดงงเกี่ยวกับข้อมูลทั่วไปของแอพพลิเคชั่น",
+    columnName: "ชื่อ",
+    columnVersion: "เวอร์ชั่น",
+    columnAuthor: "ผู้สร้าง",
   },
   appSetting: {
     languageSwitch: "ภาษา",
@@ -54,6 +59,8 @@ const lang: LanguageType = {
     threshold: "",
     thresholdTooltip: "",
 
+    nexusApikey: "",
+    nexusApikeyTooltip: "",
     nexusUpdateThreshold: "",
     nexusUpdateThresholdTooltip: "",
 
