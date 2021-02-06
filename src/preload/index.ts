@@ -3,59 +3,13 @@ import { contextBridge, ipcRenderer } from "electron";
 import { APIKEY } from "@common/constants/secrets";
 import { Global, Logger } from "@common/logger";
 
-import DataLoader, {
-  DataMapper,
-  apiName,
-  READ_APP_INFO,
-  READ_APP_METRIC,
-  READ_STORAGE,
-  WRITE_STORAGE,
-  READ_ELECTRON_INFO,
-  OPEN_FILE,
-  OPEN_STORAGE,
-  READ_FULL_INFO,
-  READ_I18N,
-  READ_I18N_PAGE,
-  READ_ALL_STORAGE,
-  FIND_MOD_DIRECTORY_V2,
-  WRITE_ALL_STORAGE,
-  READ_ALL_EVENT_COUNTER_ANALYTIC,
-  UPDATE_UNIQUE_ID,
-  VALIDATE_NEXUS_APIKEY,
-  TOGGLE_MOD_DIRECTORY,
-  OPEN_EXTERNAL_LINK,
-  READ_MOD_COLLECTION_V2,
-  CLEAR_STORAGE,
-  OPEN_MOD,
-} from "@common/communication";
+import DataLoader, { DataMapper, apiName } from "@common/communication";
+import { whitelist } from "./whitelist";
 
 process.once("loaded", () => {
   Global.auto();
 
   const logger = new Logger();
-  const whitelist = [
-    READ_STORAGE,
-    READ_ALL_STORAGE,
-    WRITE_STORAGE,
-    WRITE_ALL_STORAGE,
-    READ_APP_INFO,
-    READ_APP_METRIC,
-    READ_FULL_INFO,
-    READ_ELECTRON_INFO,
-    OPEN_FILE,
-    OPEN_STORAGE,
-    OPEN_EXTERNAL_LINK,
-    READ_I18N,
-    READ_I18N_PAGE,
-    FIND_MOD_DIRECTORY_V2,
-    READ_MOD_COLLECTION_V2,
-    READ_ALL_EVENT_COUNTER_ANALYTIC,
-    UPDATE_UNIQUE_ID,
-    VALIDATE_NEXUS_APIKEY,
-    TOGGLE_MOD_DIRECTORY,
-    CLEAR_STORAGE,
-    OPEN_MOD,
-  ];
 
   contextBridge.exposeInMainWorld(apiName, {
     send: async (raw: DataMapper<string>) => {
