@@ -1,6 +1,10 @@
-import type Value from "../core/value";
+import type { Schema } from "../core/schema";
+import type { StorageValue } from "../core/value";
 
-interface SecretValue extends Value {
+interface SecretValue extends StorageValue {
+  /**
+   * apikey generated from nexus-mod website
+   */
   nexusModsApiKey: string;
 }
 type SecretKey = keyof SecretValue;
@@ -10,5 +14,11 @@ const defaults: SecretValue = {
   nexusModsApiKey: "",
 };
 
-export default defaults;
+const schema: Schema<SecretValue> = {
+  nexusModsApiKey: {
+    type: "string",
+  },
+};
+
+export { defaults, schema };
 export type { SecretValue, SecretKey };

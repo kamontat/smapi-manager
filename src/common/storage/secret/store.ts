@@ -1,9 +1,12 @@
 import CoreStorage from "../core/store";
-import defaults, { SecretValue } from "./data";
+import { defaults, schema } from "./data";
 
-class SecertStore extends CoreStorage<"secrets", SecretValue> {
+import type { SecretValue } from "./data";
+
+const name = "secrets";
+class SecertStore extends CoreStorage<typeof name, SecretValue> {
   constructor() {
-    super("secrets", defaults);
+    super(name, defaults, schema);
   }
 }
 

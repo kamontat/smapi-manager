@@ -1,15 +1,17 @@
 import Store from "electron-store";
 import { Logger } from "@common/logger";
+import { base64 } from "@common/utils/uuid";
 
-import type Value from "./value";
+import type { StorageValue } from "./value";
+import type { Schema, AjvSchema } from "./schema";
 import builder from "./default";
 
 const logger = Logger.Common("storage");
-class CoreStorage<K extends string, V extends Value = Value> {
+class CoreStorage<K extends string, V extends StorageValue = StorageValue> {
   readonly name: K;
   private store: Store<Required<V>>;
 
-  constructor(name: K, defaults: V) {
+  constructor(name: K, defaults: V, schema: Schema<V>) {
     this.name = name;
     const defaultValue = builder<V>(defaults);
     this.store = new Store({
@@ -17,7 +19,10 @@ class CoreStorage<K extends string, V extends Value = Value> {
       fileExtension: "json",
       clearInvalidConfig: true,
       defaults: defaultValue,
-      encryptionKey: defaultValue.encryptedKey,
+      encryptionKey: base64(defaultValue.encryptedKey),
+      schema: Object.assign({ version: { type: "string" }, encryptedKey: { type: "string" } }, schema) as AjvSchema<
+        Required<V>
+      >,
     });
 
     this.store.onDidAnyChange(() => {

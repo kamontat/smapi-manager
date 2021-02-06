@@ -1,9 +1,12 @@
 import CoreStorage from "../core/store";
-import defaults, { CachesValue } from "./data";
+import { defaults, schema } from "./data";
 
-class CachesStore extends CoreStorage<"caches", CachesValue> {
+import type { CachesValue } from "./data";
+
+const name = "caches";
+class CachesStore extends CoreStorage<typeof name, CachesValue> {
   constructor() {
-    super("caches", defaults);
+    super(name, defaults, schema);
   }
 }
 

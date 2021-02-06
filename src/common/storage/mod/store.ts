@@ -1,9 +1,12 @@
 import CoreStorage from "../core/store";
-import defaults, { ModValue } from "./data";
+import { defaults, schema } from "./data";
 
-class ModStore extends CoreStorage<"mod", ModValue> {
+import type { ModValue } from "./data";
+
+const name = "mod";
+class ModStore extends CoreStorage<typeof name, ModValue> {
   constructor() {
-    super("mod", defaults);
+    super(name, defaults, schema);
   }
 }
 

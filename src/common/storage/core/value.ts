@@ -3,4 +3,4 @@ interface StorageValue {
   encryptedKey?: string;
 }
 
-export default StorageValue;
+export type { StorageValue };
