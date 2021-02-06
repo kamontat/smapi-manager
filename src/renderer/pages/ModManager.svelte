@@ -46,6 +46,17 @@
       window.api.send(openMod("updater", id));
     };
   };
+
+  const onFetchModData = (id: string) => {
+    return () => {
+      window.api.send(fetchModData(id)).then(data => {
+        collection.update(mods => {
+          mods.mods[data.output.id] = data.output;
+          return mods;
+        });
+      });
+    };
+  };
 </script>
 
 <Header {pageName}>
@@ -97,7 +108,9 @@
         </BadgeContainer>
       </div>
       <div class="footer">
-        <span />
+        <div class="footer-right" class:hidden={!$mode.beta}>
+          <button on:click={onFetchModData(each.id)}>Fetch</button>
+        </div>
       </div>
     </div>
   {/each}
@@ -190,6 +203,18 @@
         p {
           text-align: center;
           font-size: $font-base;
+        }
+      }
+
+      .footer {
+        display: flex;
+        align-items: center;
+        margin: $sm;
+
+        .footer-right {
+          display: flex;
+          flex-grow: 1;
+          justify-content: flex-end;
         }
       }
     }
