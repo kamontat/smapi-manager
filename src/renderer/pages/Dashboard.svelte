@@ -1,8 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
+
   import { readAllStorage, readI18nPage, readStorage } from "@common/communication";
 
   import CenterContainer from "@layouts/CenterContainer.svelte";
+
   import { updateMode } from "@states/mode";
   import i18n, { setLang } from "@states/lang";
   import pages, { openPage } from "@states/pages";
@@ -10,7 +12,7 @@
 
   export let pageName: string;
 
-  let pageNames: PageKey[] = (Object.keys(pages) as PageKey[]).filter(name => name !== "dashboard");
+  let pageNames: PageKey[] = (Object.keys(pages) as PageKey[]).filter(name => name !== pageName.toLowerCase());
 
   const baseContent = window.api.send(readI18nPage($i18n, "dashboard"));
 
@@ -27,7 +29,7 @@
   const suffix = "|>";
 </script>
 
-<div class="container" name={pageName}>
+<div class="container">
   {#await baseContent then content}
     {#each pageNames as page (page)}
       <div class="card bounce" on:click={() => openPage(page)}>
