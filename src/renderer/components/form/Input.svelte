@@ -34,7 +34,7 @@
     width: 100%;
 
     border-width: $xs;
-    border-color: var(--light-gray);
+    border-color: var(--border-color);
 
     padding-left: $sm;
     padding-top: $xs;
@@ -43,7 +43,7 @@
     border-radius: $md;
 
     &:disabled {
-      background-color: var(--lighter-gray);
+      background-color: var(--light-gray-color);
     }
   }
 

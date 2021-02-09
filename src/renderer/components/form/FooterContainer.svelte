@@ -21,7 +21,7 @@
     align-items: center;
 
     border-top-width: $xs;
-    border-top-color: var(--dark-gray);
+    border-top-color: var(--line-color);
 
     margin-top: $md;
     padding-top: $md;

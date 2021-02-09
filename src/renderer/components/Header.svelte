@@ -40,5 +40,6 @@
 
   button.back {
     font-size: $font-base;
+    color: var(--bg-color);
   }
 </style>

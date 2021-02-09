@@ -65,19 +65,17 @@
     .title {
       font-size: $font-lg;
       line-height: 1rem;
-      color: var(--dark-gray);
+      color: var(--primary-color);
     }
 
     .subtitle {
       font-size: $font-base;
       line-height: 1.5rem;
-      color: var(--light-gray);
+      color: var(--secondary-color);
     }
   }
 
   .body {
-    color: var(--font-color);
-
     .element {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -90,17 +88,17 @@
       padding-bottom: $md;
 
       &:nth-child(odd) {
-        background-color: var(--lighter-gray);
+        background-color: var(--bg-color-2);
       }
 
       .title {
-        color: var(--dark-gray);
+        color: var(--font-color);
 
         margin-left: $md;
       }
 
       .description {
-        color: var(--darker-gray);
+        color: var(--font-color-2);
         grid-column: span 2 / span 2;
       }
     }

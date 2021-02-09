@@ -40,12 +40,12 @@ transition-opacity duration-300 ease-in-out -->
     border-radius: $md;
 
     span {
-      border-color: var(--font-color);
+      border-color: var(--border-color);
       border-width: $border-sm;
       border-radius: $sm;
 
-      background-color: var(--bg-color);
-      color: var(--font-color);
+      background-color: var(--bg-color-2);
+      color: var(--font-color-2);
 
       padding-top: $xs;
       padding-bottom: $xs;
@@ -57,7 +57,7 @@ transition-opacity duration-300 ease-in-out -->
       height: $md;
       width: 100%;
 
-      color: var(--font-color);
+      color: var(--font-color-2);
     }
   }
 </style>

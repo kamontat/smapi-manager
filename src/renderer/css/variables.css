@@ -1,19 +1,33 @@
 :root {
-  --primary-color: #6DC1E8;
-  --secondary-color: #FFA6C9;
-  --root-font-color: #F5F5F5;
-  --font-color: #101010;
-  --bg-color: #FFFFFF;
-  --heading-color: #FF3333;
+  --white-color: #F5F5F5;
+  --black-color: #101010;
 
-  --invert-bg-color: #7E7E7E;
+  --light-gray-color: #E2E4E8;
+  --gray-color: #9CA3AF;
+  --dark-gray-color: #454B55;
 
-  --lighter-gray: #E5E7EB;
-  --light-gray: #9CA3AF;
-  --dark-gray: #4B5563;
-  --darker-gray: #1F2937;
+  --yellow-color: #FFF1BF;
+  --orange-color: #FFA500;
+  --red-color: #FF3333;
+  --pink-color: #FFA6C9;
+  --purple-color: #9999FF;
+  --blue-color: #6DC1E8;
+  --green-color: #96E26C;
 
-  --info-color: #BBFAF7;
+  --primary-color: var(--blue-color);
+  --secondary-color: var(--pink-color);
+
+  /* primary font color applied to all font from root container */
+  --font-color: var(--black-color);
+  /* secondary font color selected apply for container that has --bg-color-2 */
+  --font-color-2: var(--dark-gray-color);
+
+  --bg-color: var(--white-color);
+  --bg-color-2: var(--light-gray-color);
+
+  --border-color: var(--gray-color);
+
+  --line-color: var(--dark-gray-color);
 
   --font-sans-serif:
     system-ui,
@@ -32,11 +46,20 @@
 }
 
 [theme="dark"] {
-  --primary-color: #4C9AB9;
-  --secondary-color: #FE5BAC;
-  --font-color: #F5F5F5;
-  --bg-color: #000000;
-  --heading-color: #E60000;
+  --white-color: #383A59;
+  --black-color: #FFFFFF;
+
+  --light-gray-color: #454B55;
+  --gray-color: #9CA3AF;
+  --dark-gray-color: #F7FAFF;
+
+  --yellow-color: #FFF1BF;
+  --orange-color: #FFA500;
+  --red-color: #FF3333;
+  --pink-color: #FFA6C9;
+  --purple-color: #9999FF;
+  --blue-color: #6DC1E8;
+  --green-color: #96E26C;
 }
 
 [lang="th"] {

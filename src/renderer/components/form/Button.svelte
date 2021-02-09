@@ -33,11 +33,11 @@
     padding-right: $md;
 
     border-width: $xs;
-    border-color: var(--light-gray);
+    border-color: var(--border-color);
     border-radius: $md;
 
     &:hover {
-      background-color: var(--lighter-gray);
+      background-color: var(--primary-color);
     }
   }
 

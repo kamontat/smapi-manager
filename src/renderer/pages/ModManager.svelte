@@ -179,7 +179,7 @@
 
         small {
           font-size: $font-sm;
-          color: var(--light-gray);
+          color: var(--gray-color);
         }
 
         .header-right {

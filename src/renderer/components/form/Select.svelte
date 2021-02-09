@@ -13,6 +13,9 @@
 
 <style lang="scss">
   select {
+    background-color: var(--bg-color);
+    color: var(--font-color);
+
     width: 100%;
   }
 </style>
