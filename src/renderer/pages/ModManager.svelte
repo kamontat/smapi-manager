@@ -124,7 +124,7 @@
     display: grid;
     gap: $md;
 
-    height: 100%;
+    height: 95%;
 
     overflow-x: hidden;
     overflow-y: auto;
