@@ -3,7 +3,7 @@ import { Logger } from "@common/logger";
 import { base64 } from "@common/utils/uuid";
 
 import type { StorageValue } from "./value";
-import type { Schema, AjvSchema } from "./schema";
+import type { Schema } from "./schema";
 import builder from "./default";
 
 const logger = Logger.Common("storage");
@@ -11,18 +11,23 @@ class CoreStorage<K extends string, V extends StorageValue = StorageValue> {
   readonly name: K;
   private store: Store<Required<V>>;
 
-  constructor(name: K, defaults: V, schema: Schema<V>) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  constructor(name: K, defaults: V, _schema: Schema<V>) {
     this.name = name;
+
+    // TODO: uncomment and add to store option once PR: https://github.com/electron-userland/electron-forge/pull/2149 got merged
+    // const schema = Object.assign(
+    //   { version: { type: "string" }, encryptedKey: { type: "string" } },
+    //   _schema
+    // ) as AjvSchema<Required<V>>;
+
     const defaultValue = builder<V>(defaults);
     this.store = new Store({
       name: name,
       fileExtension: "json",
       clearInvalidConfig: true,
       defaults: defaultValue,
-      encryptionKey: base64(defaultValue.encryptedKey),
-      schema: Object.assign({ version: { type: "string" }, encryptedKey: { type: "string" } }, schema) as AjvSchema<
-        Required<V>
-      >,
+      encryptionKey: defaultValue.encryptedKey ? base64(defaultValue.encryptedKey) : undefined,
     });
 
     this.store.onDidAnyChange(() => {
