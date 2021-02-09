@@ -15,7 +15,7 @@
     .join("");
 </script>
 
-<div name={pageName} class="container" style={cssVariable}>
+<div name={pageName} style={cssVariable}>
   <slot />
 </div>
 
@@ -26,7 +26,7 @@
   $via: var(--bg-color-via) !default;
   $to: var(--bg-color-to);
 
-  .container {
+  div {
     display: flex;
     flex-direction: column;
     width: 100%;
