@@ -9,7 +9,6 @@ import { Logger } from "@common/logger";
 import Analytic from "@common/analytics";
 
 const mainLogger = Logger.Main();
-const logger = Logger.Main("builder");
 class MainBuilder {
   private app: App;
   private ipc: IpcMain;
@@ -61,10 +60,9 @@ class MainBuilder {
     this.ipc.handle(key, async (event, data) => {
       this.analytic.eventCounter.count(key);
 
-      const loader = DataLoader.load<M>(data);
-      loader.log(logger);
-
       try {
+        const loader = DataLoader.load<M>(data);
+
         const result = await executor({
           store: this.store,
           data: loader,
