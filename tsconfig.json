@@ -6,7 +6,6 @@
     "resolveJsonModule": true,
     "types": ["src/global.d.ts", "svelte"],
     "paths": {
-      "*": ["node_modules/*"],
       "@common/*": ["src/common/*"],
       "@components/*": ["src/renderer/components/*"],
       "@pages/*": ["src/renderer/pages/*"],
