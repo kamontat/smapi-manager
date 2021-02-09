@@ -131,7 +131,7 @@
 
     transition: all 1s;
 
-    padding-top: $md;
+    border-radius: $md;
 
     @include when-sm {
       grid-template-columns: repeat(1, minmax(200px, 1fr));
