@@ -3,12 +3,12 @@
   export let full: boolean = true;
 </script>
 
-<div class="flex" class:column class:full>
+<div class:column class:full>
   <slot />
 </div>
 
 <style lang="scss">
-  .flex {
+  div {
     display: flex;
   }
 
