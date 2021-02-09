@@ -5,6 +5,7 @@ const util = require("util");
 const pjson = require("../package.json");
 
 const githubToken = process.env.GITHUB_TOKEN ?? "none";
+const isCI = process.env.CI === "true"
 
 const BUILD_MODE = pjson.version.includes("beta") ? "beta" : "prod";
 const buildIdentifiers = {
@@ -39,8 +40,10 @@ module.exports = {
       "@electron-forge/plugin-webpack",
       {
         mainConfig: "./config/webpack.main.config.js",
+        jsonStats: !isCI,
         renderer: {
           config: "./config/webpack.renderer.config.js",
+          jsonStats: !isCI,
           entryPoints: [{
             html: "./src/renderer/index.html",
             js: "./src/renderer/index.ts",
@@ -63,9 +66,11 @@ module.exports = {
         options.spinner.info(
           `Completed packaging for ${options.platform} / ${options.arch} at [${options.outputPaths.join(", ")}]`
         );
+
         const promises = options.outputPaths.map(p => readdir(p, {
           withFileTypes: true
         }));
+
         return Promise.all(promises).then(ds => {
           for (const dd of ds) {
             for (const d of dd) {
