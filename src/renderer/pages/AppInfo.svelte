@@ -41,6 +41,8 @@
     display: flex;
     flex-direction: column;
 
+    height: 90%; /* reduce 10% for margin and header */
+
     margin-top: $sm;
     margin-bottom: $sm;
     margin-left: $xs;
