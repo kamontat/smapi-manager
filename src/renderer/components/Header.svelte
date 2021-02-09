@@ -10,7 +10,7 @@
   <meta property="lang" content={$i18n} />
 </svelte:head>
 
-<div name={pageName} class="container">
+<div class="container">
   <div class="left">
     <slot name="left">
       <button class="back" on:click={openDashboard}>Back</button>
