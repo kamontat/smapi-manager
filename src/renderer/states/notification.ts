@@ -50,6 +50,19 @@ const showMessage = (param: InfoParam | Callback<InfoParam>, opt?: Partial<Notif
   });
 };
 
+const showWarn = (param: ErrorParam | Callback<ErrorParam>, opt?: Partial<NotificationOption>): void => {
+  notification.update(noti => {
+    const params = typeof param === "function" ? param(noti) : param;
+    const message = typeof params === "string" ? params : params.message;
+
+    return {
+      type: NotificationType.WARN,
+      message,
+      option: optionWrapper(opt),
+    };
+  });
+};
+
 const showError = (param: ErrorParam | Callback<ErrorParam>, opt?: Partial<NotificationOption>): void => {
   notification.update(noti => {
     const params = typeof param === "function" ? param(noti) : param;
@@ -75,4 +88,5 @@ const isError: Checker = msg => msg.type === NotificationType.ERROR;
 const isInfo: Checker = msg => msg.type === NotificationType.INFO;
 
 export default notification;
-export { reset, showMessage, showError, isPermanentMessage, isEmpty, nonEmpty, isError, isWarn, isInfo };
+export { reset, showMessage, showWarn, showError };
+export { isPermanentMessage, isEmpty, nonEmpty, isError, isWarn, isInfo };
