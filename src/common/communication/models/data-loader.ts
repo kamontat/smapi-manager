@@ -42,9 +42,15 @@ class DataLoader<M extends DataMapper<string>> {
     return this.carrier.apikey;
   }
 
-  valid(apikey: string): void {
+  validApikey(apikey: string): void {
     if (this.carrier.apikey !== apikey) {
       throw new Error(`Invalid APIKEY data, you shouldn't call api by yourself`);
+    }
+  }
+
+  validWhitelist(whitelist: string[]): void {
+    if (!whitelist.includes(this.type)) {
+      throw new Error(`data type '${this.type}' is not on api whitelist`);
     }
   }
 
