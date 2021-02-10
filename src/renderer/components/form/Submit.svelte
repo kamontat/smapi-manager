@@ -24,6 +24,7 @@
 
     &:disabled {
       text-decoration: line-through;
+      cursor: initial;
 
       &:hover {
         text-decoration: line-through;
