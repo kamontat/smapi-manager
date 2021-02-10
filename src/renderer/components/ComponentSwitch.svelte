@@ -11,8 +11,6 @@
   let currentViewport: typeof SvelteComponent;
 
   const updateCurrentViewport = () => {
-    console.log(`update viewport: ${page.props.pageName}`);
-
     currentViewport = page.component;
     document.title = `${page.props.pageName} | SMAPI Manager`;
   };
@@ -25,8 +23,8 @@
     <div
       class="transition"
       on:outroend={updateCurrentViewport}
-      in:fade={{ duration: 300, easing: backInOut }}
-      out:fly={{ duration: 1000, y: -500, easing: backInOut }}
+      in:fade={{ duration: 250, easing: backInOut }}
+      out:fly={{ duration: 700, y: -500, easing: backInOut }}
     >
       <svelte:component this={currentViewport} {...page.props} />
     </div>
