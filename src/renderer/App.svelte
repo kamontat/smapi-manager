@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ErrorContainer from "@components/ErrorContainer.svelte";
+  import Notification from "@components/Notification.svelte";
   import ComponentSwitch from "@components/ComponentSwitch.svelte";
 
   import { currentPage } from "@states/pages";
@@ -11,7 +11,7 @@
   }
 </script>
 
-<ErrorContainer />
+<Notification />
 <ComponentSwitch bind:page={$currentPage} />
 
 <style global lang="scss">
