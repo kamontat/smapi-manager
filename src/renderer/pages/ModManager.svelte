@@ -13,6 +13,7 @@
   import mode from "@states/mode";
   import Icon from "@components/Icon.svelte";
   import i18n from "@states/lang";
+  import { showError } from "@states/notification";
 
   export let pageName: string;
 
@@ -50,10 +51,14 @@
   const onFetchModData = (id: string) => {
     return () => {
       window.api.send(fetchModData(id)).then(data => {
-        collection.update(mods => {
-          mods.mods[data.output.id] = data.output;
-          return mods;
-        });
+        if (data.error) {
+          showError(data.error, { showTime: 4000 });
+        } else {
+          collection.update(mods => {
+            mods.mods[data.output.id] = data.output;
+            return mods;
+          });
+        }
       });
     };
   };
