@@ -29,6 +29,7 @@
     align-items: center;
 
     padding-bottom: $lg;
+    margin-bottom: $md;
   }
 
   div.right {
