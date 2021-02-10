@@ -17,27 +17,22 @@ process.once("loaded", () => {
       input.log(logger);
 
       const forwarder = input.sendToMain();
-      if (whitelist.includes(forwarder.type)) {
-        try {
-          forwarder.valid(APIKEY);
+      try {
+        forwarder.validWhitelist(whitelist);
+        forwarder.validApikey(APIKEY);
 
-          const result = await ipcRenderer.invoke(raw.type, forwarder.toJSON());
-          const receiver = forwarder.returnToPreload().withOutput(result);
+        const result: Error | typeof raw["output"] = await ipcRenderer.invoke(raw.type, forwarder.toJSON());
+        if (result instanceof Error) throw result;
 
-          const output = receiver.returnToRenderer();
-          output.log(logger);
+        const receiver = forwarder.returnToPreload().withOutput(result);
 
-          return output.toJSON();
-        } catch (e) {
-          logger.error(e);
+        const output = receiver.returnToRenderer();
+        output.log(logger);
 
-          return Promise.reject(e);
-        }
-      } else {
-        const err = `${input.type} (${input.subtype}) is not in preload whitelist`;
-        logger.warn(err);
-
-        return Promise.reject(new Error(err));
+        return output.toJSON();
+      } catch (e) {
+        // assume that e is Error object
+        return forwarder.returnToRenderer().withError(e.message).toJSON();
       }
     },
   });

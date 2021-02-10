@@ -62,7 +62,6 @@ class MainBuilder {
 
       try {
         const loader = DataLoader.load<M>(data);
-
         const result = await executor({
           store: this.store,
           data: loader,
@@ -74,7 +73,10 @@ class MainBuilder {
       } catch (e) {
         // This should be change by using @kcutils/error instead
         this.analytic.nucleus.trackError("unknown", e);
-        throw e;
+
+        // Use return instead of throw exception because
+        // ipcMain will modify some message that contains sensitive information of backend side
+        return e;
       }
     });
 
