@@ -7,6 +7,8 @@
   export let size: "sm" | "md" | "lg";
   export let tooltip: string = "";
   export let disabledTooltip: boolean = tooltip === "";
+  export let fill: string = "var(--font-color)";
+  export let props: Record<string, string> = {};
 
   let width: number = 24;
   let height: number = 24;
@@ -16,6 +18,7 @@
 </script>
 
 <div
+  name="icon"
   class={size}
   on:click={click}
   use:onTooltip={{
@@ -25,7 +28,7 @@
     props: { bottom: -36, shift: -30 },
   }}
 >
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" {fill} {...props}>
     <slot />
   </svg>
 </div>
@@ -36,9 +39,6 @@
   svg {
     width: 100%;
     height: 100%;
-
-    color: var(--font-color);
-    fill: var(--font-color);
   }
 
   div {
