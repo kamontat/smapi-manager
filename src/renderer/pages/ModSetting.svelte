@@ -28,6 +28,7 @@
 
   import i18n from "@states/lang";
   import mode from "@states/mode";
+  import notification, { isError, reset, showError } from "@states/notification";
 
   export let pageName: string;
   $: baseContent = window.api.send(readI18nPage($i18n, "modSetting"));
@@ -37,7 +38,6 @@
   let threshold = "";
   let apikey: string = "";
   let message: string = "";
-  let error: string = "";
 
   const setupModSettings = () => {
     window.api.send(readAllStorage("mod")).then(v => {
@@ -63,10 +63,10 @@
   const onValidate = () => {
     window.api.send(validateNexusApikey(apikey)).then(data => {
       if (data.output.code === 401) {
-        error = data.output.json.message;
+        showError(data.output.json.message, { showTime: -1 });
         apikey = "";
       } else if (data.output.code === 200) {
-        error = "";
+        reset();
       }
     });
   };
@@ -112,8 +112,7 @@
           tooltip={content.output.directoryTooltip}
           disabled={$mode.tutorial !== true}
         />
-      </FormLabelContainer>
-      <FormDataContainer>
+      </FormLabelContainer><FormDataContainer>
         <FlexContainer full={false} column={false}>
           <FormInput name="directory" bind:value={directory} hasGroup={true} disabled={true} />
           <FormButton
@@ -133,17 +132,14 @@
             on:click={findMods("custom")}
           />
         </FlexContainer>
-      </FormDataContainer>
-
-      <FormLabelContainer hidden={!$mode.beta}>
+      </FormDataContainer><FormLabelContainer hidden={!$mode.beta}>
         <FormLabel
           on="nexus-mod-api-key"
           text={content.output.nexusApikey}
           tooltip={content.output.nexusApikeyTooltip}
           disabled={$mode.tutorial !== true}
         />
-      </FormLabelContainer>
-      <FormDataContainer hidden={!$mode.beta}>
+      </FormLabelContainer><FormDataContainer hidden={!$mode.beta}>
         <FlexContainer column={false} full={false}>
           <FormInput name="nexus-mod-api-key" bind:value={apikey} hasGroup={true} />
           <FormButton
@@ -155,32 +151,26 @@
             on:click={onValidate}
           />
         </FlexContainer>
-      </FormDataContainer>
-
-      <FormLabelContainer>
+      </FormDataContainer><FormLabelContainer>
         <FormLabel
           on="limit"
           text={content.output.limit}
           tooltip={content.output.limitTooltip}
           disabled={$mode.tutorial !== true}
         />
-      </FormLabelContainer>
-      <FormDataContainer>
+      </FormLabelContainer><FormDataContainer>
         <FlexContainer column={false} full={false}>
           <FormRange name="limit" bind:value={limit} min={1} max={8} />
           <FormLabel text={limit.toString()} disabled={true} />
         </FlexContainer>
-      </FormDataContainer>
-
-      <FormLabelContainer>
+      </FormDataContainer><FormLabelContainer>
         <FormLabel
           on="threshold"
           text={content.output.threshold}
           tooltip={content.output.thresholdTooltip}
           disabled={$mode.tutorial !== true}
         />
-      </FormLabelContainer>
-      <FormDataContainer>
+      </FormLabelContainer><FormDataContainer>
         <FormSelect
           bind:value={threshold}
           values={[
@@ -193,17 +183,14 @@
             { key: "3153600000000", value: content.output.timeUnitForever },
           ]}
         />
-      </FormDataContainer>
-
-      <FormFooterContainer>
+      </FormDataContainer><FormFooterContainer>
         <div slot="left" class:hidden={!$mode.beta}>
           <FormSubmit text="Clear" on:click={onClearCaches} />
         </div>
         <div slot="right">
-          <FormLabel text={error} />
           <FormSubmit text={content.output.openButton} on:click={onOpen} />
           <FormSubmit
-            disabled={error.length > 0}
+            disabled={isError($notification)}
             text={message ? message : content.output.submitButton}
             on:click={onSubmit(content.output)}
           />
