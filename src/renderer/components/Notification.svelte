@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { writable, readable, derived } from "svelte/store";
   import { fly } from "svelte/transition";
   import { elasticInOut } from "svelte/easing";
   import { Logger } from "@common/logger";
@@ -12,32 +13,49 @@
   let hidden: boolean = true;
   let permanent: boolean = false;
 
-  notification.subscribe(value => {
-    permanent = isPermanentMessage(value);
+  let countdown = writable(-1);
 
+  const resetState = () => {
+    hidden = true;
+    reset();
+    countdown.set(-1);
+  };
+
+  notification.subscribe(value => {
     if (nonEmpty(value)) {
+      permanent = isPermanentMessage(value);
+
       logger.debug(
         `Notify: ${value.message} (${value.type}) [${permanent ? "Permanent" : value.option.showTime + "ms"}]`
       );
 
+      let counter: NodeJS.Timeout;
+
+      if (!permanent) {
+        const interval = 500;
+        countdown.set(value.option.showTime);
+        counter = setInterval(() => countdown.update(c => c - interval), interval);
+      }
+
       hidden = false;
 
-      if (!permanent)
-        setTimeout(() => {
+      if (!permanent) {
+        const timer = setTimeout(() => {
+          clearInterval(counter);
+
           if (!hidden) {
-            hidden = true;
-            reset();
+            resetState();
           } else {
             logger.debug(`already manually closed`);
           }
         }, value.option.showTime);
+
+        return () => clearTimeout(timer);
+      }
     }
   });
 
-  const onClose = () => {
-    hidden = true;
-    reset();
-  };
+  const onClose = () => resetState();
 </script>
 
 {#if !hidden}
@@ -64,6 +82,7 @@
 
     <div class="message">
       <span>{$notification.message}</span>
+      <span class:hidden={$countdown < 0} class="timer">({Math.round($countdown / 1000)}s)</span>
     </div>
   </div>
 {/if}
@@ -95,10 +114,18 @@
     span {
       text-align: right;
     }
+
+    .timer {
+      margin-left: $md;
+    }
   }
 
   .message {
     display: flex;
     align-items: center;
+  }
+
+  .hidden {
+    display: none;
   }
 </style>
