@@ -129,7 +129,7 @@
     display: grid;
     gap: $md;
 
-    height: 95%;
+    max-height: 92%;
 
     overflow-x: hidden;
     overflow-y: auto;

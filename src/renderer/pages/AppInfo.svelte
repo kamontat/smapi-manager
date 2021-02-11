@@ -41,7 +41,7 @@
     display: flex;
     flex-direction: column;
 
-    height: 90%; /* reduce 10% for margin and header */
+    max-height: 90%; /* reduce 10% for margin and header */
 
     margin-bottom: $sm;
     margin-left: $xs;
