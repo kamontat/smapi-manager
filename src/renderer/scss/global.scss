@@ -30,3 +30,20 @@ html {
     font-family: var(--font-serif);
   }
 }
+
+/* CUSTOM SCROLLBAR */
+
+/* width */
+::-webkit-scrollbar {
+  width: 0;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
