@@ -7,10 +7,14 @@ const pjson = require("../package.json");
 const githubToken = process.env.GITHUB_TOKEN ?? "none";
 const isCI = process.env.CI === "true"
 
+const _array = pjson.buildVersion.split("-");
+const codename = _array[0].toLowerCase();
+const buildNumber = parseInt(_array[1], 36);
+
 const BUILD_MODE = pjson.version.includes("beta") ? "beta" : "prod";
 const buildIdentifiers = {
-  beta: "net.kamontat.beta",
-  prod: "net.kamontat",
+  beta: `net.kamontat.${codename}.beta`,
+  prod: `net.kamontat.${codename}`,
 };
 
 const readdir = util.promisify(fs.readdir);
@@ -18,7 +22,7 @@ module.exports = {
   buildIdentifier: BUILD_MODE,
   packagerConfig: {
     executableName: pjson.name,
-    buildVersion: pjson.buildVersion,
+    buildVersion: isNaN(buildNumber) ? "0" : buildNumber.toString(),
     appBundleId: buildIdentifiers[BUILD_MODE] ?? buildIdentifiers["prod"],
   },
   makers: [{

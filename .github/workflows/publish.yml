@@ -13,9 +13,6 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
 
-    env:
-      NODE_ENV: production
-
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2.3.4
@@ -34,4 +31,5 @@ jobs:
       - name: Build / Publish application
         run: yarn run publish
         env:
+          NODE_ENV: production
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
