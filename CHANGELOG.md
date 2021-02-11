@@ -2,6 +2,13 @@
 ## [Unreleased]
 
 
+<a name="v1.0.0-beta.3"></a>
+## [v1.0.0-beta.3] - 2021-02-11
+### Pull Requests
+- Merge pull request [#24](https://github.com/kamontat/smapi-manager/issues/24) from kamontat/dependabot/npm_and_yarn/typescript-eslint/eslint-plugin-4.15.0
+- Merge pull request [#17](https://github.com/kamontat/smapi-manager/issues/17) from kamontat/dependabot/npm_and_yarn/eslint-7.19.0
+
+
 <a name="v1.0.0-beta.2"></a>
 ## [v1.0.0-beta.2] - 2021-02-11
 ### Fixes Bug
@@ -252,7 +259,8 @@
 - **main:** add getting application information event support
 
 
-[Unreleased]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.2...HEAD
+[Unreleased]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.3...HEAD
+[v1.0.0-beta.3]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.2...v1.0.0-beta.3
 [v1.0.0-beta.2]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.1...v1.0.0-beta.2
 [v1.0.0-beta.1]: https://github.com/kamontat/smapi-manager/compare/v0.2.0...v1.0.0-beta.1
 [v0.2.0]: https://github.com/kamontat/smapi-manager/compare/v0.2.0-beta.1...v0.2.0
