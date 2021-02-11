@@ -2,7 +2,6 @@ import type SvelteComponentDev from "svelte/internal";
 import { writable, Writable } from "svelte/store";
 
 import Dashboard from "@pages/Dashboard.svelte";
-import SMAPIInfo from "@pages/SMAPIInfo.svelte";
 import ModManager from "@pages/ModManager.svelte";
 import ModSetting from "@pages/ModSetting.svelte";
 import AppSetting from "@pages/AppSetting.svelte";
@@ -37,18 +36,6 @@ const pages = {
       colorTo: "#000851",
     },
     component: Dashboard,
-  },
-  SMAPIInfo: {
-    props: {
-      pageName: "SMAPI Info",
-    },
-    background: {
-      direction: "top left",
-      colorFrom: "#fd5c63",
-      colorVia: "",
-      colorTo: "#9ebd13",
-    },
-    component: SMAPIInfo,
   },
   modManager: {
     props: {
