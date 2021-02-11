@@ -1,22 +1,22 @@
-# Line of code (vv0.2.0)
+# Line of code (vv1.0.0-beta.2)
 
-| cloc | github.com/AlDanial/cloc v 1.88  T=0.28 s (743.9 files/s, 25004.7 lines/s) |
-| ---- | -------------------------------------------------------------------------- |
+cloc|github.com/AlDanial/cloc v 1.88  T=0.15 s (1395.4 files/s, 51061.9 lines/s)
+--- | ---
 
-| Language     |    files |    blank |  comment |     code |
-| :----------- | -------: | -------: | -------: | -------: |
-| TypeScript   |      163 |      819 |       53 |     3754 |
-| Svelte       |       20 |      194 |       10 |      927 |
-| CSS          |        2 |       90 |      182 |      254 |
-| Markdown     |        7 |       45 |        0 |      204 |
-| YAML         |        7 |       26 |       13 |      185 |
-| JavaScript   |        3 |       11 |       10 |       94 |
-| JSON         |        2 |        0 |        0 |       82 |
-| Sass         |        3 |       12 |        0 |       58 |
-| Bourne Shell |        3 |       13 |        1 |       37 |
-| HTML         |        1 |        4 |        0 |       11 |
-| TOML         |        1 |        7 |       23 |        7 |
-| --------     | -------- | -------- | -------- | -------- |
-| SUM:         |      212 |     1221 |      292 |     5613 |
+Language|files|blank|comment|code
+:-------|-------:|-------:|-------:|-------:
+TypeScript|157|797|125|3443
+Svelte|26|323|15|1500
+Markdown|9|58|0|346
+CSS|2|96|184|269
+YAML|7|25|13|183
+JavaScript|4|17|10|106
+JSON|2|0|0|83
+Bourne Shell|2|20|1|77
+Sass|3|16|0|72
+HTML|1|4|0|11
+TOML|1|7|23|7
+--------|--------|--------|--------|--------
+SUM:|214|1363|371|6097
 
-Generated (01 Feb 2021 18:21:37)
+Generated (11 Feb 2021 17:58:39)

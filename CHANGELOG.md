@@ -2,6 +2,12 @@
 ## [Unreleased]
 
 
+<a name="v1.0.0-beta.2"></a>
+## [v1.0.0-beta.2] - 2021-02-11
+### Fixes Bug
+- remove un-implement page
+
+
 <a name="v1.0.0-beta.1"></a>
 ## [v1.0.0-beta.1] - 2021-02-11
 ### Feature
@@ -246,7 +252,8 @@
 - **main:** add getting application information event support
 
 
-[Unreleased]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.1...HEAD
+[Unreleased]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.2...HEAD
+[v1.0.0-beta.2]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.1...v1.0.0-beta.2
 [v1.0.0-beta.1]: https://github.com/kamontat/smapi-manager/compare/v0.2.0...v1.0.0-beta.1
 [v0.2.0]: https://github.com/kamontat/smapi-manager/compare/v0.2.0-beta.1...v0.2.0
 [v0.2.0-beta.1]: https://github.com/kamontat/smapi-manager/compare/v0.1.1...v0.2.0-beta.1
