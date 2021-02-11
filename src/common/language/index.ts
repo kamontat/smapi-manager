@@ -51,6 +51,8 @@ interface LanguageType {
 
     nexusApikey: string;
     nexusApikeyTooltip: string;
+    nexusApikeyValidate: string;
+    nexusApikeyValidateTooltip: string;
     nexusUpdateThreshold: string;
     nexusUpdateThresholdTooltip: string;
 

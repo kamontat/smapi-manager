@@ -24,20 +24,20 @@ const lang: LanguageType = {
     languageTooltip: "(เปลื่ยนภาษาของโปรแกรม)",
 
     debugMode: "ดีบักโหมด",
-    debugTooltip: "(แสดงข้อมูลบางอย่างเพิ่มเติม)",
+    debugTooltip: "(แสดงข้อมูลบางอย่างเพิ่มเติม เพื่อช่วยในการหาปัญหา)",
 
-    uniqueID: "",
-    uniqueIDTooltip: "",
-    uniqueIDRandom: "",
-    uniqueIDRandomTooltip: "",
+    uniqueID: "ไอดี",
+    uniqueIDTooltip: "(ใช้สำหรับเก็บข้อมูลทั่วไปของแอพพลิเคชั่น)",
+    uniqueIDRandom: "สุ่ม",
+    uniqueIDRandomTooltip: "(สุ่มเลือกไอดีใหม่)",
 
-    mode: "",
+    mode: "โหมด",
 
     betaMode: "เบต้าโหมด",
     betaTooltip: "(เปิดบางความสามารถที่อาจจะทำให้โปรแกรมทำงานไม่ถูกต้อง)",
 
     tutorialMode: "โหมดฝึกหัด",
-    tutorialTooltip: "",
+    tutorialTooltip: "(เพิ่มคำอธิบายในบางแห่ง)",
 
     submitButton: "บันทึก",
     submitMessage: "เสร็จสิ้น",
@@ -45,37 +45,39 @@ const lang: LanguageType = {
     openButton: "เปิด",
   },
   modSetting: {
-    directory: "",
-    directoryTooltip: "",
+    directory: "ไดเรกทอรี",
+    directoryTooltip: "(โฟลเดอร์ที่มีมอดอยู่)",
 
-    directoryFetch: "",
-    directoryFetchTooltip: "",
-    directoryCustom: "",
-    directoryCustomTooltip: "",
+    directoryFetch: "อัพเดต",
+    directoryFetchTooltip: "(ค้นหาอัตโนมัติ)",
+    directoryCustom: "เลือกเอง",
+    directoryCustomTooltip: "(ค้นหาด้วยตัวเอง)",
 
-    limit: "",
-    limitTooltip: "",
+    limit: "ลิมิตการค้นหา",
+    limitTooltip: "(จำนวนชั้นของโฟลเดอร์ที่จะค้นหา)",
 
-    threshold: "",
-    thresholdTooltip: "",
+    threshold: "อัพเดตการค้นหา",
+    thresholdTooltip: "(จะเริ่มค้นหาใหม่เมื่อเกินเวลาที่ระบุ)",
 
     nexusApikey: "",
-    nexusApikeyTooltip: "",
-    nexusUpdateThreshold: "",
-    nexusUpdateThresholdTooltip: "",
+    nexusApikeyTooltip: "(apikey ที่จะให้ดึงข้อมูลบางส่วนจาก nexus-mod ได้)",
+    nexusApikeyValidate: "ตรวจสอบ",
+    nexusApikeyValidateTooltip: "(ตรวจสอบตัว apikey นี้ ต้องการอินเตอร์เน็ต)",
+    nexusUpdateThreshold: "อัพเดตข้อมูลจาก nexus-mod",
+    nexusUpdateThresholdTooltip: "(จะอัพเดตข้อมูลเมื่อเกินเวลาที่ระบุ)",
 
-    timeUnitInstant: "",
-    timeUnit1Minute: "",
-    timeUnit20Minute: "",
-    timeUnit1Hour: "",
-    timeUnit1Day: "",
-    timeUnit1Week: "",
-    timeUnitForever: "",
+    timeUnitInstant: "ตลอดเวลา",
+    timeUnit1Minute: "1 นาที",
+    timeUnit20Minute: "20 นาที",
+    timeUnit1Hour: "1 ชั่วโมง",
+    timeUnit1Day: "1 วัน",
+    timeUnit1Week: "1 สัปดาห์",
+    timeUnitForever: "ไม่อัพเดตเลย",
 
-    submitButton: "",
-    submitMessage: "",
+    submitButton: "บันทึก",
+    submitMessage: "เสร็จสิ้น",
 
-    openButton: "",
+    openButton: "เปิด",
   },
 };
 

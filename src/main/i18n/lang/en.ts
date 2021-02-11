@@ -61,6 +61,8 @@ const lang: LanguageType = {
 
     nexusApikey: "Nexus Apikey",
     nexusApikeyTooltip: "(apikey generated in nexus-mod website for connect to server)",
+    nexusApikeyValidate: "Validate",
+    nexusApikeyValidateTooltip: "(send validate request to nexus-mod)",
     nexusUpdateThreshold: "Nexus update threshold",
     nexusUpdateThresholdTooltip: "(application will get latest general information from nexus-mod)",
 
