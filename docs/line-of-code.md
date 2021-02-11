@@ -1,6 +1,6 @@
-# Line of code (v1.0.0-beta.4)
+# Line of code (v1.0.0-beta.5)
 
-cloc|github.com/AlDanial/cloc v 1.88  T=0.09 s (2135.8 files/s, 78201.3 lines/s)
+cloc|github.com/AlDanial/cloc v 1.88  T=0.09 s (2185.9 files/s, 80035.2 lines/s)
 --- | ---
 
 Language|files|blank|comment|code
@@ -13,4 +13,4 @@ HTML|1|4|0|11
 --------|--------|--------|--------|--------
 SUM:|187|1235|324|5288
 
-Generated (11 Feb 2021 18:36:34)
+Generated (11 Feb 2021 18:44:20)
