@@ -10,8 +10,8 @@ version="v$(jq -r ".version" "$pjson")"
 
 printf "" >"$filepath"
 {
-  echo "# Line of code (v${version})"
-  cloc --md --fullpath --not-match-d "node_modules|.webpack|out" .
+  echo "# Line of code (${version})"
+  cloc --md --fullpath --match-d "/(src)/" --not-match-d "node_modules|.webpack|out" .
   echo
   echo "Generated ($curr_date)"
 } >>"$filepath"
