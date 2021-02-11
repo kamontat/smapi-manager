@@ -36,7 +36,7 @@
         <CenterContainer>
           <span class="left">{prefix}</span>
           <span>
-            {content.output[page]}
+            {content.output[page] ? content.output[page] : pages[page].props.pageName}
           </span>
           <span class="right">{suffix}</span>
         </CenterContainer>
