@@ -11,8 +11,8 @@ cmd_exist() {
 pjson="$PWD/package.json"
 version="v$(jq -r ".version" "$pjson")"
 
-is_exist "$version" && echo "Update new version in $pjson" >&2 && exit 2
-! cmd_exist "gitgo" && echo "gitgo cli is required" >&2 && exit 2
+is_exist "$version" && echo "Please update new version in $pjson file (exit 2)" >&2 && exit 2
+! cmd_exist "gitgo" && echo "gitgo cli is required (exit 3)" >&2 && exit 3
 
 echo "Deploying version '$version' [enter]..."
 read -r
