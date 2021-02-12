@@ -1,9 +1,10 @@
 import { handler, READ_APP_INFO } from "@main/communication";
 
 import { app } from "electron";
+import { information } from "@common/application";
 import { getDebug, getNodeEnv, getTest } from "@common/utils/env";
 
-import { buildVersion, author } from "../../../package.json";
+import { buildVersion, author, license } from "../../../package.json";
 
 export const readAppInfo = handler(READ_APP_INFO, async () => {
   const env = getNodeEnv()
@@ -11,7 +12,7 @@ export const readAppInfo = handler(READ_APP_INFO, async () => {
     .transform("", t => (getTest().is(true) ? "test" : t))
     .value();
 
-  return {
+  return information({
     name: app.getName(),
     version: app.getVersion(),
     build: buildVersion,
@@ -29,5 +30,6 @@ export const readAppInfo = handler(READ_APP_INFO, async () => {
       email: author.email,
       url: author.url,
     },
-  };
+    license,
+  });
 });
