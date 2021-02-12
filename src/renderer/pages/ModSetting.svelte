@@ -10,7 +10,7 @@
     writeAllStorage,
     writeStorage,
   } from "@common/communication";
-  import type { ReadI18NPage, FindModDirectoryV2 } from "@common/communication";
+  import type { ReadI18nPage, FindModDirectoryV2 } from "@common/communication";
 
   import FlexContainer from "@layouts/FlexContainer.svelte";
   import Header from "@components/Header.svelte";
@@ -71,7 +71,7 @@
     });
   };
 
-  const onSubmit = (content: ReadI18NPage<"modSetting">["output"]) => {
+  const onSubmit = (content: ReadI18nPage<"modSetting">["output"]) => {
     return () => {
       window.api
         .send(
