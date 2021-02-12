@@ -29,6 +29,6 @@ jobs:
         run: yarn
 
       - name: Build and Pack distribution package
-        run: yarn package
+        run: yarn run package
         env:
           NODE_ENV: production

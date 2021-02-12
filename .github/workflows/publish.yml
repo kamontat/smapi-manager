@@ -26,7 +26,7 @@ jobs:
         run: yarn
 
       - name: Build / Publish application
-        run: yarn publish
+        run: yarn run publish
         env:
           NODE_ENV: production
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
