@@ -1,8 +1,8 @@
-export { defaults as defaultAppInfo } from "./app-info";
-export type { AppInfo } from "./app-info";
+export * from "./builders/information";
+export type { Information, AuthorInformation, PathInformation } from "./models/information";
 
-export { defaults as defaultElectronInfo } from "./electron-info";
-export type { ElectronInfo } from "./electron-info";
+export * from "./builders/electron";
+export type { ElectronInformation } from "./models/electron";
 
-export { defaults as defaultInformation } from "./info";
-export type { Information } from "./info";
+export * from "./builders/status";
+export type { Status, StatusData } from "./models/status";
