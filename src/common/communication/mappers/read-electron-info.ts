@@ -1,11 +1,11 @@
-import type { ElectronInfo } from "@common/application";
+import type { ElectronInformation } from "@common/application";
 
 import wrapper from "../models/data-mapper";
 import type { DataMapper } from "../models/data-mapper";
 
 const READ_ELECTRON_INFO = "read-electron-info";
 
-type ReadElectronInfo = DataMapper<typeof READ_ELECTRON_INFO, void, void, ElectronInfo>;
+type ReadElectronInfo = DataMapper<typeof READ_ELECTRON_INFO, void, void, ElectronInformation>;
 
 const readElectronInfo = (): ReadElectronInfo => {
   return wrapper({
