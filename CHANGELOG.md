@@ -2,6 +2,9 @@
 ## [Unreleased]
 
 
+<a name="v1.0.0-beta.7"></a>
+## [v1.0.0-beta.7] - 0001-01-01
+
 <a name="v1.0.0-beta.6"></a>
 ## [v1.0.0-beta.6] - 2021-02-12
 ### Fixes Bug
@@ -151,11 +154,11 @@
 - Merge pull request [#21](https://github.com/kamontat/smapi-manager/issues/21) from kamontat/feature/reduce-app-size
 
 
-<a name="v0.2.0"></a>
-## [v0.2.0] - 2021-01-19
-
 <a name="v0.2.0-beta.1"></a>
 ## [v0.2.0-beta.1] - 2021-01-19
+
+<a name="v0.2.0"></a>
+## [v0.2.0] - 2021-01-19
 ### Feature
 - **comp:** add listing list for mod-manager instead of table
 - **page:** add setting to dashboard
@@ -271,15 +274,16 @@
 - **main:** add getting application information event support
 
 
-[Unreleased]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.6...HEAD
+[Unreleased]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.7...HEAD
+[v1.0.0-beta.7]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.6...v1.0.0-beta.7
 [v1.0.0-beta.6]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.5...v1.0.0-beta.6
 [v1.0.0-beta.5]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.4...v1.0.0-beta.5
 [v1.0.0-beta.4]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.3...v1.0.0-beta.4
 [v1.0.0-beta.3]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.2...v1.0.0-beta.3
 [v1.0.0-beta.2]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.1...v1.0.0-beta.2
-[v1.0.0-beta.1]: https://github.com/kamontat/smapi-manager/compare/v0.2.0...v1.0.0-beta.1
-[v0.2.0]: https://github.com/kamontat/smapi-manager/compare/v0.2.0-beta.1...v0.2.0
-[v0.2.0-beta.1]: https://github.com/kamontat/smapi-manager/compare/v0.1.1...v0.2.0-beta.1
+[v1.0.0-beta.1]: https://github.com/kamontat/smapi-manager/compare/v0.2.0-beta.1...v1.0.0-beta.1
+[v0.2.0-beta.1]: https://github.com/kamontat/smapi-manager/compare/v0.2.0...v0.2.0-beta.1
+[v0.2.0]: https://github.com/kamontat/smapi-manager/compare/v0.1.1...v0.2.0
 [v0.1.1]: https://github.com/kamontat/smapi-manager/compare/v0.1.0-beta.6...v0.1.1
 [v0.1.0-beta.6]: https://github.com/kamontat/smapi-manager/compare/v0.1.0-beta.4...v0.1.0-beta.6
 [v0.1.0-beta.4]: https://github.com/kamontat/smapi-manager/compare/v0.1.0-beta.2...v0.1.0-beta.4

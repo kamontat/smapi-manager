@@ -29,4 +29,5 @@ jobs:
         run: yarn run publish
         env:
           NODE_ENV: production
+          DEBUG: "electron-forge:*"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
