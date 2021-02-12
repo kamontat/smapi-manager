@@ -3,16 +3,15 @@ import { contextBridge, ipcRenderer } from "electron";
 import { APIKEY } from "@common/constants/secrets";
 import { Global, Logger } from "@common/logger";
 
-import DataLoader, { DataMapper, apiName } from "@common/communication";
+import { DataLoader, DataMapper, apiName, apiMethod } from "@common/communication";
 import { whitelist } from "./whitelist";
 
 process.once("loaded", () => {
   Global.auto();
 
   const logger = new Logger();
-
   contextBridge.exposeInMainWorld(apiName, {
-    send: async (raw: DataMapper<string>) => {
+    [apiMethod]: async (raw: DataMapper<string>) => {
       const input = DataLoader.builder(raw).sendToPreload();
       input.log(logger);
 

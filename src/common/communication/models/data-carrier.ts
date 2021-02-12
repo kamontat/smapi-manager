@@ -1,4 +1,4 @@
-import DataOrigin from "../constants/data-origin";
+import { DataOrigin } from "../constants/data-origin";
 import type { DataMapper } from "./data-mapper";
 
 interface DataCarrier<M extends DataMapper<string>> {

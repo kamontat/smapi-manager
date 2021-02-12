@@ -1,4 +1,4 @@
-import type LanguageType from "@common/language";
+import type { LanguageType } from "@common/i18n";
 
 const lang: LanguageType = {
   dashboard: {

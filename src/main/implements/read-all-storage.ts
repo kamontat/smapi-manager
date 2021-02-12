@@ -1,9 +1,6 @@
-import { MainAPIs, READ_ALL_STORAGE } from "@common/communication";
+import { handler, READ_ALL_STORAGE } from "@main/communication";
 
-const readAllStorage: MainAPIs[typeof READ_ALL_STORAGE] = async ({ store, data }) => {
+export const readAllStorage = handler(READ_ALL_STORAGE, async ({ store, data }) => {
   const storage = store[data.subtype];
   return storage.value;
-};
-
-export default readAllStorage;
-export { READ_ALL_STORAGE };
+});

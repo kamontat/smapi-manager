@@ -11,12 +11,11 @@ type ReadAllEventCounterAnalytic = DataMapper<
   KeyValue<string, number>[]
 >;
 
-const builder = (): ReadAllEventCounterAnalytic => {
+const readAllEventCounterAnalytic = (): ReadAllEventCounterAnalytic => {
   return wrapper({
     type: READ_ALL_EVENT_COUNTER_ANALYTIC,
   });
 };
 
-export default builder;
-export { READ_ALL_EVENT_COUNTER_ANALYTIC };
+export { READ_ALL_EVENT_COUNTER_ANALYTIC, readAllEventCounterAnalytic };
 export type { ReadAllEventCounterAnalytic };

@@ -1,4 +1,5 @@
-import { MainAPIs, READ_MOD_COLLECTION_V2 } from "@common/communication";
+import { handler, READ_MOD_COLLECTION_V2 } from "@main/communication";
+
 import {
   createCollection,
   updateCollection,
@@ -6,11 +7,9 @@ import {
   getModDirectory,
   ModCollection,
 } from "@common/mod";
-import { Logger } from "@common/logger";
 import { base64 } from "@common/utils/uuid";
 
-const logger = Logger.Common(READ_MOD_COLLECTION_V2);
-const builder: MainAPIs[typeof READ_MOD_COLLECTION_V2] = async ({ store, data }) => {
+export const readModCollectionV2 = handler(READ_MOD_COLLECTION_V2, async ({ store, data, logger }) => {
   const datetime = +new Date();
 
   // query information from mod storage
@@ -53,7 +52,4 @@ const builder: MainAPIs[typeof READ_MOD_COLLECTION_V2] = async ({ store, data })
       : `cache is not exist, and client send denied to auto update`;
     throw new Error(errMessage);
   }
-};
-
-export default builder;
-export { READ_MOD_COLLECTION_V2 };
+});

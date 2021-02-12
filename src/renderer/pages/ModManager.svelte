@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type LanguageType from "@common/language";
+  import type { LanguageType } from "@common/i18n";
 
   import { readable, writable } from "svelte/store";
 

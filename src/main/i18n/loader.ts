@@ -1,9 +1,10 @@
 import { Logger } from "@common/logger";
 
-import type LanguageType from "@common/language";
+import type { LanguageType, Translator } from "@common/i18n";
 
 const logger = Logger.Common("i18n-loader");
-class I18nLoader {
+
+class I18nLoader implements Translator {
   private defaultLang: string;
   private langs: Map<string, LanguageType>;
 
@@ -72,4 +73,4 @@ class I18nLoader {
   }
 }
 
-export default I18nLoader;
+export { I18nLoader };

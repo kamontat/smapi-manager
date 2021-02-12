@@ -7,12 +7,11 @@ const READ_APP_INFO = "read-app-info";
 
 type ReadAppInfo = DataMapper<typeof READ_APP_INFO, void, void, AppInfo>;
 
-const builder = (): ReadAppInfo => {
+const readAppInfo = (): ReadAppInfo => {
   return wrapper({
     type: READ_APP_INFO,
   });
 };
 
-export default builder;
-export { READ_APP_INFO };
+export { READ_APP_INFO, readAppInfo };
 export type { ReadAppInfo };

@@ -2,10 +2,11 @@ import type { DataCarrier } from "../models/data-carrier";
 import type { DataMapper } from "../models/data-mapper";
 
 const apiName = "api";
+const apiMethod = "send";
 
 interface RendererAPIs {
-  send: <M extends DataMapper<string>>(input: M) => Promise<DataCarrier<M>>;
+  [apiMethod]: <M extends DataMapper<string>>(input: M) => Promise<DataCarrier<M>>;
 }
 
-export { apiName };
+export { apiName, apiMethod };
 export type { RendererAPIs };

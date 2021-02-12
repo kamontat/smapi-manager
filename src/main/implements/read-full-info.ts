@@ -1,13 +1,15 @@
-import { MainAPIs, READ_FULL_INFO } from "@common/communication";
+import { handler, READ_FULL_INFO } from "@main/communication";
+
 import ConditionArray, { KeyValue } from "@common/utils/array";
 
-import readAppInfo from "./read-app-info";
-import readElectronInfo from "./read-electron-info";
+import { readAppInfo, readElectronInfo } from ".";
+import ExecutorHelper from "../models/executor-helper";
 
-const readFullInfo: MainAPIs[typeof READ_FULL_INFO] = async ({ store, data, event, analytic }) => {
-  const isDebug = store.settings.get("debugMode");
-  const appInfo = await readAppInfo({ store, data: data as any, event, analytic }); // eslint-disable-line @typescript-eslint/no-explicit-any
-  const electronInfo = await readElectronInfo({ store, data: data as any, event, analytic }); // eslint-disable-line @typescript-eslint/no-explicit-any
+export const readFullInfo = handler(READ_FULL_INFO, async args => {
+  const isDebug = args.store.settings.get("debugMode");
+
+  const appInfo = await ExecutorHelper.wrapper(readAppInfo).exec(args);
+  const electronInfo = await ExecutorHelper.wrapper(readElectronInfo).exec(args);
 
   return new ConditionArray<KeyValue<string>>()
     .addIf(isDebug, { key: "Environment", value: appInfo.env })
@@ -22,7 +24,7 @@ const readFullInfo: MainAPIs[typeof READ_FULL_INFO] = async ({ store, data, even
     .addIf(isDebug, { key: "Log", value: appInfo.path.log })
     .addIf(isDebug, { key: "Temp", value: appInfo.path.temp })
     .result();
-};
+});
 
 export default readFullInfo;
 export { READ_FULL_INFO };

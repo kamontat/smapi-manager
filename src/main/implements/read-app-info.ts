@@ -1,9 +1,11 @@
+import { handler, READ_APP_INFO } from "@main/communication";
+
 import { app } from "electron";
-import { MainAPIs, READ_APP_INFO } from "@common/communication";
-import { buildVersion, author } from "../../../package.json";
 import { getDebug, getNodeEnv, getTest } from "@common/utils/env";
 
-const readAppInfo: MainAPIs[typeof READ_APP_INFO] = async () => {
+import { buildVersion, author } from "../../../package.json";
+
+export const readAppInfo = handler(READ_APP_INFO, async () => {
   const env = getNodeEnv()
     .transform("", t => (getDebug().is(true) ? "debug" : t))
     .transform("", t => (getTest().is(true) ? "test" : t))
@@ -28,7 +30,4 @@ const readAppInfo: MainAPIs[typeof READ_APP_INFO] = async () => {
       url: author.url,
     },
   };
-};
-
-export default readAppInfo;
-export { READ_APP_INFO };
+});

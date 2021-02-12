@@ -1,13 +1,6 @@
-import { MainAPIs, READ_I18N_PAGE } from "@common/communication";
+import { handler, READ_I18N_PAGE } from "@main/communication";
 
-import I18nLoader from "../i18n";
-import en from "../i18n/lang/en";
-
-const i18n = new I18nLoader("en", en);
-const readI18nPage: MainAPIs[typeof READ_I18N_PAGE] = async ({ analytic, data }) => {
+export const readI18nPage = handler(READ_I18N_PAGE, async ({ analytic, data, i18n }) => {
   analytic.nucleus.openPage(data.input);
   return i18n.queryPage(data.subtype, data.input);
-};
-
-export default readI18nPage;
-export { READ_I18N_PAGE };
+});

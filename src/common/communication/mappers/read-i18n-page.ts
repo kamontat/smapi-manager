@@ -1,12 +1,12 @@
-import type LanguageType from "@common/language";
+import type { LanguageType } from "@common/i18n";
+import type { DataMapper } from "../models/data-mapper";
 
 import wrapper from "../models/data-mapper";
-import type { DataMapper } from "../models/data-mapper";
 
 const READ_I18N_PAGE = "read-i18n-page";
 
-type ReadI18NPage<K extends keyof LanguageType> = DataMapper<typeof READ_I18N_PAGE, string, K, LanguageType[K]>;
-const builder = <K extends keyof LanguageType>(lang: string, page: K): ReadI18NPage<K> => {
+type ReadI18nPage<K extends keyof LanguageType> = DataMapper<typeof READ_I18N_PAGE, string, K, LanguageType[K]>;
+const readI18nPage = <K extends keyof LanguageType>(lang: string, page: K): ReadI18nPage<K> => {
   return wrapper({
     type: READ_I18N_PAGE,
     subtype: lang,
@@ -14,6 +14,5 @@ const builder = <K extends keyof LanguageType>(lang: string, page: K): ReadI18NP
   });
 };
 
-export default builder;
-export { READ_I18N_PAGE };
-export type { ReadI18NPage };
+export { READ_I18N_PAGE, readI18nPage };
+export type { ReadI18nPage };

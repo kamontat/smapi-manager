@@ -1,8 +1,6 @@
-import { MainAPIs, WRITE_ALL_STORAGE } from "@common/communication";
-import { Logger } from "@common/logger";
+import { handler, WRITE_ALL_STORAGE } from "@main/communication";
 
-const logger = Logger.Common("write-all-storage");
-const writeAllStorage: MainAPIs[typeof WRITE_ALL_STORAGE] = async ({ store, data, analytic }) => {
+export const writeAllStorage = handler(WRITE_ALL_STORAGE, async ({ store, data, analytic, logger }) => {
   const storage = store[data.subtype];
 
   if (data.subtype === "settings") {
@@ -18,7 +16,4 @@ const writeAllStorage: MainAPIs[typeof WRITE_ALL_STORAGE] = async ({ store, data
   }
 
   return storage.setAll(data.input);
-};
-
-export default writeAllStorage;
-export { WRITE_ALL_STORAGE };
+});

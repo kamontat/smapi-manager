@@ -1,6 +1,6 @@
-import { MainAPIs, READ_ELECTRON_INFO } from "@common/communication";
+import { handler, READ_ELECTRON_INFO } from "@main/communication";
 
-const readElectronInfo: MainAPIs[typeof READ_ELECTRON_INFO] = async () => {
+export const readElectronInfo = handler(READ_ELECTRON_INFO, async () => {
   const electronVersion = process.versions.electron;
   const chromeVersion = process.versions.chrome;
 
@@ -8,7 +8,4 @@ const readElectronInfo: MainAPIs[typeof READ_ELECTRON_INFO] = async () => {
     version: electronVersion,
     chrome: chromeVersion,
   };
-};
-
-export default readElectronInfo;
-export { READ_ELECTRON_INFO };
+});

@@ -1,11 +1,10 @@
-import { MainAPIs, FETCH_MOD_DATA } from "@common/communication";
-import { Logger } from "@common/logger";
-import { loadFromCaches, saveToCaches } from "@common/mod/utils";
+import { handler, FETCH_MOD_DATA } from "@main/communication";
+
 import { isModServerExtender, ModExternal, modServerExtenderBuilder } from "@common/mod/v2/models/mod-server";
 import NexusRequest from "@common/nexus";
+import { loadFromCaches, saveToCaches } from "@common/mod/utils";
 
-const logger = Logger.Common(FETCH_MOD_DATA);
-const fetchModData: MainAPIs[typeof FETCH_MOD_DATA] = async ({ store, data }) => {
+export const fetchModData = handler(FETCH_MOD_DATA, async ({ store, data, logger }) => {
   const cache = loadFromCaches(store, data.input);
 
   if (isModServerExtender(cache)) {
@@ -45,7 +44,4 @@ const fetchModData: MainAPIs[typeof FETCH_MOD_DATA] = async ({ store, data }) =>
 
   saveToCaches(store, mod);
   return mod;
-};
-
-export default fetchModData;
-export { FETCH_MOD_DATA };
+});

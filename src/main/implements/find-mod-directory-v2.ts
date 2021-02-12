@@ -1,10 +1,9 @@
+import { handler, FIND_MOD_DIRECTORY_V2 } from "@main/communication";
+
 import { dialog } from "electron";
-import { MainAPIs, FIND_MOD_DIRECTORY_V2 } from "@common/communication";
-import { Logger } from "@common/logger";
 import { createCollection, getModDirectory } from "@common/mod";
 
-const logger = Logger.Common(FIND_MOD_DIRECTORY_V2);
-const findModDirectoryV2: MainAPIs[typeof FIND_MOD_DIRECTORY_V2] = async ({ store, data }) => {
+export const findModDirectoryV2 = handler(FIND_MOD_DIRECTORY_V2, async ({ store, data, logger }) => {
   logger.debug(`finding base on input type (${data.subtype})`);
 
   let directoryName: string | undefined = undefined;
@@ -46,7 +45,4 @@ const findModDirectoryV2: MainAPIs[typeof FIND_MOD_DIRECTORY_V2] = async ({ stor
   store.caches.setAny(`modCollections.${collection.uuid}`, collection);
 
   return directoryName;
-};
-
-export default findModDirectoryV2;
-export { FIND_MOD_DIRECTORY_V2 };
+});

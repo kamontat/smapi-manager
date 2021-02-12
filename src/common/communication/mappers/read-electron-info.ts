@@ -7,12 +7,11 @@ const READ_ELECTRON_INFO = "read-electron-info";
 
 type ReadElectronInfo = DataMapper<typeof READ_ELECTRON_INFO, void, void, ElectronInfo>;
 
-const builder = (): ReadElectronInfo => {
+const readElectronInfo = (): ReadElectronInfo => {
   return wrapper({
     type: READ_ELECTRON_INFO,
   });
 };
 
-export default builder;
-export { READ_ELECTRON_INFO };
+export { READ_ELECTRON_INFO, readElectronInfo };
 export type { ReadElectronInfo };

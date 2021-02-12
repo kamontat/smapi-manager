@@ -11,7 +11,7 @@ type WriteAllStorage<K extends keyof StorageType> = DataMapper<
   Partial<StorageType[K]>,
   void
 >;
-const builder = <K extends keyof StorageType>(key: K, data: Partial<StorageType[K]>): WriteAllStorage<K> => {
+const writeAllStorage = <K extends keyof StorageType>(key: K, data: Partial<StorageType[K]>): WriteAllStorage<K> => {
   return wrapper({
     type: WRITE_ALL_STORAGE,
     subtype: key,
@@ -19,6 +19,5 @@ const builder = <K extends keyof StorageType>(key: K, data: Partial<StorageType[
   });
 };
 
-export default builder;
-export { WRITE_ALL_STORAGE };
+export { WRITE_ALL_STORAGE, writeAllStorage };
 export type { WriteAllStorage };

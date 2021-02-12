@@ -1,6 +1,5 @@
-import { getNodeEnv } from "@common/utils/env";
-
 import { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
+import { getNodeEnv } from "@common/utils/env";
 
 import {
   DEFAULT_HEIGHT,

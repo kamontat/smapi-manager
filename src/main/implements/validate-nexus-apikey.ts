@@ -1,7 +1,7 @@
-import { MainAPIs, VALIDATE_NEXUS_APIKEY } from "@common/communication";
+import { handler, VALIDATE_NEXUS_APIKEY } from "@main/communication";
 import NexusRequest from "@common/nexus";
 
-const validateNexusApikey: MainAPIs[typeof VALIDATE_NEXUS_APIKEY] = async ({ store, data }) => {
+export const validateNexusApikey = handler(VALIDATE_NEXUS_APIKEY, async ({ store, data }) => {
   const apikey = data.input;
 
   const request = new NexusRequest(apikey);
@@ -15,7 +15,4 @@ const validateNexusApikey: MainAPIs[typeof VALIDATE_NEXUS_APIKEY] = async ({ sto
   }
 
   return validation;
-};
-
-export default validateNexusApikey;
-export { VALIDATE_NEXUS_APIKEY };
+});

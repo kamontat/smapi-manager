@@ -1,8 +1,9 @@
-import DataOrigin from "../constants/data-origin";
+import { DataOrigin } from "../constants/data-origin";
 import builder from "./data-carrier";
-import type { DataCarrier } from "./data-carrier";
-import type { DataMapper } from "./data-mapper";
+
 import type { Logger } from "@common/logger";
+import type { DataMapper } from "./data-mapper";
+import type { DataCarrier } from "./data-carrier";
 
 class DataLoader<M extends DataMapper<string>> {
   static builder<M extends DataMapper<string>>(mapper: M): DataLoader<M> {
@@ -54,14 +55,20 @@ class DataLoader<M extends DataMapper<string>> {
     }
   }
 
-  withSubtype(subtype: M["subtype"]): this {
-    this.carrier.subtype = subtype;
-    return this;
+  cloneType<T extends string>(type: T): DataLoader<DataMapper<T, M["subtype"], M["input"], M["output"]>> {
+    return DataLoader.builder(Object.assign({}, this.carrier, { type }));
   }
 
-  withInput(input: M["input"]): this {
-    this.carrier.input = input;
-    return this;
+  cloneSubtype<T extends string>(subtype: T): DataLoader<DataMapper<M["type"], T, M["input"], M["output"]>> {
+    return DataLoader.builder(Object.assign({}, this.carrier, { subtype }));
+  }
+
+  cloneInput<T>(input: T): DataLoader<DataMapper<M["type"], M["subtype"], T, M["output"]>> {
+    return DataLoader.builder(Object.assign({}, this.carrier, { input }));
+  }
+
+  cloneOutput<T>(output: T): DataLoader<DataMapper<M["type"], M["subtype"], M["input"], T>> {
+    return DataLoader.builder(Object.assign({}, this.carrier, { output }));
   }
 
   withOutput(output: M["output"]): this {
@@ -115,4 +122,4 @@ class DataLoader<M extends DataMapper<string>> {
   }
 }
 
-export default DataLoader;
+export { DataLoader };

@@ -6,7 +6,7 @@ type Opener = "directory" | "updater";
 const OPEN_MOD = "open-mod";
 
 type OpenMod = DataMapper<typeof OPEN_MOD, Opener, string, void>;
-const builder = (type: Opener, id: string): OpenMod => {
+const openMod = (type: Opener, id: string): OpenMod => {
   return wrapper({
     type: OPEN_MOD,
     subtype: type,
@@ -14,6 +14,5 @@ const builder = (type: Opener, id: string): OpenMod => {
   });
 };
 
-export default builder;
-export { OPEN_MOD };
+export { OPEN_MOD, openMod };
 export type { OpenMod };

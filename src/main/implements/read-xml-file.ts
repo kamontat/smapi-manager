@@ -1,8 +1,5 @@
-import { MainAPIs, READ_XML_FILE } from "@common/communication";
+import { handler, READ_XML_FILE } from "@main/communication";
 
-const readXmlFile: MainAPIs[typeof READ_XML_FILE] = async () => {
+export const readXmlFile = handler(READ_XML_FILE, async () => {
   return "";
-};
-
-export default readXmlFile;
-export { READ_XML_FILE };
+});

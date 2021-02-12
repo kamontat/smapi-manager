@@ -9,7 +9,7 @@ interface Option {
 }
 
 type ReadModCollectionV2 = DataMapper<typeof READ_MOD_COLLECTION_V2, void, Option, ModCollection>;
-const builder = (opts?: Partial<Option>): ReadModCollectionV2 => {
+const readModCollectionV2 = (opts?: Partial<Option>): ReadModCollectionV2 => {
   return wrapper({
     type: READ_MOD_COLLECTION_V2,
     input: {
@@ -18,6 +18,5 @@ const builder = (opts?: Partial<Option>): ReadModCollectionV2 => {
   });
 };
 
-export default builder;
-export { READ_MOD_COLLECTION_V2 };
+export { READ_MOD_COLLECTION_V2, readModCollectionV2 };
 export type { ReadModCollectionV2 };

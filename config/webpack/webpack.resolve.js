@@ -7,6 +7,7 @@ module.exports = {
   alias: {
     svelte: path.resolve(pwd, "node_modules", "svelte"),
     "@common": path.resolve(pwd, "src", "common"),
+    "@main": path.resolve(pwd, "src", "main"),
     "@components": path.resolve(pwd, "src", "renderer", "components"),
     "@pages": path.resolve(pwd, "src", "renderer", "pages"),
     "@layouts": path.resolve(pwd, "src", "renderer", "layouts"),

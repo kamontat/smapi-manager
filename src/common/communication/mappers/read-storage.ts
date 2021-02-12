@@ -11,7 +11,7 @@ type ReadStorage<
   O extends StorageType[K][KK]
 > = DataMapper<typeof READ_STORAGE, K, KK, O>;
 
-const builder = <K extends keyof StorageType, KK extends keyof StorageType[K], O extends StorageType[K][KK]>(
+const readStorage = <K extends keyof StorageType, KK extends keyof StorageType[K], O extends StorageType[K][KK]>(
   key: K,
   configKey: KK
 ): ReadStorage<K, KK, O> => {
@@ -22,6 +22,5 @@ const builder = <K extends keyof StorageType, KK extends keyof StorageType[K], O
   });
 };
 
-export default builder;
-export { READ_STORAGE };
+export { READ_STORAGE, readStorage };
 export type { ReadStorage };

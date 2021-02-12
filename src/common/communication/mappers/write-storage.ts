@@ -13,7 +13,7 @@ type WriteStorage<
   O extends StorageType[K][KK]
 > = DataMapper<typeof WRITE_STORAGE, K, KeyValue<KK, O>, void>;
 
-const builder = <K extends keyof StorageType, KK extends keyof StorageType[K], O extends StorageType[K][KK]>(
+const writeStorage = <K extends keyof StorageType, KK extends keyof StorageType[K], O extends StorageType[K][KK]>(
   key: K,
   configKey: KK,
   value: O
@@ -28,6 +28,5 @@ const builder = <K extends keyof StorageType, KK extends keyof StorageType[K], O
   });
 };
 
-export default builder;
-export { WRITE_STORAGE };
+export { WRITE_STORAGE, writeStorage };
 export type { WriteStorage };

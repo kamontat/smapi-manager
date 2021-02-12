@@ -7,12 +7,11 @@ const READ_APP_METRIC = "read-app-metric";
 
 type ReadAppMetric = DataMapper<typeof READ_APP_METRIC, void, void, ProcessMetric[]>;
 
-const builder = (): ReadAppMetric => {
+const readAppMetric = (): ReadAppMetric => {
   return wrapper({
     type: READ_APP_METRIC,
   });
 };
 
-export default builder;
-export { READ_APP_METRIC };
+export { READ_APP_METRIC, readAppMetric };
 export type { ReadAppMetric };

@@ -1,8 +1,5 @@
-import { MainAPIs, READ_ALL_EVENT_COUNTER_ANALYTIC } from "@common/communication";
+import { handler, READ_ALL_EVENT_COUNTER_ANALYTIC } from "@main/communication";
 
-const readAllEventCounterAnalytic: MainAPIs[typeof READ_ALL_EVENT_COUNTER_ANALYTIC] = async ({ analytic }) => {
+export const readAllEventCounterAnalytic = handler(READ_ALL_EVENT_COUNTER_ANALYTIC, async ({ analytic }) => {
   return analytic.eventCounter.all();
-};
-
-export default readAllEventCounterAnalytic;
-export { READ_ALL_EVENT_COUNTER_ANALYTIC };
+});

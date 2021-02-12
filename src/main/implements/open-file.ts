@@ -1,12 +1,8 @@
-import { shell } from "electron";
-import { MainAPIs, OPEN_FILE } from "@common/communication";
-import { Logger } from "@common/logger";
+import { handler, OPEN_FILE } from "@main/communication";
 
-const logger = Logger.Common("open-file");
-const openFile: MainAPIs[typeof OPEN_FILE] = async ({ data }) => {
+import { shell } from "electron";
+
+export const openFile = handler(OPEN_FILE, async ({ data, logger }) => {
   logger.debug(`try to open directory at ${data.input}`);
   shell.showItemInFolder(data.input);
-};
-
-export default openFile;
-export { OPEN_FILE };
+});

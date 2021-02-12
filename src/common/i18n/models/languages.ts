@@ -1,4 +1,4 @@
-interface LanguageType {
+export interface LanguageType {
   dashboard: {
     modManager: string;
     modSetting: string;
@@ -77,5 +77,3 @@ interface LanguageType {
     columnAuthor: string;
   };
 }
-
-export default LanguageType;

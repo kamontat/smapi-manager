@@ -1,24 +1,31 @@
 import type { IpcMain, App } from "electron";
-import type { DataMapper } from "@common/communication/models/data-mapper";
 import type { Analytics } from "@common/analytics";
 import type { AppExecutor } from "./app-executor";
 
 import { Builder, Storage } from "@common/storage";
-import DataLoader, { Executor } from "@common/communication";
+import { DataLoader } from "@common/communication";
 import { Logger } from "@common/logger";
 import Analytic from "@common/analytics";
+import type { Translator } from "@common/i18n";
+
+import type { Mapping, Handler } from "@main/communication";
+import { I18nLoader } from "@main/i18n";
+import en from "@main/i18n/lang/en";
 
 const mainLogger = Logger.Main();
+
 class MainBuilder {
   private app: App;
   private ipc: IpcMain;
   private store: Storage;
   private analytic: Analytics;
+  private i18n: Translator;
   constructor(app: App, ipc: IpcMain) {
     this.app = app;
     this.ipc = ipc;
     this.store = Builder();
     this.analytic = Analytic.build(this.store);
+    this.i18n = new I18nLoader("en", en);
   }
 
   onReady(executor: AppExecutor): this {
@@ -55,27 +62,27 @@ class MainBuilder {
     return this;
   }
 
-  handle<M extends DataMapper<string>>(key: M["type"], executor: Executor<M>): this {
-    this.analytic.eventCounter.setup(key);
-    this.ipc.handle(key, async (event, data) => {
-      this.analytic.eventCounter.count(key);
+  handler<K extends keyof Mapping = keyof Mapping, M extends Mapping[K] = Mapping[K]>(obj: Handler<K, M>): this {
+    // setup analytics
+    this.analytic.eventCounter.setup(obj.type);
 
+    const logger = Logger.Common(obj.type);
+    this.ipc.handle(obj.type, async (event, data) => {
+      this.analytic.eventCounter.count(obj.type);
       try {
         const loader = DataLoader.load<M>(data);
-        const result = await executor({
+        const result = await obj.executor({
           store: this.store,
           data: loader,
           analytic: this.analytic,
           event,
+          logger,
+          i18n: this.i18n,
         });
 
         return result;
       } catch (e) {
-        // This should be change by using @kcutils/error instead
         this.analytic.nucleus.trackError("unknown", e);
-
-        // Use return instead of throw exception because
-        // ipcMain will modify some message that contains sensitive information of backend side
         return e;
       }
     });

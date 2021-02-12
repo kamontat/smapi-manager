@@ -6,13 +6,12 @@ import type { DataMapper } from "../models/data-mapper";
 const TOGGLE_MOD_DIRECTORY = "toggle-mod-directory";
 
 type ToggleModDirectory = DataMapper<typeof TOGGLE_MOD_DIRECTORY, void, string, Mod>;
-const builder = (id: string): ToggleModDirectory => {
+const toggleModDirectory = (id: string): ToggleModDirectory => {
   return wrapper({
     type: TOGGLE_MOD_DIRECTORY,
     input: id,
   });
 };
 
-export default builder;
-export { TOGGLE_MOD_DIRECTORY };
+export { TOGGLE_MOD_DIRECTORY, toggleModDirectory };
 export type { ToggleModDirectory };

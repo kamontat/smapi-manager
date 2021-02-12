@@ -1,12 +1,5 @@
-import { MainAPIs, READ_I18N } from "@common/communication";
+import { handler, READ_I18N } from "@main/communication";
 
-import I18nLoader from "../i18n";
-import en from "../i18n/lang/en";
-
-const i18n = new I18nLoader("en", en);
-const readI18n: MainAPIs[typeof READ_I18N] = async ({ data }) => {
+export const readI18n = handler(READ_I18N, async ({ data, i18n }) => {
   return i18n.query(data.subtype, data.input.key, data.input.value);
-};
-
-export default readI18n;
-export { READ_I18N };
+});

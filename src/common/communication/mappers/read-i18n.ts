@@ -1,8 +1,8 @@
-import type LanguageType from "@common/language";
+import type { LanguageType } from "@common/i18n";
 import type { KeyValue } from "@common/utils/array";
+import type { DataMapper } from "../models/data-mapper";
 
 import wrapper from "../models/data-mapper";
-import type { DataMapper } from "../models/data-mapper";
 
 const READ_I18N = "read-i18n";
 
@@ -12,7 +12,7 @@ type ReadI18N<K extends keyof LanguageType, KK extends keyof LanguageType[K]> = 
   KeyValue<K, KK>,
   string
 >;
-const builder = <K extends keyof LanguageType, KK extends keyof LanguageType[K]>(
+const readI18N = <K extends keyof LanguageType, KK extends keyof LanguageType[K]>(
   lang: string,
   page: K,
   key: KK
@@ -24,6 +24,5 @@ const builder = <K extends keyof LanguageType, KK extends keyof LanguageType[K]>
   });
 };
 
-export default builder;
-export { READ_I18N };
+export { READ_I18N, readI18N };
 export type { ReadI18N };
