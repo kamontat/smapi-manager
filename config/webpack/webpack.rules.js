@@ -66,6 +66,7 @@ const css = [
         loader: "css-loader",
         options: {
           sourceMap: !isProd,
+          url: false,
         },
       },
     ],
