@@ -15,9 +15,19 @@ const lang: LanguageType = {
   appInfo: {
     title: "Application information",
     description: "This shown all information relate to application",
+
+    columnEnv: "Environment",
     columnName: "Name",
     columnVersion: "Version",
+    columnElectronVersion: "Electron version",
+    columnChromeVersion: "Chrome version",
+    columnLicense: "License",
     columnAuthor: "Author",
+    columnApplicationPath: "Application",
+    columnDataPath: "Data",
+    columnUserDataPath: "User data",
+    columnLogPath: "Log",
+    columnTempPath: "Temp",
   },
   appSetting: {
     languageSwitch: "Language",

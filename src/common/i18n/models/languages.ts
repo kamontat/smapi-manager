@@ -72,8 +72,18 @@ export interface LanguageType {
   appInfo: {
     title: string;
     description: string;
+
+    columnEnv: string;
     columnName: string;
     columnVersion: string;
+    columnElectronVersion: string;
+    columnChromeVersion: string;
+    columnLicense: string;
     columnAuthor: string;
+    columnApplicationPath: string;
+    columnDataPath: string;
+    columnUserDataPath: string;
+    columnLogPath: string;
+    columnTempPath: string;
   };
 }
