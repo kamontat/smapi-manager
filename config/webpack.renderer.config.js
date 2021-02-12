@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+console.log(`[renderer] webpack configuration is ${process.env.NODE_ENV}`);
+
 const { svelte, ts, css, node } = require("./webpack/webpack.rules");
 const plugins = require("./webpack/webpack.plugins");
 const resolve = require("./webpack/webpack.resolve");

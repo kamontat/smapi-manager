@@ -5,7 +5,7 @@ const util = require("util");
 const pjson = require("../package.json");
 
 const githubToken = process.env.GITHUB_TOKEN ?? "none";
-const isCI = process.env.CI === "true"
+const isProd = process.env.NODE_ENV === "production"
 
 const BUILD_MODE = pjson.version.includes("beta") ? "beta" : "prod";
 const buildIdentifiers = {
@@ -40,10 +40,10 @@ module.exports = {
       "@electron-forge/plugin-webpack",
       {
         mainConfig: "./config/webpack.main.config.js",
-        jsonStats: !isCI,
+        jsonStats: !isProd,
         renderer: {
           config: "./config/webpack.renderer.config.js",
-          jsonStats: !isCI,
+          jsonStats: !isProd,
           entryPoints: [{
             html: "./src/renderer/index.html",
             js: "./src/renderer/index.ts",
@@ -62,7 +62,7 @@ module.exports = {
      * @param {{platform: string, arch: string, outputPaths: string[]}} options
      */
     postPackage: async (forgeConfig, options) => {
-      if (options.spinner) {
+      if (options.spinner && options.spinner.info) {
         options.spinner.info(
           `Completed packaging for ${options.platform} / ${options.arch} at [${options.outputPaths.join(", ")}]`
         );
