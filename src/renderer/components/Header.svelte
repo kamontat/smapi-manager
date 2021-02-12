@@ -11,6 +11,10 @@
 </svelte:head>
 
 <div class="container">
+  <!-- Remove this line after svelte fix default slot warning message -->
+  {#if false}
+    <slot />
+  {/if}
   <div class="left">
     <slot name="left">
       <button class="back" on:click={openDashboard}>Back</button>

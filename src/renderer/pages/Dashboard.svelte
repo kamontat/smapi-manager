@@ -9,6 +9,7 @@
   import i18n, { setLang } from "@states/lang";
   import pages, { openPage } from "@states/pages";
   import type { PageKey } from "@states/pages";
+  import Header from "@components/Header.svelte";
 
   export let pageName: string;
 
@@ -28,6 +29,11 @@
   const prefix = "<|";
   const suffix = "|>";
 </script>
+
+<Header {pageName}>
+  <div slot="left" />
+  <div slot="right" />
+</Header>
 
 <div class="container">
   {#await baseContent then content}
