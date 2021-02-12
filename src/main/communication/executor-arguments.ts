@@ -4,8 +4,7 @@ import type { Storage } from "@common/storage";
 import type { Logger } from "@common/logger";
 import type { Translator } from "@common/i18n";
 
-import type { DataMapper } from "./data-mapper";
-import type { DataLoader } from "./data-loader";
+import type { DataLoader, DataMapper } from "@common/communication";
 
 interface ExecutorArguments<M extends DataMapper<string>> {
   store: Storage;

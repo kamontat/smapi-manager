@@ -1,6 +1,5 @@
-import type { DataLoader, DataMapper, ExecutorArguments } from "@common/communication";
-
-import type { Mapping, Handler } from "@main/communication";
+import type { DataLoader, DataMapper } from "@common/communication";
+import type { Mapping, Handler, ExecutorArguments } from "@main/communication";
 
 type Modifier<M extends DataMapper<string>, NM extends DataMapper<string>> = (data: DataLoader<M>) => DataLoader<NM>;
 
@@ -27,4 +26,4 @@ class ExecutorHelper<K extends keyof Mapping = keyof Mapping, M extends Mapping[
   }
 }
 
-export default ExecutorHelper;
+export { ExecutorHelper };

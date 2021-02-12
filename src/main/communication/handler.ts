@@ -1,4 +1,4 @@
-import type { Executor } from "@common/communication";
+import type { Executor } from "./executor";
 import type { Mapping } from "./mapping";
 
 export interface Handler<K extends keyof Mapping = keyof Mapping, M extends Mapping[K] = Mapping[K]> {
