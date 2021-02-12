@@ -1,8 +1,8 @@
 {
   "name": "smapi-manager",
   "productName": "smapi-manager",
-  "version": "1.0.0-beta.5",
-  "buildVersion": "11",
+  "version": "1.0.0-beta.6",
+  "buildVersion": "12",
   "description": "smapi management application",
   "main": ".webpack/main",
   "license": "BSD-3-Clause",

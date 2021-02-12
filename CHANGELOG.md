@@ -2,6 +2,12 @@
 ## [Unreleased]
 
 
+<a name="v1.0.0-beta.6"></a>
+## [v1.0.0-beta.6] - 2021-02-12
+### Fixes Bug
+- compile error on production
+
+
 <a name="v1.0.0-beta.5"></a>
 ## [v1.0.0-beta.5] - 2021-02-11
 
@@ -265,7 +271,8 @@
 - **main:** add getting application information event support
 
 
-[Unreleased]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.5...HEAD
+[Unreleased]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.6...HEAD
+[v1.0.0-beta.6]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.5...v1.0.0-beta.6
 [v1.0.0-beta.5]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.4...v1.0.0-beta.5
 [v1.0.0-beta.4]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.3...v1.0.0-beta.4
 [v1.0.0-beta.3]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.2...v1.0.0-beta.3
