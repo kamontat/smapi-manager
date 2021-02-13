@@ -3,6 +3,8 @@ import { Logger } from "@common/logger";
 
 interface Response<C extends number = number, H = unknown, T = unknown> {
   code: C;
+  codeMessage: string;
+
   headers: H;
   json: T;
 }
@@ -41,7 +43,12 @@ class Request {
         });
 
         response.on("end", () => {
-          res({ code: response.statusCode, headers: response.headers as unknown, json: JSON.parse(data) } as R);
+          res({
+            code: response.statusCode,
+            codeMessage: response.statusMessage,
+            headers: response.headers as unknown,
+            json: JSON.parse(data),
+          } as R);
         });
 
         response.on("error", (error: Error) => {
