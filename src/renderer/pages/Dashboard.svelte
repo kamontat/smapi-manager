@@ -59,7 +59,7 @@
     --grid-col: 2;
     --grid-row: 4;
 
-    height: 100%;
+    height: 92%;
 
     display: grid;
     grid-template-columns: repeat(var(--grid-col), minmax(0, 1fr));
