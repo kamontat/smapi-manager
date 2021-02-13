@@ -56,38 +56,20 @@
   @import "../scss/breakdowns.scss";
 
   div.container {
-    --grid-col: 2;
-    --grid-row: 4;
-
-    height: 92%;
-
     display: grid;
-    grid-template-columns: repeat(var(--grid-col), minmax(0, 1fr));
-    grid-template-rows: repeat(var(--grid-row), minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+
     column-gap: $lg;
     row-gap: $xl;
-
-    @include when-md {
-      --grid-col: 3;
-      --grid-row: 3;
-    }
-
-    @include when-lg {
-      --grid-col: 5;
-      --grid-row: 2;
-    }
   }
 
   div.card {
-    width: 100%;
-    height: 100%;
-    max-height: 25vw;
+    min-height: 180px;
+    max-height: 250px;
 
     color: var(--font-color);
     background-color: var(--bg-color);
 
-    // border: $xs solid;
-    // border-color: rgba(229, 231, 235, 0.75);
     border-radius: $md;
 
     box-shadow: $shadow-sm;
