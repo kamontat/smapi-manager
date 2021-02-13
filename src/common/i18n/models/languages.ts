@@ -73,6 +73,10 @@ export interface LanguageType {
     title: string;
     description: string;
 
+    stateUnknown: string;
+    stateLatest: string;
+    stateNeedUpdate: string;
+
     columnEnv: string;
     columnName: string;
     columnVersion: string;

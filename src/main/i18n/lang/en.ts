@@ -16,6 +16,10 @@ const lang: LanguageType = {
     title: "Application information",
     description: "This shown all information relate to application",
 
+    stateUnknown: "Unknown",
+    stateLatest: "Latest",
+    stateNeedUpdate: "Download",
+
     columnEnv: "Environment",
     columnName: "Name",
     columnVersion: "Version",

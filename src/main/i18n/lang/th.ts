@@ -15,6 +15,11 @@ const lang: LanguageType = {
   appInfo: {
     title: "ข้อมูลทั่วไป",
     description: "หน้านี้จะแสดงเกี่ยวกับข้อมูลทั่วไปของแอพพลิเคชั่น",
+
+    stateUnknown: "",
+    stateLatest: "",
+    stateNeedUpdate: "",
+
     columnEnv: "Environment",
     columnName: "ชื่อ",
     columnVersion: "เวอร์ชั่น",
