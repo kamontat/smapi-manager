@@ -1,5 +1,7 @@
 import type { ModCollection } from "@common/mod";
 import type { Information } from "@common/nexus";
+import type { Status } from "@common/application";
+
 import type { StorageValue } from "../core/value";
 import type { Schema } from "../core/schema";
 
@@ -13,6 +15,8 @@ interface CachesValue extends StorageValue {
    * general information fetch when user validate apikey
    */
   nexusInformation: Information | undefined;
+
+  appStatus: Status | undefined;
 }
 type CachesKey = keyof CachesValue;
 
@@ -20,6 +24,7 @@ const defaults: CachesValue = {
   encryptedKey: "reAdONlY-CacHE",
   modCollections: {},
   nexusInformation: undefined,
+  appStatus: undefined,
 };
 
 const schema: Schema<CachesValue> = {
@@ -27,6 +32,9 @@ const schema: Schema<CachesValue> = {
     type: "object",
   },
   nexusInformation: {
+    type: "object",
+  },
+  appStatus: {
     type: "object",
   },
 };

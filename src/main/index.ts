@@ -10,6 +10,7 @@ import quitWindow from "./implements/quit-window";
 
 import {
   clearStorage,
+  fetchAppStatus,
   fetchModData,
   findModDirectoryV2,
   openExternalLink,
@@ -42,6 +43,7 @@ main
   .onReactivate(recreateWindow)
   .onQuit(quitWindow)
   .handler(clearStorage)
+  .handler(fetchAppStatus)
   .handler(fetchModData)
   .handler(findModDirectoryV2)
   .handler(openExternalLink)

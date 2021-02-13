@@ -21,6 +21,7 @@ import {
   CLEAR_STORAGE,
   OPEN_MOD,
   FETCH_MOD_DATA,
+  FETCH_APP_STATUS,
 } from "@common/communication";
 
 export const whitelist = [
@@ -46,4 +47,5 @@ export const whitelist = [
   CLEAR_STORAGE,
   OPEN_MOD,
   FETCH_MOD_DATA,
+  FETCH_APP_STATUS,
 ];

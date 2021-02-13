@@ -1,6 +1,6 @@
 export * from "./clear-storage";
 
-// export * from "./fetch-app-status";
+export * from "./fetch-app-status";
 export * from "./fetch-mod-data";
 
 export * from "./find-mod-directory-v2";
