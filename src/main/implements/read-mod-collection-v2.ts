@@ -8,10 +8,9 @@ import {
   ModCollection,
 } from "@common/mod";
 import { base64 } from "@common/utils/uuid";
+import { validateCaches } from "@common/utils/caches";
 
 export const readModCollectionV2 = handler(READ_MOD_COLLECTION_V2, async ({ store, data, logger }) => {
-  const datetime = +new Date();
-
   // query information from mod storage
   const directoryUuid = base64(store.mod.get("directory"));
   const limit = store.mod.get("recusiveLimit");
@@ -21,15 +20,14 @@ export const readModCollectionV2 = handler(READ_MOD_COLLECTION_V2, async ({ stor
   const cache = store.caches.getAny(`modCollections.${directoryUuid}`, emptyCollectionBuilder());
 
   // defined information
-  const isCacheExist = cache.lastUpdated !== -1;
-  const isCacheExpired = Math.abs(cache.lastUpdated - datetime) > threshold;
+  const { datetime, exist, expired } = validateCaches(threshold, cache);
   const allowUpdate = data.input.allowAutoLoad;
 
   logger.debug(`Settings: Updating enabled_auto=${allowUpdate}, threshold=${threshold}`);
-  logger.debug(`Cache system: exist=${isCacheExist}, expired=${isCacheExpired}`);
+  logger.debug(`Cache system: exist=${exist}, expired=${expired}`);
 
   // valid caches
-  if (isCacheExist && !isCacheExpired) {
+  if (exist && !expired) {
     logger.debug(`return valid cache data without fetch anything`);
     return cache;
   }
@@ -38,7 +36,7 @@ export const readModCollectionV2 = handler(READ_MOD_COLLECTION_V2, async ({ stor
     logger.debug(`starting auto update new mod directory`);
 
     let collection: ModCollection | undefined = undefined;
-    if (isCacheExist && isCacheExpired) {
+    if (exist && expired) {
       collection = await updateCollection(cache, limit);
     } else {
       collection = await createCollection(getModDirectory(), limit, datetime);
@@ -47,7 +45,7 @@ export const readModCollectionV2 = handler(READ_MOD_COLLECTION_V2, async ({ stor
     store.caches.setAny(`modCollections.${collection.uuid}`, collection);
     return collection;
   } else {
-    const errMessage = isCacheExpired
+    const errMessage = expired
       ? `cache is already expire, but client send denied to auto update`
       : `cache is not exist, and client send denied to auto update`;
     throw new Error(errMessage);

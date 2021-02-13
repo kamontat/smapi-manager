@@ -3,17 +3,16 @@ import { handler, FETCH_MOD_DATA } from "@main/communication";
 import { isModServerExtender, ModExternal, modServerExtenderBuilder } from "@common/mod/v2/models/mod-server";
 import NexusRequest from "@common/nexus";
 import { loadFromCaches, saveToCaches } from "@common/mod/utils";
+import { validateCaches } from "@common/utils/caches";
 
 export const fetchModData = handler(FETCH_MOD_DATA, async ({ store, data, logger }) => {
   const cache = loadFromCaches(store, data.input);
 
   if (isModServerExtender(cache)) {
-    const datetime = +new Date();
     const threshold = store.mod.get("fetchThreshold");
+    const { expired } = validateCaches(threshold, cache.external);
 
-    const isCacheExpired = Math.abs(cache.external.lastUpdated - datetime) > threshold;
-
-    if (!isCacheExpired) {
+    if (!expired) {
       logger.debug(`return valid cache data without fetch anything`);
       return cache;
     }
