@@ -6,6 +6,7 @@
   import i18n from "@states/lang";
 
   $: {
+    document.cookie = `pageName=${$currentPage.props.pageName}`;
     document.documentElement.setAttribute("lang", $i18n);
     document.documentElement.setAttribute("theme", "light");
   }
