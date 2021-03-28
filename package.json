@@ -54,7 +54,7 @@
     "style-loader": "2.0.0",
     "svelte-check": "1.1.28",
     "svelte-loader": "3.0.0",
-    "svelte-preprocess": "4.6.3",
+    "svelte-preprocess": "4.7.0",
     "ts-loader": "8.0.14",
     "typescript": "4.2.3",
     "webpack-bundle-analyzer": "4.3.0"
