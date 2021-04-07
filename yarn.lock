@@ -2419,10 +2419,10 @@ electron-rebuild@^2.0.3:
     tar "^6.0.5"
     yargs "^16.0.0"
 
-electron-store@7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/electron-store/-/electron-store-7.0.1.tgz#4179fc4d2408b607c7d2ddc0ac966590f65cd92d"
-  integrity sha512-/LkvbwFAMLKTj6f11gZry9KDtvM7z3/idg7FheeSz0/WATa9Vfj53LpqAugF1Q5TyhV4ZggsZMISdTrC/A8qqQ==
+electron-store@7.0.3:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/electron-store/-/electron-store-7.0.3.tgz#56d78284454018ed50ffc7645da49f828ae5ff19"
+  integrity sha512-wIbw4GHt4djs4dVrlRLCD/SpdpDUiRsQc212jagGA6zJ8xt1iwx3KZIzXY8gmwvgVCOcVxi3iyCXZoBBWwBXpQ==
   dependencies:
     conf "^9.0.0"
     type-fest "^0.20.2"

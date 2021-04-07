@@ -28,7 +28,7 @@
     "directory": "."
   },
   "dependencies": {
-    "electron-store": "7.0.1",
+    "electron-store": "7.0.3",
     "jsonrepair": "2.0.0",
     "nucleus-nodejs": "3.0.8",
     "svelte": "3.35.0",
