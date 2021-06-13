@@ -4193,10 +4193,10 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-jsonrepair@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/jsonrepair/-/jsonrepair-2.0.0.tgz#816ab546b0e0864ea3faa4d456e61ff0d23814d0"
-  integrity sha512-beGD14VPmrQNt/Sspi12sCGT+N3w7FWM1T2UJx7biEMfGIUUpqBBPjHq8ETKA992+JS+fSnrSHxKHq7AIgdgcA==
+jsonrepair@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/jsonrepair/-/jsonrepair-2.2.1.tgz#7c6257c36550a310150c41ab7d5d4cab71828456"
+  integrity sha512-o9Je8TceILo872uQC9fIBJm957j1Io7z8Ca1iWIqY6S5S65HGE9XN7XEEw7+tUviB9Vq4sygV89MVTxl+rhZyg==
 
 jsprim@^1.2.2:
   version "1.4.1"
@@ -5019,17 +5019,17 @@ nth-check@^1.0.2:
   dependencies:
     boolbase "~1.0.0"
 
-nucleus-nodejs@3.0.8:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/nucleus-nodejs/-/nucleus-nodejs-3.0.8.tgz#ec75f5516f76b33a091709242ec86186c18fc8e0"
-  integrity sha512-ZiS/n3lY5dXBlq63R8hBi/k9A3FK62uVWvcLunpLSdPHfqSfFShoBSfQ4qtqW0nErnSNvqYy2zy2fHMLku79eQ==
+nucleus-nodejs@3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/nucleus-nodejs/-/nucleus-nodejs-3.0.9.tgz#24aacf9f2b5fa39877e01ee077a954e5e49c76be"
+  integrity sha512-8yfHXJ2kznW8pU9uw18rYRy5dvJcQdJNYxMsdYF6QLqBgREmwnmXxsSqdv1TgXU9slNNRCfAzpy+BAJhtthejw==
   dependencies:
     arch "^2.2.0"
   optionalDependencies:
     conf "^9.0.0"
     node-machine-id "^1.1.12"
     os-locale "^5.0.0"
-    ws "^7.1.2"
+    ws "^7.4.6"
 
 nugget@^2.0.1:
   version "2.0.1"
@@ -7411,10 +7411,15 @@ ws@^5.2.0:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^7.1.2, ws@^7.3.1:
+ws@^7.3.1:
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.3.tgz#1f9643de34a543b8edb124bdcbc457ae55a6e5cd"
   integrity sha512-hr6vCR76GsossIRsr8OLR9acVVm1jyfEWvhbNjtgPOrfvAlKzvyeg/P6r8RuDjRyrcQoPQT7K0DGEPc7Ae6jzA==
+
+ws@^7.4.6:
+  version "7.4.6"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.6.tgz#5654ca8ecdeee47c33a9a4bf6d28e2be2980377c"
+  integrity sha512-YmhHDO4MzaDLB+M9ym/mDA5z0naX8j7SIlT8f8z+I0VtzsRbekxEutHSme7NPS2qE8StCYQNUnfWdXta/Yu85A==
 
 xml2js@0.4.23:
   version "0.4.23"

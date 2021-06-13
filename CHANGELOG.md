@@ -2,6 +2,18 @@
 ## [Unreleased]
 
 
+<a name="v1.0.0-beta.9"></a>
+## [v1.0.0-beta.9] - 2021-06-13
+### Fixes Bug
+- update new version from jsonrepair
+
+### Pull Requests
+- Merge pull request [#45](https://github.com/kamontat/smapi-manager/issues/45) from kamontat/dependabot/npm_and_yarn/electron-12.0.1
+- Merge pull request [#42](https://github.com/kamontat/smapi-manager/issues/42) from kamontat/dependabot/npm_and_yarn/typescript-4.2.3
+- Merge pull request [#46](https://github.com/kamontat/smapi-manager/issues/46) from kamontat/dependabot/npm_and_yarn/typescript-eslint/parser-4.18.0
+- Merge pull request [#39](https://github.com/kamontat/smapi-manager/issues/39) from kamontat/dependabot/npm_and_yarn/svelte-3.35.0
+
+
 <a name="v1.0.0-beta.8"></a>
 ## [v1.0.0-beta.8] - 2021-02-13
 ### Feature
@@ -296,7 +308,8 @@
 - **main:** add getting application information event support
 
 
-[Unreleased]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.8...HEAD
+[Unreleased]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.9...HEAD
+[v1.0.0-beta.9]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.8...v1.0.0-beta.9
 [v1.0.0-beta.8]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.7...v1.0.0-beta.8
 [v1.0.0-beta.7]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.6...v1.0.0-beta.7
 [v1.0.0-beta.6]: https://github.com/kamontat/smapi-manager/compare/v1.0.0-beta.5...v1.0.0-beta.6
