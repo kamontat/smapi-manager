@@ -4,10 +4,15 @@ import { promisify } from "util";
 import jsonrepair from "jsonrepair";
 
 const parseJson = <T>(json: string): T => {
+  const trimedJSON = json.replace(/(\r\n|\n|\r)/gm, "")
   try {
-    return JSON.parse(json);
+    return JSON.parse(trimedJSON);
   } catch (e) {
-    return JSON.parse(jsonrepair(json));
+    try {
+      return JSON.parse(jsonrepair(trimedJSON));
+    } catch (ejson) {
+      return {} as T
+    }
   }
 };
 
