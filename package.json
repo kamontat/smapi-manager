@@ -29,8 +29,8 @@
   },
   "dependencies": {
     "electron-store": "7.0.1",
-    "jsonrepair": "2.0.0",
-    "nucleus-nodejs": "3.0.8",
+    "jsonrepair": "2.2.1",
+    "nucleus-nodejs": "3.0.9",
     "svelte": "3.35.0",
     "xml2js": "0.4.23"
   },
