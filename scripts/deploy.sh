@@ -73,7 +73,7 @@ read -r
 echo
 echo
 
-step "update changelog" gitgo changelog --tag "$version"
+step "update changelog" git-chglog --config .gitgo/chglog/config.yml --output CHANGELOG.md --next-tag "$version"
 step "update line-of-code file" bash "$PWD/scripts/loc.sh"
 step "git commit" git commit -am "chore(release): $version"
 step "git tag" git tag "$version"
