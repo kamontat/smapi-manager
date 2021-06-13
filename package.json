@@ -57,7 +57,7 @@
     "svelte-preprocess": "4.7.3",
     "ts-loader": "8.0.14",
     "typescript": "4.2.3",
-    "webpack-bundle-analyzer": "4.3.0"
+    "webpack-bundle-analyzer": "4.4.2"
   },
   "config": {
     "forge": "./config/forge.config.js"
