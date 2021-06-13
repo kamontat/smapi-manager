@@ -6189,10 +6189,10 @@ svelte-hmr@^0.12.3:
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.12.5.tgz#afbdd44daaf5eca901727af2f80571855d9e9985"
   integrity sha512-AEPtbwF6h+B5jI/aQhvk61wXrW6bxOGQecI/GmRd+LCvg+s4P0VQ3Xseg18foAM6ZemBZrGCRCopeZZS4+X7cg==
 
-svelte-loader@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/svelte-loader/-/svelte-loader-3.0.0.tgz#16fbdc7036d95629e861a519fd53c0d7319060f3"
-  integrity sha512-MiZ40V3kbGSghMY2zJi99eTSJtLsgvz8QQRlrWvBsLinx8tYEQzLMoivz2+H+p25LDFCPl7hZgxr3Jl1LECnEQ==
+svelte-loader@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/svelte-loader/-/svelte-loader-3.1.1.tgz#cb03541214b164edee58e4c98d4303f76df9013d"
+  integrity sha512-JU7qo1yBdDeJ3Aw23WoGKXrVaSn3KeWkM9KMl43HuMVFrsPNHIzZHTsf1ARJX/Abm3jeqNjigaO35RVbixhmWg==
   dependencies:
     loader-utils "^2.0.0"
     svelte-dev-helper "^1.1.9"
@@ -6467,10 +6467,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@*, typescript@4.2.3:
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.3.tgz#39062d8019912d43726298f09493d598048c1ce3"
-  integrity sha512-qOcYwxaByStAWrBf4x0fibwZvMRG+r4cQoTjbPtUlrWjBHbmCAww1i448U0GJ+3cNNEtebDteo/cHOR3xJ4wEw==
+typescript@*, typescript@4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.3.2.tgz#399ab18aac45802d6f2498de5054fcbbe716a805"
+  integrity sha512-zZ4hShnmnoVnAHpVHWpTcxdv7dWP60S2FsydQLV8V5PbS3FifjWFFRiHSWpDJahly88PRyV5teTSLoq4eG7mKw==
 
 unbox-primitive@^1.0.1:
   version "1.0.1"
