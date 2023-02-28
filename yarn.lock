@@ -4467,10 +4467,10 @@ loader-utils@^1.2.3:
     emojis-list "^3.0.0"
     json5 "^1.0.1"
 
-loader-utils@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-2.0.0.tgz#e4cace5b816d425a166b5f097e10cd12b36064b0"
-  integrity sha512-rP4F0h2RaWSvPEkD7BLDFQnvSf+nK+wr3ESUjNTyAGobqrijmW92zc+SO6d4p4B1wh7+B/Jg1mkQe5NYUEHtHQ==
+loader-utils@^2.0.0, loader-utils@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-2.0.4.tgz#8b5cb38b5c34a9a018ee1fc0e6a066d1dfcc528c"
+  integrity sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw==
   dependencies:
     big.js "^5.2.2"
     emojis-list "^3.0.0"
@@ -7032,19 +7032,19 @@ svelte-dev-helper@^1.1.9:
   resolved "https://registry.yarnpkg.com/svelte-dev-helper/-/svelte-dev-helper-1.1.9.tgz#7d187db5c6cdbbd64d75a32f91b8998bde3273c3"
   integrity sha1-fRh9tcbNu9ZNdaMvkbiZi94yc8M=
 
-svelte-hmr@^0.12.3:
-  version "0.12.5"
-  resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.12.5.tgz#afbdd44daaf5eca901727af2f80571855d9e9985"
-  integrity sha512-AEPtbwF6h+B5jI/aQhvk61wXrW6bxOGQecI/GmRd+LCvg+s4P0VQ3Xseg18foAM6ZemBZrGCRCopeZZS4+X7cg==
+svelte-hmr@^0.14.2:
+  version "0.14.12"
+  resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.14.12.tgz#a127aec02f1896500b10148b2d4d21ddde39973f"
+  integrity sha512-4QSW/VvXuqVcFZ+RhxiR8/newmwOCTlbYIezvkeN6302YFRE8cXy0naamHcjz8Y9Ce3ITTZtrHrIL0AGfyo61w==
 
-svelte-loader@3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/svelte-loader/-/svelte-loader-3.1.1.tgz#cb03541214b164edee58e4c98d4303f76df9013d"
-  integrity sha512-JU7qo1yBdDeJ3Aw23WoGKXrVaSn3KeWkM9KMl43HuMVFrsPNHIzZHTsf1ARJX/Abm3jeqNjigaO35RVbixhmWg==
+svelte-loader@3.1.7:
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/svelte-loader/-/svelte-loader-3.1.7.tgz#b6acc02380b3cfe08340a08fe6831474fe4d56cb"
+  integrity sha512-YVg5gQaUdV26uaA5SEGj1VOUX0YQicD9PezKvVlkQ2JI644silWtJZ3hkxHtXSfjnlFr0OTNoyOgeINIODdT+A==
   dependencies:
-    loader-utils "^2.0.0"
+    loader-utils "^2.0.4"
     svelte-dev-helper "^1.1.9"
-    svelte-hmr "^0.12.3"
+    svelte-hmr "^0.14.2"
 
 svelte-preprocess@4.7.3, svelte-preprocess@^4.0.0:
   version "4.7.3"
